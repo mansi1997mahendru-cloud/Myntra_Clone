@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>User Profile | Premium Grocery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "delivery-green": "#0C831F",
+                        "inverse-surface": "#2e3132",
+                        "surface": "#f8f9fa",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#524600",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d9dadb",
+                        "on-secondary-container": "#646464",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "surface-gray": "#F3F4F6",
+                        "on-error": "#ffffff",
+                        "text-primary": "#111827",
+                        "surface-variant": "#e1e3e4",
+                        "surface-container": "#edeeef",
+                        "primary": "#6d5e00",
+                        "on-surface": "#191c1d",
+                        "surface-tint": "#6d5e00",
+                        "surface-bright": "#f8f9fa",
+                        "on-secondary-fixed-variant": "#474747",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "primary-container": "#f7d700",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f8f9fa",
+                        "secondary-container": "#e2e2e2",
+                        "on-tertiary-container": "#006b49",
+                        "surface-container-low": "#f3f4f5",
+                        "surface-container-high": "#e7e8e9",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "on-surface-variant": "#4c4732",
+                        "on-background": "#191c1d",
+                        "error-red": "#EF4444",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#ffe24a",
+                        "outline-variant": "#cfc6ab",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-secondary-fixed": "#1b1b1b",
+                        "secondary": "#5e5e5e",
+                        "on-primary-fixed": "#211b00",
+                        "primary-fixed-dim": "#e3c600",
+                        "secondary-fixed": "#e2e2e2",
+                        "text-secondary": "#6B7280",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-tertiary-fixed": "#002113",
+                        "inverse-primary": "#e3c600",
+                        "tertiary-container": "#63f0b3",
+                        "success-green": "#10B981",
+                        "outline": "#7d775f",
+                        "on-primary-container": "#6c5d00",
+                        "tertiary": "#006c49",
+                        "inverse-on-surface": "#f0f1f2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "20px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit-1": "8px",
+                        "unit-2": "16px",
+                        "unit-3": "24px",
+                        "unit-4": "32px",
+                        "unit-6": "48px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "64px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-lg": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "title-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f8f9fa;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .profile-gradient {
+            background: linear-gradient(135deg, #f7d700 0%, #ffe24a 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-text-primary antialiased">
+<!-- Top Navigation Anchor -->
+<header class="sticky top-0 w-full z-50 flex flex-col px-margin-mobile md:px-margin-desktop py-unit-1 bg-surface-container-lowest dark:bg-inverse-surface shadow-sm transition-all duration-300">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center gap-3">
+<div class="p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary">location_on</span>
+</div>
+<h1 class="font-display-lg text-title-lg font-black text-primary dark:text-primary-fixed">Premium Grocery</h1>
+</div>
+<div class="flex items-center gap-2">
+<div class="p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary">mic</span>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-md mx-auto px-margin-mobile pt-unit-4 pb-32">
+<!-- User Identity Header -->
+<section class="flex flex-col items-center mb-unit-6 text-center">
+<div class="relative mb-unit-3">
+<div class="w-24 h-24 rounded-full border-4 border-primary-container p-1 overflow-hidden shadow-lg">
+<img class="w-full h-full object-cover rounded-full" data-alt="A professional and elegant studio portrait of a woman named Jane Doe with a friendly expression. She has a clean, minimalist aesthetic, wearing a modern white blazer. The background is a soft, high-key studio light, maintaining a premium light-mode corporate feel with subtle warm yellow accents in the lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxeMpd9z5yMTQqpHDBRjBbPyXugvSxnwGw9XgkgPxyKirfM5bXk-TFUbqgxKjVwTe91kX094bVasoo6pXtJHy5JIvym-98-72dlw-GojfoZUYLVT2ZT6y0HEDZHbre1D-jS_7SRjjril8P_9uR7I7YCzLg6BinSS8fqFSYzj9sryApJ-lrItW_pTSL1ZvnZkjgcDfIMWJfq5aN7emCiL-1OLpVhbNzmK8ZZHmLIf8OG5Uku-Iw-Qumfg"/>
+</div>
+<button class="absolute bottom-0 right-0 bg-primary text-on-primary p-1.5 rounded-full shadow-md active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Jane Doe</h2>
+<p class="font-body-md text-text-secondary mt-1">+1 (555) 012-3456</p>
+</section>
+<!-- Rapid Wallet Card (High-end Glassmorphism/Bento Style) -->
+<div class="profile-gradient rounded-2xl p-6 shadow-xl shadow-primary-container/20 mb-unit-6 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-white/20 rounded-full blur-2xl"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="font-label-sm text-on-primary-container/80 uppercase tracking-wider">Rapid Wallet</p>
+<h3 class="font-headline-lg text-headline-lg text-on-primary-container mt-1">$458.20</h3>
+</div>
+<div class="bg-white/30 backdrop-blur-md p-2 rounded-xl">
+<span class="material-symbols-outlined text-on-primary-container">account_balance_wallet</span>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 bg-on-primary-container text-primary-container py-2.5 rounded-xl font-label-lg active:scale-95 transition-transform">Add Money</button>
+<button class="flex-1 bg-white/20 backdrop-blur-md text-on-primary-container py-2.5 rounded-xl font-label-lg active:scale-95 transition-transform">History</button>
+</div>
+</div>
+</div>
+<!-- Menu List Section -->
+<section class="space-y-3">
+<!-- Orders -->
+<div class="bg-white border border-outline-variant/30 rounded-2xl p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface-container-highest rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<div>
+<p class="font-label-lg text-on-surface">Orders</p>
+<p class="text-xs text-text-secondary">Track & reorder items</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-secondary group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+<!-- Addresses -->
+<div class="bg-white border border-outline-variant/30 rounded-2xl p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface-container-highest rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<div>
+<p class="font-label-lg text-on-surface">Addresses</p>
+<p class="text-xs text-text-secondary">Manage delivery locations</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-secondary group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+<!-- Payments -->
+<div class="bg-white border border-outline-variant/30 rounded-2xl p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface-container-highest rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<p class="font-label-lg text-on-surface">Payments</p>
+<p class="text-xs text-text-secondary">Saved cards & methods</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-secondary group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+<!-- Coupons -->
+<div class="bg-white border border-outline-variant/30 rounded-2xl p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface-container-highest rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">confirmation_number</span>
+</div>
+<div>
+<p class="font-label-lg text-on-surface">Coupons</p>
+<p class="text-xs text-text-secondary">Offers for you</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-secondary group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+<!-- Help -->
+<div class="bg-white border border-outline-variant/30 rounded-2xl p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface-container-highest rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">help_outline</span>
+</div>
+<div>
+<p class="font-label-lg text-on-surface">Help</p>
+<p class="text-xs text-text-secondary">Support & FAQs</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-secondary group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+<!-- Settings -->
+<div class="bg-white border border-outline-variant/30 rounded-2xl p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-surface-container-highest rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">settings</span>
+</div>
+<div>
+<p class="font-label-lg text-on-surface">Settings</p>
+<p class="text-xs text-text-secondary">Privacy & App preferences</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-text-secondary group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+</section>
+<!-- Logout Action -->
+<button class="w-full mt-unit-6 py-4 rounded-2xl border-1.5 border-error-red text-error-red font-label-lg flex items-center justify-center gap-2 active:scale-95 transition-all hover:bg-error-container/20">
+<span class="material-symbols-outlined">logout</span>
+            Logout
+        </button>
+<p class="text-center text-text-secondary text-[10px] mt-unit-4 uppercase tracking-[0.2em]">App Version 4.2.1-Premium</p>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center bg-surface-container-lowest dark:bg-inverse-surface py-2 pb-safe px-4 border-t border-outline-variant dark:border-none shadow-lg z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-sm text-label-sm">Categories</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-sm text-label-sm">Cart</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-sm text-label-sm">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-fixed text-on-primary-container dark:text-on-primary-fixed rounded-xl px-3 py-1 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-sm text-label-sm font-bold">Account</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for menu items
+        document.querySelectorAll('section > div').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.add('scale-[0.98]');
+                setTimeout(() => {
+                    this.classList.remove('scale-[0.98]');
+                }, 100);
+            });
+        });
+
+        // Sticky header behavior
+        let lastScroll = 0;
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > 50) {
+                header.classList.add('shadow-md', 'h-14');
+                header.classList.remove('shadow-sm', 'h-16');
+            } else {
+                header.classList.add('shadow-sm', 'h-16');
+                header.classList.remove('shadow-md', 'h-14');
+            }
+            lastScroll = currentScroll;
+        });
+    </script>
+</body></html>

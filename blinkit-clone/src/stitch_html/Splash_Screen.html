@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Premium Grocery - Welcome</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#2e3132",
+                        "on-secondary-fixed": "#1b1b1b",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-tertiary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#002113",
+                        "tertiary-container": "#63f0b3",
+                        "text-secondary": "#6B7280",
+                        "on-tertiary-container": "#006b49",
+                        "surface-tint": "#6d5e00",
+                        "on-error": "#ffffff",
+                        "background": "#f8f9fa",
+                        "surface-container-highest": "#e1e3e4",
+                        "inverse-primary": "#e3c600",
+                        "secondary-container": "#e2e2e2",
+                        "error-red": "#EF4444",
+                        "surface-variant": "#e1e3e4",
+                        "on-primary-fixed-variant": "#524600",
+                        "surface": "#f8f9fa",
+                        "surface-container-low": "#f3f4f5",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "text-primary": "#111827",
+                        "inverse-on-surface": "#f0f1f2",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#4c4732",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#6c5d00",
+                        "on-surface": "#191c1d",
+                        "delivery-green": "#0C831F",
+                        "primary-fixed-dim": "#e3c600",
+                        "on-secondary-fixed-variant": "#474747",
+                        "outline-variant": "#cfc6ab",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#6d5e00",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "surface-gray": "#F3F4F6",
+                        "on-background": "#191c1d",
+                        "primary-container": "#f7d700",
+                        "secondary": "#5e5e5e",
+                        "on-primary-fixed": "#211b00",
+                        "tertiary-fixed": "#6ffbbe",
+                        "surface-bright": "#f8f9fa",
+                        "surface-container": "#edeeef",
+                        "outline": "#7d775f",
+                        "tertiary": "#006c49",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e7e8e9",
+                        "primary-fixed": "#ffe24a",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#646464",
+                        "surface-dim": "#d9dadb",
+                        "success-green": "#10B981",
+                        "secondary-fixed-dim": "#c6c6c6"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "unit-3": "24px",
+                        "margin-desktop": "64px",
+                        "unit-4": "32px",
+                        "unit-1": "8px",
+                        "gutter": "16px",
+                        "unit-2": "16px",
+                        "unit-6": "48px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "title-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "label-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        @keyframes subtle-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes progress-loading {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        .animate-subtle-bounce {
+            animation: subtle-bounce 2s ease-in-out infinite;
+        }
+
+        .loading-bar-inner {
+            animation: progress-loading 2.5s ease-in-out infinite;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        body {
+            background-color: #f7d700;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col items-center justify-between min-h-screen">
+<!-- Top Spacing -->
+<div class="h-1/4"></div>
+<!-- Main Branding Area -->
+<main class="flex flex-col items-center justify-center flex-grow text-center px-margin-mobile">
+<!-- Brand Identity Container -->
+<div class="animate-subtle-bounce flex flex-col items-center">
+<!-- Icon Symbol -->
+<div class="mb-unit-4 flex items-center justify-center bg-on-background rounded-[24px] p-unit-3 shadow-xl transform rotate-3">
+<span class="material-symbols-outlined text-[64px] text-primary-container" style="font-variation-settings: 'FILL' 1;">
+                    shopping_basket
+                </span>
+</div>
+<!-- Brand Name (Typography: font-display-lg) -->
+<h1 class="font-display-lg text-display-lg text-on-background tracking-tighter mb-unit-1">
+                Premium Grocery
+            </h1>
+<!-- Value Prop (Typography: font-title-lg) -->
+<p class="font-title-lg text-title-lg text-on-background/80 max-w-[280px]">
+                Groceries delivered in <span class="text-on-background font-extrabold underline decoration-4 decoration-white/30">10 minutes</span>
+</p>
+</div>
+</main>
+<!-- Bottom Loading Section -->
+<footer class="w-full flex flex-col items-center pb-unit-6 px-margin-mobile">
+<!-- Progress Bar Background -->
+<div class="w-48 h-1.5 bg-on-background/10 rounded-full overflow-hidden relative mb-unit-3">
+<!-- Animated Loading Fill -->
+<div class="loading-bar-inner absolute top-0 left-0 h-full bg-on-background rounded-full"></div>
+</div>
+<!-- System Status Label (Typography: font-label-sm) -->
+<div class="flex items-center gap-unit-1 text-on-background/60 font-label-sm text-label-sm uppercase tracking-[0.1em]">
+<span class="w-2 h-2 rounded-full bg-delivery-green inline-block animate-pulse"></span>
+            Initializing secure checkout...
+        </div>
+<!-- Platform Signature -->
+<div class="mt-unit-6 opacity-40">
+<span class="font-label-sm text-label-sm text-on-background">Part of the Modern Express Network</span>
+</div>
+</footer>
+<!-- Background Decorative Elements (Bento-style silhouettes) -->
+<div class="fixed top-[-5%] left-[-10%] opacity-[0.03] pointer-events-none transform -rotate-12">
+<span class="material-symbols-outlined text-[320px]">grocery</span>
+</div>
+<div class="fixed bottom-[15%] right-[-5%] opacity-[0.03] pointer-events-none transform rotate-12">
+<span class="material-symbols-outlined text-[280px]">nutrition</span>
+</div>
+<!-- Micro-interaction Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Simulated loading transition logic
+            const bar = document.querySelector('.loading-bar-inner');
+            const status = document.querySelector('.text-on-background\\/60');
+            
+            const messages = [
+                "Initializing secure checkout...",
+                "Locating nearest store...",
+                "Optimizing delivery route...",
+                "Updating fresh inventory..."
+            ];
+            
+            let i = 0;
+            setInterval(() => {
+                i = (i + 1) % messages.length;
+                status.innerHTML = `<span class="w-2 h-2 rounded-full bg-delivery-green inline-block animate-pulse"></span> ${messages[i]}`;
+            }, 1200);
+
+            // Optional: Redirect or transition after splash
+            /*
+            setTimeout(() => {
+                window.location.href = 'home.html';
+            }, 5000);
+            */
+        });
+    </script>
+</body></html>

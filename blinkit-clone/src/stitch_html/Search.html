@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Search &amp; Discovery | Premium Grocery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface-variant": "#4c4732",
+                    "on-primary-container": "#6c5d00",
+                    "error-container": "#ffdad6",
+                    "surface-variant": "#e1e3e4",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#e3c600",
+                    "surface-container-highest": "#e1e3e4",
+                    "tertiary-container": "#63f0b3",
+                    "outline-variant": "#cfc6ab",
+                    "text-primary": "#111827",
+                    "primary": "#6d5e00",
+                    "background": "#f8f9fa",
+                    "on-surface": "#191c1d",
+                    "on-error-container": "#93000a",
+                    "text-secondary": "#6B7280",
+                    "primary-container": "#f7d700",
+                    "surface-gray": "#F3F4F6",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "success-green": "#10B981",
+                    "secondary-container": "#e2e2e2",
+                    "secondary": "#5e5e5e",
+                    "primary-fixed": "#ffe24a",
+                    "on-error": "#ffffff",
+                    "surface-container-high": "#e7e8e9",
+                    "inverse-surface": "#2e3132",
+                    "on-primary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "error-red": "#EF4444",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "secondary-fixed": "#e2e2e2",
+                    "on-primary-fixed": "#211b00",
+                    "secondary-fixed-dim": "#c6c6c6",
+                    "on-secondary-container": "#646464",
+                    "surface-container-low": "#f3f4f5",
+                    "surface-container": "#edeeef",
+                    "on-tertiary-fixed": "#002113",
+                    "outline": "#7d775f",
+                    "on-tertiary": "#ffffff",
+                    "surface": "#f8f9fa",
+                    "primary-fixed-dim": "#e3c600",
+                    "on-secondary-fixed": "#1b1b1b",
+                    "delivery-green": "#0C831F",
+                    "surface-bright": "#f8f9fa",
+                    "tertiary-fixed": "#6ffbbe",
+                    "surface-tint": "#6d5e00",
+                    "surface-dim": "#d9dadb",
+                    "on-tertiary-container": "#006b49",
+                    "on-secondary-fixed-variant": "#474747",
+                    "on-primary-fixed-variant": "#524600",
+                    "inverse-on-surface": "#f0f1f2",
+                    "on-background": "#191c1d",
+                    "tertiary": "#006c49"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit-6": "48px",
+                    "margin-desktop": "64px",
+                    "unit-2": "16px",
+                    "unit-4": "32px",
+                    "margin-mobile": "16px",
+                    "unit-3": "24px",
+                    "base": "8px",
+                    "unit-1": "8px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "title-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        @media (min-width: 768px) {
+            .bento-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .search-container-focus:focus-within {
+            box-shadow: 0 0 0 2px #F7D700;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top App Bar (Search Context) -->
+<header class="sticky top-0 w-full z-50 flex flex-col px-margin-mobile md:px-margin-desktop py-unit-1 bg-surface-container-lowest shadow-sm">
+<div class="flex items-center justify-between h-16 gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-2xl">location_on</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Deliver to</span>
+<span class="font-label-lg text-label-lg text-text-primary leading-tight">Central Park, NY</span>
+</div>
+</div>
+<div class="hidden md:flex items-center space-x-6">
+<a class="font-label-lg text-label-lg text-primary font-bold" href="#">Explore</a>
+<a class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors" href="#">Deals</a>
+<a class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors" href="#">New</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-on-surface-variant">person</span>
+</button>
+</div>
+</div>
+<!-- Search Bar -->
+<div class="pb-3 pt-1">
+<div class="relative group search-container-focus flex items-center bg-surface-gray rounded-xl px-4 h-12 transition-all duration-200">
+<span class="material-symbols-outlined text-secondary mr-3">search</span>
+<input class="w-full bg-transparent border-none focus:ring-0 text-body-lg font-body-lg text-on-surface placeholder:text-text-secondary" placeholder="Search 'avocado', 'organic milk'..." type="text"/>
+<button class="p-1 rounded-full hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-primary">mic</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-unit-4 mb-24">
+<!-- Recent Searches Section -->
+<section class="mb-unit-4">
+<div class="flex items-center justify-between mb-4">
+<h2 class="font-title-lg text-title-lg text-text-primary">Recent Searches</h2>
+<button class="text-label-lg font-label-lg text-primary hover:underline">Clear all</button>
+</div>
+<div class="flex flex-wrap gap-2">
+<div class="flex items-center gap-1 bg-surface-container-low border border-outline-variant rounded-full px-4 py-2 hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95">
+<span class="font-body-md text-body-md text-on-surface">Fresh Berries</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">close</span>
+</div>
+<div class="flex items-center gap-1 bg-surface-container-low border border-outline-variant rounded-full px-4 py-2 hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95">
+<span class="font-body-md text-body-md text-on-surface">Oat Milk</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">close</span>
+</div>
+<div class="flex items-center gap-1 bg-surface-container-low border border-outline-variant rounded-full px-4 py-2 hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95">
+<span class="font-body-md text-body-md text-on-surface">Greek Yogurt</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">close</span>
+</div>
+<div class="flex items-center gap-1 bg-surface-container-low border border-outline-variant rounded-full px-4 py-2 hover:bg-surface-container-high transition-colors cursor-pointer active:scale-95">
+<span class="font-body-md text-body-md text-on-surface">Avocado</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">close</span>
+</div>
+</div>
+</section>
+<!-- Trending & Discovery Bento -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-unit-4">
+<!-- Trending List -->
+<section class="md:col-span-1">
+<h2 class="font-title-lg text-title-lg text-text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-error-red">trending_up</span>
+                    Trending Now
+                </h2>
+<div class="space-y-1">
+<div class="flex items-center justify-between p-3 rounded-xl hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<span class="font-title-lg text-title-lg text-outline-variant group-hover:text-primary transition-colors">01</span>
+<span class="font-body-lg text-body-lg text-on-surface">Cold Brew Coffee</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant">north_east</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-xl hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<span class="font-title-lg text-title-lg text-outline-variant group-hover:text-primary transition-colors">02</span>
+<span class="font-body-lg text-body-lg text-on-surface">Organic Avocados</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant">north_east</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-xl hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<span class="font-title-lg text-title-lg text-outline-variant group-hover:text-primary transition-colors">03</span>
+<span class="font-body-lg text-body-lg text-on-surface">Artisan Sourdough</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant">north_east</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-xl hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<span class="font-title-lg text-title-lg text-outline-variant group-hover:text-primary transition-colors">04</span>
+<span class="font-body-lg text-body-lg text-on-surface">Kombucha Multi-pack</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant">north_east</span>
+</div>
+</div>
+</section>
+<!-- Discovery Highlights -->
+<section class="md:col-span-2">
+<h2 class="font-title-lg text-title-lg text-text-primary mb-4">Browse by Category</h2>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+<div class="relative overflow-hidden rounded-2xl h-32 group cursor-pointer active:scale-[0.98] transition-transform">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A macro close-up of fresh, dew-covered vegetables like bright green broccoli and vibrant carrots in a clean, high-end grocery setting. The lighting is soft and natural, emphasizing a fresh, farm-to-table organic aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4_8ZWuM4dJ3XT_IMz5N_yqtixEIHWxbzkdB7YHToipQ4gqRz6BwmMjcKWevW-MvC8cJmRuw0DMOSLpzcfRyg0yFjllgBaXKSQrnxP115p0QWOSpp3BQ7MEA4JM49yjMlvnkkY4IzcmlW5CAnNldfG5ipChrP_rQVzXcLpVJb5ixdLI0k5rnm15dpJfLTYc8xY5qzDTvY4yeKNwsEbDSVbSo2J7WXGSoJqlP5R6wxAC6S7N2TzQQUgdA"/>
+<div class="absolute bottom-3 left-4 z-20">
+<span class="font-label-lg text-label-lg text-white">Vegetables</span>
+</div>
+</div>
+<div class="relative overflow-hidden rounded-2xl h-32 group cursor-pointer active:scale-[0.98] transition-transform">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="An elegant display of artisanal bakery items, featuring golden-brown croissants and rustic sourdough loaves on a minimalist marble surface. The mood is warm and inviting, using a sophisticated palette of creams and earth tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtUQwQ4OGSl5bagWm87gAnS5rkMupvmCjbBYDm4wj-7XUiBr0hqdk3dQZqC3iMouGgPv1gEP9p8M7bu6v-3gnBCA_ovEjf2sHjfZV1mcuv2X7f1TOLG3oEmCzHSYUBTNKFRHWtk8NuCn55rS8HYD8AwGKTg0WUpMEi9R2h4FKNZnPN9BkDTOcbfeLzAVl3R72DU88EYWeT8ZxpO4RRBrC4yl3_99zmx0f3p5PyFEZHQKV2QNMO588vhQ"/>
+<div class="absolute bottom-3 left-4 z-20">
+<span class="font-label-lg text-label-lg text-white">Bakery</span>
+</div>
+</div>
+<div class="relative overflow-hidden rounded-2xl h-32 group cursor-pointer active:scale-[0.98] transition-transform">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A high-contrast studio shot of premium dairy products, including a glass bottle of milk and a wedge of gourmet cheese. The scene is bright and clinical, with a clean white background that highlights the high-quality textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCuYolBB4-pAyWIH1ptdDiOUxyCZ5jp8-O1P4-fTXhNrlAtWVBT0b_noELsLN4UEz0hmGkkuU-6gD0PgCCcNvh-Vx6U7NgGmMtBBO-HIiiPFzRcTJcWNdiAJcWFga3qgEpHKJ9tSacpJcmp03LQBxs94jcgqQ_lflicUIbRb2MQ83GvUnS9sW4RU3LzDRPk-7ah-YPZbvh9mr5SD-d1uqHa2x0WgPdIL6VUlkOl0OQroUy9h8YPpfchw"/>
+<div class="absolute bottom-3 left-4 z-20">
+<span class="font-label-lg text-label-lg text-white">Dairy &amp; Eggs</span>
+</div>
+</div>
+<div class="relative overflow-hidden rounded-2xl h-32 group cursor-pointer active:scale-[0.98] transition-transform">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A vibrant and energetic collection of seasonal fruits like sliced dragon fruit, deep blue berries, and bright oranges arranged artistically. The lighting is sunny and optimistic, fitting a premium, fast-delivery brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcKvFroT78ai8NxlJQFxZ1fOV-Tszjs4K4i0SPziamO-yFkgnyS75HteTuUElTqqKJZ1m0IRTG9UQI2NkFE6rMGc29quu0L4T8K2RRECXlZN5gOHlX9Je0LSDzlKiaT_HhVU5wASqgk4_7-oHyK5__5ZmJLszqqxBhbCKcw7wUFVui0is1Umj1eq0gKKYep0w7SoRyujNvrbHk-Yei4lzPBwGSzBxZqPm776ZbeGN0jH_pt1vqfGXA9Q"/>
+<div class="absolute bottom-3 left-4 z-20">
+<span class="font-label-lg text-label-lg text-white">Fruits</span>
+</div>
+</div>
+<div class="relative overflow-hidden rounded-2xl h-32 group cursor-pointer active:scale-[0.98] transition-transform">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Minimalist top-down view of premium snack packages like organic nut mixes and dark chocolate bars on a clean gray surface. The composition is structured and mathematically balanced, reflecting professional corporate design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuApL117LcmI2zcnSRFaWawfl3sxu_NsokthDRGgP8xxDh6J3JrTeCs9aPAFJqoP0HvubMYLGQ_42cEEDKQojkRPZeEM4Eq1GG6WKK5bMcK6o45kFSoGxOdfGKrMfb5U5ghudPYiUymMago7Lt-DcCi_4yS9kek0aQlCptHpQkugrh5LUwHe-g5Z_dfjRBo-hpq6EtWBJzp0MutNk7LnLiKXQLki-7EXIismM1wdncVepsswe5kc4sSFew"/>
+<div class="absolute bottom-3 left-4 z-20">
+<span class="font-label-lg text-label-lg text-white">Snacks</span>
+</div>
+</div>
+<div class="relative overflow-hidden rounded-2xl h-32 group cursor-pointer active:scale-[0.98] transition-transform">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A refreshing display of premium beverages, including sparkling water in elegant glass bottles and colorful fresh juices. Soft ambient light creates a sense of depth and luxury against a soft-focus background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXx2GtsJPv9UQbWobsJmKHdvy1ZDpsXXUyf9G_ECVJrkFbWE-pLHR1oC2jZQctgIGGGNfQYCmVedcJTOWynFs3b4SDWSkxYYLON7VkXt7DZGsmZm6yPRUB3-WaeIwBtiL3H6l1VAuTnS4timRmqAlrEs7CN7b6TZFcOrDPtBbuUT77mvrKPrn0TxbYzoK2SjJbil9sIYtLTaTkEK5-8DE_ZHCamAvQfFihrfYHPNezrrn_lkccl5Ao6w"/>
+<div class="absolute bottom-3 left-4 z-20">
+<span class="font-label-lg text-label-lg text-white">Drinks</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Suggested for You Product Grid -->
+<section class="mb-12">
+<div class="flex items-center justify-between mb-6">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-text-primary">Suggested for You</h2>
+<p class="font-body-md text-body-md text-text-secondary">Based on your recent purchases</p>
+</div>
+<button class="bg-secondary text-white px-6 py-2 rounded-xl font-label-lg text-label-lg active:scale-95 transition-transform">View All</button>
+</div>
+<div class="bento-grid">
+<!-- Product Card 1 -->
+<div class="bg-surface-container-lowest border border-surface-variant rounded-2xl p-3 shadow-sm hover:shadow-md transition-all group relative">
+<div class="relative w-full aspect-square rounded-xl overflow-hidden mb-3 bg-surface-gray">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A single, perfectly ripe avocado cut in half, revealing the smooth green flesh and pit, shot on a clean white studio background. The lighting is high-key and professional, highlighting the fresh texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo883zHc8bpQAHxk6323LKo5Hcu3xDyI2Rdg4o_yOjVGmxfY3NwYosuwnhFSRFG_T1WaRHwJynER5rWuE7KiqpF63jiM7ceJSgtKZQ4DlIHuVTuSVo3N2kWxeRRdFpCyaXUN93aFy8Khx-RqfdEF5LxQhfUBviELyC1tJQhsunaxCor44Z1yHixliayXSbkhVPvSDQHeY_Q1zBDOljT9odEnV5lvvmhlWx3w3JlUhuH1lavN7gIIDQvA"/>
+<div class="absolute top-2 left-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg">
+<span class="font-label-sm text-label-sm text-delivery-green font-bold">8-10 MINS</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-lg text-label-lg text-text-primary truncate">Organic Hass Avocado</span>
+<span class="font-body-md text-body-md text-text-secondary">1 unit</span>
+<div class="flex items-center justify-between mt-2">
+<div class="flex flex-col">
+<span class="font-title-lg text-title-lg text-text-primary">$1.99</span>
+<span class="font-label-sm text-label-sm text-error-red line-through">$2.49</span>
+</div>
+<button class="bg-primary-container text-on-primary-container p-2 rounded-xl shadow-sm active:scale-90 transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-surface-container-lowest border border-surface-variant rounded-2xl p-3 shadow-sm hover:shadow-md transition-all group relative">
+<div class="relative w-full aspect-square rounded-xl overflow-hidden mb-3 bg-surface-gray">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A glass bottle of premium whole milk with condensation on the outside, set against a soft, bright kitchen morning light. The aesthetic is clean, minimalist, and focuses on purity and freshness." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBs3pGDu097sSldoWTcwz6l14ifLatLAiAIpX2C18R7gSVnsd3kJfMOphOrY_HiIXajIr24J4f_a7nmWHEnurUHa5Y3W1SPjm8XLfkgUuwBUvaH9zXnb5mnLA9am86sv7KqnQgrhF_bM8y4Vgj7aeHjc8pHDlZGlAavojUrxzaphc02rkEIPNsWM1vHn0W9x3CumW-zsumqv56CxZZExfN1fFGyTzhjYLxGbLCPU96BvcsPfpkVHvWKYQ"/>
+<div class="absolute top-2 left-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg">
+<span class="font-label-sm text-label-sm text-delivery-green font-bold">12 MINS</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-lg text-label-lg text-text-primary truncate">Fresh Whole Milk</span>
+<span class="font-body-md text-body-md text-text-secondary">1 Liter</span>
+<div class="flex items-center justify-between mt-2">
+<div class="flex flex-col">
+<span class="font-title-lg text-title-lg text-text-primary">$3.50</span>
+</div>
+<button class="bg-primary-container text-on-primary-container p-2 rounded-xl shadow-sm active:scale-90 transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-surface-container-lowest border border-surface-variant rounded-2xl p-3 shadow-sm hover:shadow-md transition-all group relative">
+<div class="relative w-full aspect-square rounded-xl overflow-hidden mb-3 bg-surface-gray">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A punnet of bright red, juicy organic strawberries with small green leaves, arranged neatly. The lighting is vibrant and high-contrast, making the red color pop against the neutral background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJQ6B-RtLRv4x3_iTgq2DQ0CZNVwg0pP_BDzPSO-rm9ln3bAkh5khv3HpjVh97BNv0C_E-xi_2wKlSJwvca1VJjAgXQ7Wn68T9s3ny75qz1XdONGtB3UTP4_Z4-L-bzfWK7nqyswnbHZy-fIZVG5xjxQA_lqK27xldw9tDSXZRTVP2Vhij02DrO6IBPygwVqsJRC8ygb_4AsHDhAByuBZWDpkuuw_8t8VtVBEvxO3TFrxvMIqaYhsCjQ"/>
+<div class="absolute top-2 left-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg">
+<span class="font-label-sm text-label-sm text-delivery-green font-bold">10 MINS</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-lg text-label-lg text-text-primary truncate">Organic Strawberries</span>
+<span class="font-body-md text-body-md text-text-secondary">250g</span>
+<div class="flex items-center justify-between mt-2">
+<div class="flex flex-col">
+<span class="font-title-lg text-title-lg text-text-primary">$4.20</span>
+</div>
+<button class="bg-primary-container text-on-primary-container p-2 rounded-xl shadow-sm active:scale-90 transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="bg-surface-container-lowest border border-surface-variant rounded-2xl p-3 shadow-sm hover:shadow-md transition-all group relative">
+<div class="relative w-full aspect-square rounded-xl overflow-hidden mb-3 bg-surface-gray">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A rustic sourdough bread loaf with a crispy golden crust, dusted with flour, placed on a dark wooden cutting board. The lighting is warm and moody, emphasizing the artisanal, hand-crafted quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzO9Z80oAaHd8jAfTb9eaI_Zigt7AyhRInRqK865PSwTQi_3UIF0742QSiYD6EfZT7ZLEsqDvplI26xa6JcXDyONS2Boutya5gF_XD1qQ6Gqcg-LkPyJfl-tnhAZC4QkBckEFaf4kv3Ch4vuXh3PBc8h0VcwOR5rVqhLaw0rhwMGe1SMgijCetxgVLWJyAMQ_nnhiC0EZv2-mpx5cm2Zqf6Nwe2euNOvmj0Z8K37uILqwz2csv37D2ag"/>
+<div class="absolute top-2 left-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-lg">
+<span class="font-label-sm text-label-sm text-delivery-green font-bold">15 MINS</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-lg text-label-lg text-text-primary truncate">Artisan Sourdough</span>
+<span class="font-body-md text-body-md text-text-secondary">500g</span>
+<div class="flex items-center justify-between mt-2">
+<div class="flex flex-col">
+<span class="font-title-lg text-title-lg text-text-primary">$5.99</span>
+</div>
+<button class="bg-primary-container text-on-primary-container p-2 rounded-xl shadow-sm active:scale-90 transition-all">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center bg-surface-container-lowest dark:bg-inverse-surface py-2 pb-safe px-4 border-t border-outline-variant shadow-lg z-50">
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 active:scale-90 transition-all duration-200">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1 active:scale-90 transition-all duration-200">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-sm text-label-sm">Categories</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 active:scale-90 transition-all duration-200">
+<div class="relative">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="absolute -top-1 -right-2 bg-primary text-on-primary text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">3</span>
+</div>
+<span class="font-label-sm text-label-sm">Cart</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 active:scale-90 transition-all duration-200">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-sm text-label-sm">Orders</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 active:scale-90 transition-all duration-200">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Account</span>
+</button>
+</nav>
+<script>
+        // Micro-interactions for search focus
+        const searchInput = document.querySelector('input[type="text"]');
+        const searchContainer = searchInput.parentElement;
+
+        searchInput.addEventListener('focus', () => {
+            searchContainer.classList.add('bg-white', 'shadow-md');
+            searchContainer.classList.remove('bg-surface-gray');
+        });
+
+        searchInput.addEventListener('blur', () => {
+            searchContainer.classList.remove('bg-white', 'shadow-md');
+            searchContainer.classList.add('bg-surface-gray');
+        });
+
+        // Add subtle animation for product buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('touchstart', () => {
+                btn.style.transform = 'scale(0.95)';
+            });
+            btn.addEventListener('touchend', () => {
+                btn.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

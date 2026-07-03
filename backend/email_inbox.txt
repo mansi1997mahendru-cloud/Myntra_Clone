@@ -1,0 +1,106 @@
+
+Timestamp: 2026-07-03T10:29:55.608333
+To: mansi.mahendru@abes.ac.in
+Subject: Verify Your Blinkit Account
+Text Content:
+Hi mansi mahendru,
+
+Thank you for registering at Blinkit Clone! Please verify your email using either option below:
+
+Option 1: Enter this 6-digit OTP code on the verification screen:
+👉  271375  👈
+
+Option 2: Click this link to activate your account directly:
+🔗  http://localhost:8000/api/auth/verify-link?token=4715764e-31e5-40d0-9abf-520be6b50a79
+
+Regards,
+Blinkit Security Team
+------------------------------------------------------------------------
+
+Timestamp: 2026-07-03T10:30:34.463052
+To: mansi.mahendru@abes.ac.in
+Subject: Your New Blinkit Verification Code
+Text Content:
+Hi mansi mahendru,
+
+Here is your new 6-digit verification OTP code:
+👉  453638  👈
+
+Regards,
+Blinkit Security Team
+------------------------------------------------------------------------
+
+Timestamp: 2026-07-03T10:41:27.470507
+To: mansi.mahendru@abes.ac.in
+Subject: Verify Your Blinkit Account
+Text Content:
+Hi mansi mahendru,
+
+Thank you for registering at Blinkit Clone! Please verify your email using either option below:
+
+Option 1: Enter this 6-digit OTP code on the verification screen:
+👉  487306  👈
+
+Option 2: Click this link to activate your account directly:
+🔗  http://localhost:8000/api/auth/verify-link?token=5703e3e9-9d1f-4fa7-b5d4-bb6fdad24f1f
+
+Regards,
+Blinkit Security Team
+------------------------------------------------------------------------
+
+Timestamp: 2026-07-03T10:48:46.576438
+To: mansi.mahendru@abes.ac.in
+Subject: Verify Your Blinkit Account
+Text Content:
+Hi mansi mahendru,
+
+Thank you for registering at Blinkit Clone! Please verify your email using either option below:
+
+Option 1: Enter this 6-digit OTP code on the verification screen:
+👉  233820  👈
+
+Option 2: Click this link to activate your account directly:
+🔗  http://localhost:8000/api/auth/verify-link?token=038f8ef7-bade-4054-8621-b3fe01e142d2
+
+Regards,
+Blinkit Security Team
+------------------------------------------------------------------------
+
+Timestamp: 2026-07-03T10:51:13.403369
+To: mansi.mahendru@abes.ac.in
+Subject: Your New Blinkit Verification Code
+Text Content:
+Hi mansi mahendru,
+
+Here is your new 6-digit verification OTP code:
+👉  518893  👈
+
+Regards,
+Blinkit Security Team
+------------------------------------------------------------------------
+
+Timestamp: 2026-07-03T10:51:14.384235
+To: mansi.mahendru@abes.ac.in
+Subject: Your New Blinkit Verification Code
+Text Content:
+Hi mansi mahendru,
+
+Here is your new 6-digit verification OTP code:
+👉  018365  👈
+
+Regards,
+Blinkit Security Team
+------------------------------------------------------------------------
+
+Timestamp: 2026-07-03T10:51:15.577504
+To: mansi.mahendru@abes.ac.in
+Subject: Your New Blinkit Verification Code
+Text Content:
+Hi mansi mahendru,
+
+Here is your new 6-digit verification OTP code:
+👉  049123  👈
+
+Regards,
+Blinkit Security Team
+------------------------------------------------------------------------

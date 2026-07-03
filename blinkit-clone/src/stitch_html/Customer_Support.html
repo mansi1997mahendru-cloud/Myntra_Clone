@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customer Support Hub | Premium Grocery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface-variant": "#4c4732",
+                      "on-primary-container": "#6c5d00",
+                      "error-container": "#ffdad6",
+                      "surface-variant": "#e1e3e4",
+                      "error": "#ba1a1a",
+                      "inverse-primary": "#e3c600",
+                      "surface-container-highest": "#e1e3e4",
+                      "tertiary-container": "#63f0b3",
+                      "outline-variant": "#cfc6ab",
+                      "text-primary": "#111827",
+                      "primary": "#6d5e00",
+                      "background": "#f8f9fa",
+                      "on-surface": "#191c1d",
+                      "on-error-container": "#93000a",
+                      "text-secondary": "#6B7280",
+                      "primary-container": "#f7d700",
+                      "surface-gray": "#F3F4F6",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "success-green": "#10B981",
+                      "secondary-container": "#e2e2e2",
+                      "secondary": "#5e5e5e",
+                      "primary-fixed": "#ffe24a",
+                      "on-error": "#ffffff",
+                      "surface-container-high": "#e7e8e9",
+                      "inverse-surface": "#2e3132",
+                      "on-primary": "#ffffff",
+                      "on-secondary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "error-red": "#EF4444",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "secondary-fixed": "#e2e2e2",
+                      "on-primary-fixed": "#211b00",
+                      "secondary-fixed-dim": "#c6c6c6",
+                      "on-secondary-container": "#646464",
+                      "surface-container-low": "#f3f4f5",
+                      "surface-container": "#edeeef",
+                      "on-tertiary-fixed": "#002113",
+                      "outline": "#7d775f",
+                      "on-tertiary": "#ffffff",
+                      "surface": "#f8f9fa",
+                      "primary-fixed-dim": "#e3c600",
+                      "on-secondary-fixed": "#1b1b1b",
+                      "delivery-green": "#0C831F",
+                      "surface-bright": "#f8f9fa",
+                      "tertiary-fixed": "#6ffbbe",
+                      "surface-tint": "#6d5e00",
+                      "surface-dim": "#d9dadb",
+                      "on-tertiary-container": "#006b49",
+                      "on-secondary-fixed-variant": "#474747",
+                      "on-primary-fixed-variant": "#524600",
+                      "inverse-on-surface": "#f0f1f2",
+                      "on-background": "#191c1d",
+                      "tertiary": "#006c49"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit-6": "48px",
+                      "margin-desktop": "64px",
+                      "unit-2": "16px",
+                      "unit-4": "32px",
+                      "margin-mobile": "16px",
+                      "unit-3": "24px",
+                      "base": "8px",
+                      "unit-1": "8px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "body-md": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "label-lg": ["Inter"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "title-lg": ["Plus Jakarta Sans"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body { background-color: #f8f9fa; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .accordion-active .accordion-content { max-height: 500px; }
+        .accordion-active .chevron-icon { transform: rotate(180deg); }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(0, 0, 0, 0.05); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface">
+<!-- TopAppBar Shell -->
+<header class="sticky top-0 w-full z-50 flex flex-col px-margin-mobile md:px-margin-desktop py-unit-1 bg-surface-container-lowest dark:bg-inverse-surface shadow-sm">
+<div class="flex items-center justify-between w-full h-16">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined p-2 hover:bg-surface-container-low transition-colors rounded-full text-on-surface">arrow_back</button>
+<h1 class="font-display-lg text-display-lg font-black text-primary dark:text-primary-fixed">Premium Grocery</h1>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary p-2">location_on</span>
+<span class="hidden md:block font-label-lg text-label-lg text-on-surface-variant">Central Park, NY</span>
+<button class="material-symbols-outlined p-2 text-on-surface-variant">mic</button>
+</div>
+</div>
+</header>
+<main class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-unit-4 mb-24">
+<!-- Welcome Hero -->
+<section class="mb-unit-6">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-text-primary mb-2">How can we help you today?</h2>
+<p class="font-body-lg text-body-lg text-text-secondary max-w-xl">Our team is ready to assist you 24/7. Whether it's a question about your order or feedback, we're here to make things right.</p>
+</div>
+<div class="flex gap-3">
+<span class="flex items-center gap-2 bg-success-green/10 text-delivery-green px-3 py-1.5 rounded-full font-label-lg text-label-lg">
+<span class="w-2 h-2 rounded-full bg-delivery-green animate-pulse"></span>
+                        Support Online
+                    </span>
+</div>
+</div>
+</section>
+<!-- Quick Actions Bento Grid -->
+<section class="bento-grid mb-unit-6">
+<!-- Live Chat -->
+<div class="col-span-12 md:col-span-4 glass-card p-unit-3 rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer group active:scale-95 transition-transform duration-150">
+<div class="w-12 h-12 bg-primary-container rounded-xl flex items-center justify-center mb-4 text-on-primary-container">
+<span class="material-symbols-outlined text-[28px]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+</div>
+<h3 class="font-title-lg text-title-lg mb-2">Live Chat</h3>
+<p class="font-body-md text-body-md text-text-secondary mb-4">Instant support for ongoing orders and quick queries.</p>
+<div class="flex items-center gap-2 text-primary font-label-lg text-label-lg">
+<span>Start Chat</span>
+<span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+<!-- Call Us -->
+<div class="col-span-12 md:col-span-4 glass-card p-unit-3 rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer group active:scale-95 transition-transform duration-150">
+<div class="w-12 h-12 bg-secondary-container rounded-xl flex items-center justify-center mb-4 text-on-secondary-container">
+<span class="material-symbols-outlined text-[28px]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">call</span>
+</div>
+<h3 class="font-title-lg text-title-lg mb-2">Call Us</h3>
+<p class="font-body-md text-body-md text-text-secondary mb-4">Talk to a support representative for complex issues.</p>
+<div class="flex items-center gap-2 text-text-primary font-label-lg text-label-lg">
+<span>1-800-GROCERY</span>
+<span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+<!-- Raise a Complaint -->
+<div class="col-span-12 md:col-span-4 glass-card p-unit-3 rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer group active:scale-95 transition-transform duration-150 border-error/10">
+<div class="w-12 h-12 bg-error-container rounded-xl flex items-center justify-center mb-4 text-on-error-container">
+<span class="material-symbols-outlined text-[28px]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">report_problem</span>
+</div>
+<h3 class="font-title-lg text-title-lg mb-2">Raise a Complaint</h3>
+<p class="font-body-md text-body-md text-text-secondary mb-4">Facing issues with quality or service? Let us investigate.</p>
+<div class="flex items-center gap-2 text-error font-label-lg text-label-lg">
+<span>New Ticket</span>
+<span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+</section>
+<!-- FAQ Categories -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Sidebar Navigation -->
+<aside class="md:col-span-3">
+<div class="sticky top-24 space-y-2">
+<h4 class="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-wider mb-4 px-2">Knowledge Base</h4>
+<button class="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-primary-container text-on-primary-container font-bold transition-colors">
+<span class="material-symbols-outlined">local_shipping</span>
+                        Delivery
+                    </button>
+<button class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">payments</span>
+                        Payments
+                    </button>
+<button class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">verified</span>
+                        Quality
+                    </button>
+<button class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+                        Account
+                    </button>
+</div>
+</aside>
+<!-- Accordion Content -->
+<div class="md:col-span-9 space-y-12">
+<!-- Category: Delivery -->
+<div>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile mb-6 flex items-center gap-3">
+<span class="w-1.5 h-8 bg-primary rounded-full"></span>
+                        Delivery FAQs
+                    </h3>
+<div class="space-y-4">
+<!-- Q1 -->
+<div class="accordion-item bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden">
+<button class="w-full flex items-center justify-between p-unit-3 text-left hover:bg-surface-container-low transition-colors" onclick="toggleAccordion(this)">
+<span class="font-label-lg text-label-lg">What is the estimated delivery time for my location?</span>
+<span class="material-symbols-outlined chevron-icon transition-transform">expand_more</span>
+</button>
+<div class="accordion-content">
+<div class="px-unit-3 pb-unit-3 font-body-md text-text-secondary">
+                                    Our average delivery time is between 8-15 minutes depending on your distance from our nearest dark store. You can track the real-time location of your delivery partner via the 'Track Order' section in the app.
+                                </div>
+</div>
+</div>
+<!-- Q2 -->
+<div class="accordion-item bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden">
+<button class="w-full flex items-center justify-between p-unit-3 text-left hover:bg-surface-container-low transition-colors" onclick="toggleAccordion(this)">
+<span class="font-label-lg text-label-lg">How can I change my delivery address after placing an order?</span>
+<span class="material-symbols-outlined chevron-icon transition-transform">expand_more</span>
+</button>
+<div class="accordion-content">
+<div class="px-unit-3 pb-unit-3 font-body-md text-text-secondary">
+                                    Once an order is packed (usually within 2 minutes), addresses cannot be changed to ensure fast delivery. If the rider hasn't left yet, you can contact Support via Live Chat to check for feasibility.
+                                </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Category: Payments -->
+<div>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile mb-6 flex items-center gap-3">
+<span class="w-1.5 h-8 bg-primary rounded-full"></span>
+                        Payments &amp; Refunds
+                    </h3>
+<div class="space-y-4">
+<div class="accordion-item bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden">
+<button class="w-full flex items-center justify-between p-unit-3 text-left hover:bg-surface-container-low transition-colors" onclick="toggleAccordion(this)">
+<span class="font-label-lg text-label-lg">My payment was deducted but the order failed. What should I do?</span>
+<span class="material-symbols-outlined chevron-icon transition-transform">expand_more</span>
+</button>
+<div class="accordion-content">
+<div class="px-unit-3 pb-unit-3 font-body-md text-text-secondary">
+                                    Don't worry! If an order fails after deduction, the amount is automatically reversed by our bank within 2-4 hours. If it doesn't show up in 24 hours, please share the transaction ID via 'Raise a Complaint'.
+                                </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Featured Image Banner -->
+<div class="relative w-full h-64 rounded-3xl overflow-hidden shadow-xl">
+<div class="w-full h-full bg-cover bg-center" data-alt="A professional, brightly lit modern customer service center with ergonomic furniture and greenery. Diverse support staff are focused on high-tech screens showing logistics maps. The atmosphere is calm, organized, and technologically advanced, reflecting the premium grocery brand's commitment to quality service. Soft natural light illuminates the clean, white interior with subtle yellow accents." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB_sqP2DiOvRtXT9oZVHpdp_Fkzub2mrHXJ3RE_llwlm6Vr1CXLdw8Tac_auA41LTZ8iXC-CCQEW6Y4Vc5oqD9mXwBp0Dtnw7AAE-4vzyIUK2llU1WC0EG0eVgQqIQzgggjp4ODD-qlVoGQhQcQ-AWsuK7kfGY3t4WLNJgFrDhERXIw8bXyxchk2d3VpDwuuSEaFjzuQGk5H8idPqh6OmJVW3N439ZTDcb9Jx0hFZevznmUNczvbTgy3A')"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent flex items-center px-unit-6">
+<div class="max-w-md">
+<h4 class="text-white font-headline-lg text-headline-lg mb-2">Still need help?</h4>
+<p class="text-white/80 font-body-md text-body-md mb-6">Our dedicated support managers are just a click away to ensure your satisfaction.</p>
+<button class="bg-primary-container text-on-primary-container px-6 py-3 rounded-xl font-label-lg text-label-lg active:scale-95 transition-transform">Contact Manager</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar Shell -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center bg-surface-container-lowest dark:bg-inverse-surface py-2 pb-safe px-4 border-t border-outline-variant dark:border-none shadow-lg z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-sm text-label-sm">Categories</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-sm text-label-sm">Cart</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-sm text-label-sm">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-fixed text-on-primary-container dark:text-on-primary-fixed rounded-xl px-3 py-1 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-sm text-label-sm">Account</span>
+</a>
+</nav>
+<script>
+        function toggleAccordion(button) {
+            const item = button.closest('.accordion-item');
+            const isActive = item.classList.contains('accordion-active');
+            
+            // Close all items
+            document.querySelectorAll('.accordion-item').forEach(el => {
+                el.classList.remove('accordion-active');
+            });
+            
+            // Toggle clicked item
+            if (!isActive) {
+                item.classList.add('accordion-active');
+            }
+        }
+
+        // Smooth interaction for quick action cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousedown', () => card.classList.add('scale-[0.98]'));
+            card.addEventListener('mouseup', () => card.classList.remove('scale-[0.98]'));
+            card.addEventListener('mouseleave', () => card.classList.remove('scale-[0.98]'));
+        });
+    </script>
+</body></html>

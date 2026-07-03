@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Resume Builder</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- html2pdf.js for client-side PDF downloads -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- App Container -->
+    <div class="app-container">
+        <!-- Top Navigation Bar -->
+        <header class="app-header">
+            <div class="header-logo">
+                <div class="logo-icon"><i data-lucide="file-badge"></i></div>
+                <div class="logo-text">
+                    <h1>Antigravity CV</h1>
+                    <span>Resume Builder</span>
+                </div>
+            </div>
+            
+            <!-- Controls: Template Selector & Actions -->
+            <div class="header-controls">
+                <div class="template-selector-group">
+                    <span class="control-label">Template:</span>
+                    <div class="template-tabs">
+                        <button class="template-tab active" id="btn-template-modern" onclick="selectTemplate('modern')">
+                            <i data-lucide="palette"></i> Modern Accent
+                        </button>
+                        <button class="template-tab" id="btn-template-minimal" onclick="selectTemplate('minimal')">
+                            <i data-lucide="align-left"></i> Minimal B&W
+                        </button>
+                    </div>
+                </div>
+
+                <div class="divider-v"></div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="triggerJsonImport()" title="Import Resume Data (JSON)">
+                        <i data-lucide="upload"></i> <span>Import</span>
+                    </button>
+                    <input type="file" id="json-file-input" style="display: none;" accept=".json" onchange="importJsonData(event)">
+                    <button class="btn btn-secondary" onclick="exportJsonData()" title="Export Resume Data (JSON)">
+                        <i data-lucide="download"></i> <span>Export</span>
+                    </button>
+                    <button class="btn btn-danger-outline" onclick="resetResumeData()" title="Clear Form">
+                        <i data-lucide="trash-2"></i> <span>Clear</span>
+                    </button>
+                    
+                    <div class="divider-v"></div>
+                    
+                    <button class="btn btn-primary" onclick="generatePDF()" title="Download PDF directly">
+                        <i data-lucide="file-text"></i> <span>Download PDF</span>
+                    </button>
+                    <button class="btn btn-accent" onclick="triggerPrint()" title="Best print-to-PDF quality">
+                        <i data-lucide="printer"></i> <span>Print / Save PDF</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Workspace -->
+        <main class="app-workspace">
+            <!-- Left Side: Form Editor Panel -->
+            <section class="editor-panel">
+                <!-- Editor Sidebar Tabs Navigation -->
+                <div class="editor-tabs">
+                    <button class="editor-tab active" onclick="switchEditorTab('personal')">
+                        <i data-lucide="user"></i>
+                        <span>Personal</span>
+                    </button>
+                    <button class="editor-tab" onclick="switchEditorTab('experience')">
+                        <i data-lucide="briefcase"></i>
+                        <span>Experience</span>
+                    </button>
+                    <button class="editor-tab" onclick="switchEditorTab('education')">
+                        <i data-lucide="graduation-cap"></i>
+                        <span>Education</span>
+                    </button>
+                    <button class="editor-tab" onclick="switchEditorTab('projects')">
+                        <i data-lucide="folder-git-2"></i>
+                        <span>Projects</span>
+                    </button>
+                    <button class="editor-tab" onclick="switchEditorTab('skills')">
+                        <i data-lucide="terminal"></i>
+                        <span>Skills & Misc</span>
+                    </button>
+                </div>
+
+                <!-- Editor Scrollable Panel Content -->
+                <div class="editor-content-container">
+                    <!-- Personal Info Tab -->
+                    <div class="tab-content active" id="tab-personal">
+                        <h2 class="section-title">Personal Details</h2>
+                        <p class="section-subtitle">Introduce yourself to employers and highlight your contact details.</p>
+                        
+                        <div class="form-grid">
+                            <div class="form-group col-span-2">
+                                <label for="input-fullName">Full Name</label>
+                                <input type="text" id="input-fullName" placeholder="e.g., John Doe" oninput="updateField('personal', 'fullName', this.value)">
+                            </div>
+                            <div class="form-group col-span-2">
+                                <label for="input-jobTitle">Professional Title</label>
+                                <input type="text" id="input-jobTitle" placeholder="e.g., Senior Full-Stack Engineer" oninput="updateField('personal', 'jobTitle', this.value)">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-email">Email Address</label>
+                                <input type="email" id="input-email" placeholder="e.g., john.doe@email.com" oninput="updateField('personal', 'email', this.value)">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-phone">Phone Number</label>
+                                <input type="tel" id="input-phone" placeholder="e.g., +1 (555) 000-0000" oninput="updateField('personal', 'phone', this.value)">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-location">Location</label>
+                                <input type="text" id="input-location" placeholder="e.g., New York, NY" oninput="updateField('personal', 'location', this.value)">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-website">Website / Portfolio</label>
+                                <input type="url" id="input-website" placeholder="e.g., johndoe.dev" oninput="updateField('personal', 'website', this.value)">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-linkedin">LinkedIn Profile URL</label>
+                                <input type="url" id="input-linkedin" placeholder="e.g., linkedin.com/in/johndoe" oninput="updateField('personal', 'linkedin', this.value)">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-github">GitHub Profile URL</label>
+                                <input type="url" id="input-github" placeholder="e.g., github.com/johndoe" oninput="updateField('personal', 'github', this.value)">
+                            </div>
+                            <div class="form-group col-span-2">
+                                <label for="input-summary">Professional Summary</label>
+                                <textarea id="input-summary" rows="5" placeholder="Write a short summary of your background, key strengths, and career objectives..." oninput="updateField('personal', 'summary', this.value)"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Work Experience Tab -->
+                    <div class="tab-content" id="tab-experience">
+                        <div class="tab-header-flex">
+                            <div>
+                                <h2 class="section-title">Work Experience</h2>
+                                <p class="section-subtitle">List your relevant employment history starting with your most recent job.</p>
+                            </div>
+                            <button class="btn btn-outline btn-sm" onclick="addListEntry('experience')">
+                                <i data-lucide="plus"></i> Add Job
+                            </button>
+                        </div>
+
+                        <div id="experience-list-container" class="dynamic-entries-list">
+                            <!-- Dynamic experience entries populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Education Tab -->
+                    <div class="tab-content" id="tab-education">
+                        <div class="tab-header-flex">
+                            <div>
+                                <h2 class="section-title">Education</h2>
+                                <p class="section-subtitle">Detail your academic background and certifications.</p>
+                            </div>
+                            <button class="btn btn-outline btn-sm" onclick="addListEntry('education')">
+                                <i data-lucide="plus"></i> Add Education
+                            </button>
+                        </div>
+
+                        <div id="education-list-container" class="dynamic-entries-list">
+                            <!-- Dynamic education entries populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Projects Tab -->
+                    <div class="tab-content" id="tab-projects">
+                        <div class="tab-header-flex">
+                            <div>
+                                <h2 class="section-title">Key Projects</h2>
+                                <p class="section-subtitle">Showcase your side projects, open-source work, or highlights of your career.</p>
+                            </div>
+                            <button class="btn btn-outline btn-sm" onclick="addListEntry('projects')">
+                                <i data-lucide="plus"></i> Add Project
+                            </button>
+                        </div>
+
+                        <div id="projects-list-container" class="dynamic-entries-list">
+                            <!-- Dynamic projects entries populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Skills & Misc Tab -->
+                    <div class="tab-content" id="tab-skills">
+                        <h2 class="section-title">Skills & Languages</h2>
+                        <p class="section-subtitle">List your core competency groups and language proficiencies.</p>
+
+                        <div class="form-card">
+                            <div class="form-card-header">
+                                <h3>Technical & Soft Skills</h3>
+                                <button class="btn btn-outline btn-xs" onclick="addSkillCategory()">
+                                    <i data-lucide="plus"></i> Add Skill Category
+                                </button>
+                            </div>
+                            <div id="skills-categories-container" class="skills-categories-list">
+                                <!-- Dynamic skills categorized listed via JS -->
+                            </div>
+                        </div>
+
+                        <div class="form-card mt-6">
+                            <div class="form-card-header">
+                                <h3>Languages</h3>
+                                <button class="btn btn-outline btn-xs" onclick="addLanguageEntry()">
+                                    <i data-lucide="plus"></i> Add Language
+                                </button>
+                            </div>
+                            <div id="languages-container" class="languages-list">
+                                <!-- Dynamic languages list via JS -->
+                            </div>
+                        </div>
+
+                        <div class="form-card mt-6">
+                            <div class="form-card-header">
+                                <h3>Certifications & Achievements</h3>
+                                <button class="btn btn-outline btn-xs" onclick="addCertificationEntry()">
+                                    <i data-lucide="plus"></i> Add Certification
+                                </button>
+                            </div>
+                            <div id="certifications-container" class="certifications-list">
+                                <!-- Dynamic certifications list via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Side: Live A4 Preview Panel -->
+            <section class="preview-panel">
+                <div class="preview-toolbar">
+                    <div class="preview-status">
+                        <span class="pulse-indicator"></span> Live Preview (A4 Page Size)
+                    </div>
+                    <div class="zoom-controls">
+                        <button class="zoom-btn" onclick="adjustZoom(-10)" title="Zoom Out">
+                            <i data-lucide="zoom-out"></i>
+                        </button>
+                        <span id="zoom-value" class="zoom-value">100%</span>
+                        <button class="zoom-btn" onclick="adjustZoom(10)" title="Zoom In">
+                            <i data-lucide="zoom-in"></i>
+                        </button>
+                        <button class="zoom-btn btn-sm-square" onclick="resetZoom()" title="Reset Zoom">
+                            <i data-lucide="maximize-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Interactive Preview Viewport -->
+                <div class="preview-viewport" id="preview-viewport">
+                    <!-- The actual A4 scale container -->
+                    <div class="a4-page-wrapper" id="a4-page-wrapper">
+                        <div class="a4-page template-modern" id="resume-preview-page">
+                            <!-- Templates get loaded here dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Script Entrypoint -->
+    <script src="app.js"></script>
+    <script>
+        // Init Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>

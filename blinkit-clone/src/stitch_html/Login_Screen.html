@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login - Premium Grocery</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-surface": "#2e3132",
+                      "on-secondary-fixed": "#1b1b1b",
+                      "secondary-fixed": "#e2e2e2",
+                      "on-tertiary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "on-tertiary-fixed": "#002113",
+                      "tertiary-container": "#63f0b3",
+                      "text-secondary": "#6B7280",
+                      "on-tertiary-container": "#006b49",
+                      "surface-tint": "#6d5e00",
+                      "on-error": "#ffffff",
+                      "background": "#f8f9fa",
+                      "surface-container-highest": "#e1e3e4",
+                      "inverse-primary": "#e3c600",
+                      "secondary-container": "#e2e2e2",
+                      "error-red": "#EF4444",
+                      "surface-variant": "#e1e3e4",
+                      "on-primary-fixed-variant": "#524600",
+                      "surface": "#f8f9fa",
+                      "surface-container-low": "#f3f4f5",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "text-primary": "#111827",
+                      "inverse-on-surface": "#f0f1f2",
+                      "on-error-container": "#93000a",
+                      "on-surface-variant": "#4c4732",
+                      "on-secondary": "#ffffff",
+                      "on-primary-container": "#6c5d00",
+                      "on-surface": "#191c1d",
+                      "delivery-green": "#0C831F",
+                      "primary-fixed-dim": "#e3c600",
+                      "on-secondary-fixed-variant": "#474747",
+                      "outline-variant": "#cfc6ab",
+                      "surface-container-lowest": "#ffffff",
+                      "primary": "#6d5e00",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "surface-gray": "#F3F4F6",
+                      "on-background": "#191c1d",
+                      "primary-container": "#f7d700",
+                      "secondary": "#5e5e5e",
+                      "on-primary-fixed": "#211b00",
+                      "tertiary-fixed": "#6ffbbe",
+                      "surface-bright": "#f8f9fa",
+                      "surface-container": "#edeeef",
+                      "outline": "#7d775f",
+                      "tertiary": "#006c49",
+                      "on-primary": "#ffffff",
+                      "surface-container-high": "#e7e8e9",
+                      "primary-fixed": "#ffe24a",
+                      "error": "#ba1a1a",
+                      "on-secondary-container": "#646464",
+                      "surface-dim": "#d9dadb",
+                      "success-green": "#10B981",
+                      "secondary-fixed-dim": "#c6c6c6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "unit-3": "24px",
+                      "margin-desktop": "64px",
+                      "unit-4": "32px",
+                      "unit-1": "8px",
+                      "gutter": "16px",
+                      "unit-2": "16px",
+                      "unit-6": "48px",
+                      "base": "8px"
+              },
+              "fontFamily": {
+                      "title-lg": ["Plus Jakarta Sans"],
+                      "body-md": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "label-lg": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-lg": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .focused-shadow {
+            box-shadow: 0 0 0 2px #F7D700;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-container-lowest font-body-md text-on-surface antialiased overflow-x-hidden">
+<!-- Auth Shell Suppression Logic applied: No TopAppBar or BottomNavBar as this is a focused journey -->
+<main class="min-h-screen flex flex-col md:flex-row items-center justify-center p-margin-mobile md:p-0 relative overflow-hidden">
+<!-- Atmospheric Background Element (WebGL or Decorative) -->
+<div class="absolute inset-0 z-0 pointer-events-none opacity-20 hidden md:block">
+<div class="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] bg-primary-container rounded-full blur-[120px]"></div>
+<div class="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] bg-surface-container-highest rounded-full blur-[100px]"></div>
+</div>
+<!-- Content Canvas -->
+<div class="z-10 w-full max-w-[420px] bg-surface-container-lowest md:shadow-lg md:rounded-3xl md:p-unit-6 md:border md:border-outline-variant flex flex-col">
+<!-- Branding/Visual Anchor -->
+<div class="mb-unit-6 text-center md:text-left">
+<div class="inline-flex items-center justify-center w-16 h-16 bg-primary-container rounded-2xl mb-unit-3 shadow-sm">
+<span class="material-symbols-outlined text-[32px] text-on-primary-container">shopping_basket</span>
+</div>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-text-primary">Welcome Back</h1>
+<p class="font-body-md text-body-md text-text-secondary mt-unit-1">Login to access your fresh groceries in minutes.</p>
+</div>
+<!-- Login Form -->
+<form class="space-y-unit-3" id="loginForm" onsubmit="return false;">
+<!-- Phone Number Input Group -->
+<div class="space-y-unit-1">
+<label class="font-label-lg text-label-lg text-on-surface-variant px-1">Phone Number</label>
+<div class="flex items-center bg-surface-gray rounded-xl border border-transparent focus-within:border-primary transition-all duration-200">
+<div class="flex items-center gap-unit-1 px-unit-2 border-r border-outline-variant">
+<!-- In-context image of a flag/country code -->
+<div class="w-6 h-4 bg-gray-200 rounded-sm overflow-hidden" data-alt="A small, high-detail macro photograph of the Indian flag with vibrant orange, white, and green stripes. The lighting is soft and studio-quality, emphasizing the fabric texture. The visual style is professional, clean, and perfectly suited for a premium fintech or delivery app UI component." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDtAiNoUzQ3X50FwmLDXeQg4ewiIRoWlrvgF1rxbS5V4UZZRetncYihCFBqQbALgilgh2pWgAF2lZ3dQo77jG1jv1Mmc52ZKA0ezPXTm-5gzPN5D3N3DbSp7BO-cXnNUjeXJGf0FEzdlj8KY5lVC_2DzIgijh5ULqQxKWi5YYtkeE2Mc9IZVUxh7UPmhL1JsShX9yrNyPqirzR2ABXpTkETLBhgxwPb4O404wyEot3QNF2b9KfU7GYwFQ')"></div>
+<span class="font-body-lg text-body-lg text-text-primary">+91</span>
+</div>
+<input class="flex-1 bg-transparent border-none focus:ring-0 py-unit-3 px-unit-2 font-body-lg text-body-lg tracking-widest placeholder:text-outline" maxlength="10" placeholder="00000 00000" type="tel"/>
+</div>
+</div>
+<!-- Primary Action -->
+<button class="w-full bg-primary-container hover:bg-primary-fixed text-on-primary-fixed font-title-lg text-title-lg py-4 rounded-xl transition-all duration-200 active:scale-[0.98] shadow-sm flex items-center justify-center gap-unit-2" type="submit">
+                    Continue with Phone
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="flex items-center gap-unit-2 my-unit-4">
+<div class="flex-1 h-px bg-outline-variant"></div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">or login with</span>
+<div class="flex-1 h-px bg-outline-variant"></div>
+</div>
+<!-- Social Logins -->
+<div class="space-y-unit-2">
+<!-- Google -->
+<button class="w-full border-1.5 border-text-primary bg-surface-container-lowest hover:bg-surface-gray text-text-primary font-label-lg text-label-lg py-unit-3 rounded-xl transition-all duration-150 flex items-center justify-center gap-unit-3 active:scale-[0.98]">
+<svg height="20" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+                    Continue with Google
+                </button>
+<!-- Apple -->
+<button class="w-full border-1.5 border-text-primary bg-surface-container-lowest hover:bg-surface-gray text-text-primary font-label-lg text-label-lg py-unit-3 rounded-xl transition-all duration-150 flex items-center justify-center gap-unit-3 active:scale-[0.98]">
+<svg fill="currentColor" height="20" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.05 20.28c-.98.95-2.05 1.72-3.35 1.72-1.33 0-1.74-.82-3.3-.82-1.57 0-2.02.82-3.3.82-1.28 0-2.39-.81-3.35-1.72-2-1.92-3.52-5.41-3.52-8.68 0-3.3 1.68-5.06 3.28-5.06 1.58 0 2.45.96 3.43.96s1.95-.96 3.53-.96c1.24 0 2.85.66 3.75 1.88-3.08 1.83-2.58 5.89.52 7.15-.55 1.53-1.51 3.23-2.69 4.71zm-4.73-15.65c0-.98.81-2.02 1.75-2.63 1.02-.68 1.93-.7 2.1-.7 0 1.06-.7 2.14-1.78 2.82-.9.57-1.87.65-2.07.51z"></path>
+</svg>
+                    Continue with Apple
+                </button>
+</div>
+<!-- Footer Compliance -->
+<div class="mt-unit-6 text-center">
+<p class="font-label-sm text-label-sm text-on-surface-variant">
+                    By continuing, you agree to our <br/>
+<a class="text-primary font-semibold hover:underline" href="#">Terms of Service</a> &amp; 
+                    <a class="text-primary font-semibold hover:underline" href="#">Privacy Policy</a>
+</p>
+</div>
+</div>
+<!-- Right Side Visual (Desktop Only) -->
+<div class="hidden md:flex flex-col items-center justify-center w-1/2 h-full pl-unit-6">
+<div class="relative w-full max-w-[500px]">
+<!-- Bento-style visual decoration -->
+<div class="grid grid-cols-2 gap-unit-2 transform rotate-3">
+<div class="aspect-square bg-white rounded-3xl p-unit-2 shadow-lg flex flex-col items-center justify-center">
+<div class="w-full h-2/3 bg-surface-container-low rounded-2xl overflow-hidden relative" data-alt="A vibrant, studio-lit close-up of a perfectly ripe Hass avocado, cut in half to reveal the smooth green flesh and central pit. The background is a clean, neutral white that fits a premium grocery brand aesthetic. High-key lighting emphasizes freshness and quality." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDGc-us6vKwkFDlbhK6Ja0NXlZ2Q3iLs7Pdgb4t7rQNVL81gyXuKFQJRXlmLZXqlGrbtzIPYad4ZPo2MKflzFUOZ34ZflHe3Z4ut0q3D9Hgxqx5YYKsHYoLPlcPVws8rvDiz0Mk6o2-ipetok4lYr9y96I0tX2dShSZQ635gvPGyTSzr9yPsIyJE87X4fvNMbnUVmx_yS6tc1Tau7nV5D-_mTYHHZK76Z7zwERechI5H2eCfTinDnC3VQ')"></div>
+<span class="mt-unit-1 font-label-lg text-label-lg">Fresh Harvest</span>
+</div>
+<div class="aspect-square bg-primary-container rounded-3xl p-unit-2 shadow-lg translate-y-unit-4 flex flex-col items-center justify-center">
+<div class="w-full h-2/3 bg-white/20 rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-on-primary-container">speed</span>
+</div>
+<span class="mt-unit-1 font-label-lg text-label-lg text-on-primary-container">10 Min Delivery</span>
+</div>
+<div class="aspect-square bg-surface-container-highest rounded-3xl p-unit-2 shadow-lg -translate-y-unit-2 flex flex-col items-center justify-center">
+<div class="w-full h-2/3 bg-surface-container-low rounded-2xl overflow-hidden" data-alt="A cluster of large, glistening red strawberries with dew drops on their surface, set against a minimalist white background. The composition is modern and editorial, suggesting ultra-high quality organic produce. The lighting is bright and airy, perfectly capturing a high-end grocery marketplace feel." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAd6CgeVnx67mWY8RoDcUrEV2FiTdJuh4lDyMuigAxA7XF60DBLiiHsdKUVFYyixqM2Tdm6WwVIb6q9lrp72eCexNq1-qVSzcnaw8D-FiY4Snb0D_SdFBMDo2h4AOeqpScR9YkSMTzjdkBEZoFojgK6dSx7IIJgVnxFH09vLSzYGWvmPcL7tJooSo9sWeqj5jxdsrm0hj6Ur3yzHS52Jg726y9Bxd5EmcE_T-OCVbnoxBdAuvJwpywOEQ')"></div>
+<span class="mt-unit-1 font-label-lg text-label-lg">Daily Organic</span>
+</div>
+<div class="aspect-square bg-white rounded-3xl p-unit-2 shadow-lg translate-x-unit-2 flex flex-col items-center justify-center">
+<div class="w-full h-2/3 bg-surface-container-low rounded-2xl flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-success-green" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+<span class="mt-unit-1 font-label-lg text-label-lg">Eco-Friendly</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Micro-interactions Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputs = document.querySelectorAll('input');
+            
+            inputs.forEach(input => {
+                input.addEventListener('focus', (e) => {
+                    e.target.parentElement.classList.add('focused-shadow');
+                });
+                input.addEventListener('blur', (e) => {
+                    e.target.parentElement.classList.remove('focused-shadow');
+                });
+            });
+
+            // Handle numeric only input for phone
+            const phoneInput = document.querySelector('input[type="tel"]');
+            phoneInput.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout | Premium Grocery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .step-active { font-variation-settings: 'FILL' 1; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e2e2e2; border-radius: 10px; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f8f9fa",
+                        "surface-dim": "#d9dadb",
+                        "outline-variant": "#cfc6ab",
+                        "error-red": "#EF4444",
+                        "on-secondary-fixed-variant": "#474747",
+                        "on-primary-container": "#6c5d00",
+                        "primary-fixed": "#ffe24a",
+                        "surface-gray": "#F3F4F6",
+                        "delivery-green": "#0C831F",
+                        "primary-fixed-dim": "#e3c600",
+                        "background": "#f8f9fa",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "outline": "#7d775f",
+                        "inverse-primary": "#e3c600",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#edeeef",
+                        "inverse-on-surface": "#f0f1f2",
+                        "surface-variant": "#e1e3e4",
+                        "tertiary-fixed": "#6ffbbe",
+                        "primary-container": "#f7d700",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-tertiary-fixed": "#002113",
+                        "surface-bright": "#f8f9fa",
+                        "inverse-surface": "#2e3132",
+                        "success-green": "#10B981",
+                        "on-background": "#191c1d",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#211b00",
+                        "primary": "#6d5e00",
+                        "text-primary": "#111827",
+                        "tertiary": "#006c49",
+                        "on-secondary-container": "#646464",
+                        "on-secondary-fixed": "#1b1b1b",
+                        "surface-container-high": "#e7e8e9",
+                        "text-secondary": "#6B7280",
+                        "tertiary-container": "#63f0b3",
+                        "on-tertiary-container": "#006b49",
+                        "on-surface-variant": "#4c4732",
+                        "error": "#ba1a1a",
+                        "secondary": "#5e5e5e",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e1e3e4",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#f3f4f5",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "on-primary-fixed-variant": "#524600",
+                        "on-error": "#ffffff",
+                        "on-surface": "#191c1d",
+                        "surface-tint": "#6d5e00",
+                        "secondary-container": "#e2e2e2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "unit-3": "24px",
+                        "base": "8px",
+                        "unit-4": "32px",
+                        "margin-desktop": "64px",
+                        "unit-2": "16px",
+                        "unit-1": "8px",
+                        "unit-6": "48px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "title-lg": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md selection:bg-primary-container">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-50 flex flex-col px-margin-mobile md:px-margin-desktop py-unit-1 bg-surface-container-lowest shadow-sm">
+<div class="flex items-center justify-between w-full h-16">
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container-low transition-colors rounded-full active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</button>
+<h1 class="font-display-lg text-title-lg font-black text-primary">Premium Grocery</h1>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<div class="flex items-center gap-2 px-3 py-1 bg-surface-container rounded-full">
+<span class="material-symbols-outlined text-delivery-green scale-75" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Secure Checkout</span>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-unit-4 mb-32">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Checkout Details -->
+<div class="lg:col-span-8 space-y-gutter">
+<!-- Delivery Address Section -->
+<section class="bg-surface-container-lowest rounded-xl border border-surface-variant p-unit-3 shadow-sm">
+<div class="flex items-center justify-between mb-unit-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<h2 class="font-title-lg text-title-lg">Delivery Address</h2>
+</div>
+<button class="text-primary font-label-lg hover:underline transition-all">Change</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Active Address -->
+<div class="border-2 border-primary-container bg-primary-container/5 rounded-xl p-4 relative cursor-pointer group">
+<div class="absolute top-4 right-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-on-surface-variant">home</span>
+<span class="font-label-lg text-label-lg uppercase tracking-wider">Home</span>
+</div>
+<p class="text-on-surface-variant font-body-md mb-1">Jane Doe | +91 98765 43210</p>
+<p class="text-on-surface font-body-md leading-relaxed">402, Highrise Apartments, 7th Main Road, Indiranagar, Bengaluru, 560038</p>
+</div>
+<!-- Other Address -->
+<div class="border border-surface-variant hover:border-outline rounded-xl p-4 cursor-pointer transition-colors group">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-on-surface-variant">work</span>
+<span class="font-label-lg text-label-lg uppercase tracking-wider">Office</span>
+</div>
+<p class="text-on-surface-variant font-body-md mb-1">Jane Doe | +91 98765 43210</p>
+<p class="text-on-surface font-body-md leading-relaxed">WeWork Galaxy, Residency Road, Shanthala Nagar, Bengaluru, 560025</p>
+</div>
+</div>
+<button class="mt-4 flex items-center gap-2 text-primary font-label-lg py-2 px-4 rounded-lg hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">add</span>
+                        Add New Address
+                    </button>
+</section>
+<!-- Delivery Instructions -->
+<section class="bg-surface-container-lowest rounded-xl border border-surface-variant p-unit-3 shadow-sm">
+<div class="flex items-center gap-3 mb-unit-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">note_alt</span>
+</div>
+<h2 class="font-title-lg text-title-lg">Delivery Instructions</h2>
+</div>
+<div class="flex flex-wrap gap-3">
+<button class="flex flex-col items-center justify-center gap-1 p-3 border border-surface-variant rounded-xl min-w-[100px] hover:border-primary transition-all active:scale-95 group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">door_front</span>
+<span class="text-label-sm font-label-sm text-center">Leave at door</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 p-3 border border-surface-variant rounded-xl min-w-[100px] hover:border-primary transition-all active:scale-95 group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">notifications_off</span>
+<span class="text-label-sm font-label-sm text-center">Don't ring bell</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 p-3 border border-surface-variant rounded-xl min-w-[100px] hover:border-primary transition-all active:scale-95 group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">person_check</span>
+<span class="text-label-sm font-label-sm text-center">Hand to me</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 p-3 border border-surface-variant rounded-xl min-w-[100px] hover:border-primary transition-all active:scale-95 group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">call</span>
+<span class="text-label-sm font-label-sm text-center">Call on arrival</span>
+</button>
+</div>
+<div class="mt-4">
+<textarea class="w-full bg-surface-gray border-none rounded-xl p-4 focus:ring-2 focus:ring-primary-container transition-all min-h-[100px] font-body-md" placeholder="Write a note for the delivery partner..."></textarea>
+</div>
+</section>
+<!-- Payment Method -->
+<section class="bg-surface-container-lowest rounded-xl border border-surface-variant p-unit-3 shadow-sm">
+<div class="flex items-center gap-3 mb-unit-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<h2 class="font-title-lg text-title-lg">Payment Method</h2>
+</div>
+<div class="space-y-3">
+<!-- UPI -->
+<label class="flex items-center justify-between p-4 border border-surface-variant rounded-xl cursor-pointer hover:bg-surface-gray transition-colors group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-white border border-surface-variant rounded-lg flex items-center justify-center p-2">
+<img class="h-full object-contain" data-alt="A clean, minimalist vector logo of a universal UPI payment interface, featuring sleek geometric lines and vibrant blue and purple accents on a pure white background. The logo is centered and professional, symbolizing fast and secure digital transactions." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaRNEYybm97y6IEwCYveuZaAny2zBb8pofmSkmJuM24o2rKi5FG7wd2wG4vH3T4oQwwRzLBDyyzn-n-YHzF01AdMp_tC2tPLKu3HILe0SQDrz8t2lbCq7_i41UfSrnP0FVcerqWT_Yyr2Lfni-FhDi0G3XPRG8VMdyfIOLWPET0S5LXRZWb-nT9hvI3F3iira_t6p5ZsDDxl4JaqSpc_KX3lnyudklw1rQuZVcOtk0cRrZ0JLXVE_EvA"/>
+</div>
+<div>
+<p class="font-label-lg text-label-lg">UPI (Google Pay, PhonePe, Paytm)</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Instant & Secure Payment</p>
+</div>
+</div>
+<input class="w-5 h-5 text-primary focus:ring-primary" name="payment" type="radio"/>
+</label>
+<!-- Cards -->
+<label class="flex items-center justify-between p-4 border border-primary-container bg-primary-container/5 rounded-xl cursor-pointer transition-colors group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-white border border-surface-variant rounded-lg flex items-center justify-center p-2">
+<span class="material-symbols-outlined text-on-surface-variant text-3xl">credit_card</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg">Credit / Debit Cards</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Visa, Mastercard, RuPay, Amex</p>
+</div>
+</div>
+<input checked="" class="w-5 h-5 text-primary focus:ring-primary border-primary" name="payment" type="radio"/>
+</label>
+<!-- COD -->
+<label class="flex items-center justify-between p-4 border border-surface-variant rounded-xl cursor-pointer hover:bg-surface-gray transition-colors group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-white border border-surface-variant rounded-lg flex items-center justify-center p-2">
+<span class="material-symbols-outlined text-on-surface-variant text-3xl">payments</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg">Cash on Delivery</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Pay when you receive the order</p>
+</div>
+</div>
+<input class="w-5 h-5 text-primary focus:ring-primary" name="payment" type="radio"/>
+</label>
+</div>
+</section>
+</div>
+<!-- Right Column: Order Summary -->
+<aside class="lg:col-span-4">
+<div class="sticky top-24 space-y-gutter">
+<section class="bg-surface-container-lowest rounded-xl border border-surface-variant p-unit-3 shadow-sm overflow-hidden">
+<h2 class="font-title-lg text-title-lg mb-4">Order Summary</h2>
+<!-- Items List -->
+<div class="space-y-4 mb-6 max-h-[300px] overflow-y-auto pr-2">
+<div class="flex gap-4">
+<div class="w-16 h-16 bg-surface-gray rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden border border-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A high-resolution, close-up photograph of a fresh, vibrant bunch of organic Hass avocados resting on a clean marble countertop. The lighting is soft and natural, emphasizing the rich, pebbly texture of the dark green skin. The overall aesthetic is clean, wholesome, and appetizing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1MkrQKkgVpvN9aaCrNDG-_rsrW8aL11mjCW4NJOGYCduGs-AK_Tl3IaYwa0jxAjB5bS9jDqXsifP0P_NKGhQEtyczH_oj_TKOv138Hx8NtgoWa42POpk949qgjK6VoTEFS3qTzC5uenzYbvh61MDoFRB1KPJ-Sqj7BsYmQmhpOLMCibbdu0w-9rkEfdL3kJOb0W9qDfqn8x6zw3tMLaICG0Mj-O-ccu4Ar9lVNbrebmYZgj46JjHIgw"/>
+</div>
+<div class="flex-1">
+<h3 class="font-label-lg text-label-lg line-clamp-1">Organic Hass Avocado</h3>
+<p class="text-label-sm text-on-surface-variant">2 units • 500g</p>
+<p class="font-label-lg text-label-lg mt-1">₹399</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-16 h-16 bg-surface-gray rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden border border-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A professional studio photograph of a liter carton of premium organic whole milk with minimalist branding. The carton is standing on a reflective white surface against a soft gray background. The lighting is bright and even, conveying freshness and high quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaosHnnc-r_bQb-8UMM_CAWn8M6ja3NdsEL1M3P8Vpqdr0Tu2VCtjL3KXo9Pj_VUBZSGYbNQ8FsHOUZjrFAPgmeFgi0lVDWhwqbsDJh1EoHDqE3HO9MO0Cl1y_ZnESLKMTH9BCAXP-BuG6CV_OaS_AwiZ1uJ_IsnyX4_vgDJVnA7ChG3ui236Md89jcwMZNdSL_cM2q1TGz8JK2-wuleZ1xMXNhimSnTKe5p_km2EL8kyCOcx_Ap7WCA"/>
+</div>
+<div class="flex-1">
+<h3 class="font-label-lg text-label-lg line-clamp-1">Farm Fresh Whole Milk</h3>
+<p class="text-label-sm text-on-surface-variant">1 unit • 1L</p>
+<p class="font-label-lg text-label-lg mt-1">₹65</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-16 h-16 bg-surface-gray rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden border border-surface-variant">
+<img class="w-full h-full object-cover" data-alt="A macro shot of artisan sourdough bread, showing the beautifully browned, crispy crust and the light dusting of flour. The bread is sitting on a wooden cutting board with a warm, cozy kitchen atmosphere in the background. The style is rustic yet refined, focused on texture and artisanal quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqNT23gGcgwb5RescvRg23uLOLQHnWhE9Edw_vZXT22mxw5pwPZwbspSR-GG-Mdb_JWxHReaK1W2AghfI3SBkSdjtlmUon7JtkBniyQ3vSHNGJ9JkeqjXAt9QaYNKF6oUJcArJr9mFGmDcxbVf9G9pBOELW4hqANk4oB144C7n00OLHyjmnuqHF9Q77x8R1troLRnH5UDUnCMQBa4nv0btv0lZkMqOQuc7ojkSmXySoGpQ2gpf_xGRWw"/>
+</div>
+<div class="flex-1">
+<h3 class="font-label-lg text-label-lg line-clamp-1">Artisan Sourdough Loaf</h3>
+<p class="text-label-sm text-on-surface-variant">1 unit • 400g</p>
+<p class="font-label-lg text-label-lg mt-1">₹120</p>
+</div>
+</div>
+</div>
+<!-- Bill Details -->
+<div class="space-y-3 pt-4 border-t border-surface-variant">
+<div class="flex justify-between font-body-md text-on-surface-variant">
+<span>Item Total</span>
+<span>₹584</span>
+</div>
+<div class="flex justify-between font-body-md text-on-surface-variant">
+<span>Delivery Fee</span>
+<div class="flex items-center gap-2">
+<span class="line-through">₹25</span>
+<span class="text-delivery-green font-bold">FREE</span>
+</div>
+</div>
+<div class="flex justify-between font-body-md text-on-surface-variant">
+<span>Handling Charge</span>
+<span>₹2</span>
+</div>
+<div class="flex justify-between font-body-md text-on-surface-variant">
+<span>GST and Taxes</span>
+<span>₹28.40</span>
+</div>
+<div class="flex justify-between font-title-lg text-title-lg pt-2 border-t border-dashed border-surface-variant">
+<span>Bill Total</span>
+<span>₹614.40</span>
+</div>
+</div>
+<!-- Savings Badge -->
+<div class="mt-4 bg-success-green/10 border border-success-green/20 rounded-lg p-3 flex items-center gap-3">
+<span class="material-symbols-outlined text-success-green">local_offer</span>
+<p class="text-label-sm font-label-sm text-success-green">You saved ₹25 on delivery with this order!</p>
+</div>
+</section>
+<!-- Safe & Secure Badge -->
+<div class="flex flex-col items-center gap-2 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">verified_user</span>
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">100% Secure Checkout</span>
+</div>
+<p class="text-[10px] text-center text-on-surface-variant px-8">Your payment is protected by industry-leading 256-bit encryption</p>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Bottom Action Bar (Fixed Mobile & Desktop) -->
+<div class="fixed bottom-0 left-0 w-full bg-surface-container-lowest border-t border-surface-variant px-margin-mobile md:px-margin-desktop py-4 z-50 shadow-[0_-8px_24px_rgba(0,0,0,0.05)]">
+<div class="max-w-[1280px] mx-auto flex items-center justify-between">
+<div class="hidden md:block">
+<p class="text-label-sm font-label-sm text-on-surface-variant">Total Payable</p>
+<p class="text-title-lg font-bold text-on-surface">₹614.40</p>
+</div>
+<div class="flex items-center gap-4 w-full md:w-auto">
+<div class="md:hidden flex-1">
+<p class="text-label-sm font-label-sm text-on-surface-variant">Payable</p>
+<p class="text-title-lg font-bold text-on-surface">₹614.40</p>
+</div>
+<button class="flex-1 md:flex-none md:min-w-[320px] bg-primary-container text-on-primary-fixed font-title-lg py-4 px-8 rounded-xl flex items-center justify-center gap-3 hover:shadow-lg active:scale-95 transition-all duration-200" id="payButton">
+<span class="material-symbols-outlined">lock</span>
+                    Place Order & Pay
+                </button>
+</div>
+</div>
+</div>
+<!-- Success Modal (Hidden by Default) -->
+<div class="fixed inset-0 bg-black/60 z-[60] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300" id="successOverlay">
+<div class="bg-surface rounded-3xl p-unit-6 max-w-md w-full mx-4 text-center transform scale-90 transition-transform duration-300">
+<div class="w-20 h-20 bg-success-green rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-success-green/20">
+<span class="material-symbols-outlined text-white text-5xl">check_circle</span>
+</div>
+<h2 class="font-display-lg text-headline-lg mb-2">Order Confirmed!</h2>
+<p class="text-on-surface-variant font-body-lg mb-8">Your fresh groceries will arrive in 8-10 minutes. Tracking link sent via SMS.</p>
+<button class="w-full bg-on-surface text-surface py-4 rounded-xl font-label-lg hover:opacity-90 transition-opacity" onclick="window.location.reload()">
+                Track My Order
+            </button>
+</div>
+</div>
+<script>
+        document.getElementById('payButton').addEventListener('click', function() {
+            const btn = this;
+            const originalContent = btn.innerHTML;
+            
+            // Animation for placing order
+            btn.innerHTML = `
+                <div class="w-6 h-6 border-4 border-on-primary-fixed/30 border-t-on-primary-fixed rounded-full animate-spin"></div>
+                Processing...
+            `;
+            btn.disabled = true;
+
+            setTimeout(() => {
+                const overlay = document.getElementById('successOverlay');
+                const modal = overlay.querySelector('div');
+                
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                modal.classList.remove('scale-90');
+                modal.classList.add('scale-100');
+            }, 1500);
+        });
+
+        // Toggle address selection
+        document.querySelectorAll('section:nth-of-type(1) .grid > div').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('section:nth-of-type(1) .grid > div').forEach(c => {
+                    c.className = 'border border-surface-variant hover:border-outline rounded-xl p-4 cursor-pointer transition-colors group';
+                    const checkIcon = c.querySelector('.material-symbols-outlined[style*="FILL: 1"]');
+                    if (checkIcon) checkIcon.parentElement.remove();
+                });
+                
+                this.className = 'border-2 border-primary-container bg-primary-container/5 rounded-xl p-4 relative cursor-pointer group';
+                const checkDiv = document.createElement('div');
+                checkDiv.className = 'absolute top-4 right-4';
+                checkDiv.innerHTML = '<span class="material-symbols-outlined text-primary" style="font-variation-settings: \'FILL\' 1;">check_circle</span>';
+                this.appendChild(checkDiv);
+            });
+        });
+
+        // Instruction chips selection
+        document.querySelectorAll('section:nth-of-type(2) button').forEach(chip => {
+            chip.addEventListener('click', function() {
+                this.classList.toggle('bg-primary-container/20');
+                this.classList.toggle('border-primary');
+            });
+        });
+    </script>
+</body></html>

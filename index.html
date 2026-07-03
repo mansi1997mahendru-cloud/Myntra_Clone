@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TECHIE INVOICE GENERATOR</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- ==========================================
+         FIREBASE COMPAT SDK LIBRARIES (CDN)
+         ========================================== -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+</head>
+<body class="auth-active"> <!-- Toggle auth-active class to show/hide login -->
+
+    <!-- ==========================================
+         USER AUTHENTICATION SCREEN
+         ========================================== -->
+    <div class="auth-screen" id="auth-screen">
+        <div class="auth-card">
+            <!-- Firebase Config Warning Banner -->
+            <div class="firebase-config-banner" id="firebase-config-banner" style="display: none;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span>Local Sandbox Mode (Configure Firebase in <code>app.js</code>)</span>
+            </div>
+
+            <div class="auth-header">
+                <div class="auth-logo-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+                        <path d="M9 7H15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M9 12H15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M9 17H12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h2>TECHIE INVOICE GENERATOR</h2>
+                <p id="auth-desc">Register or log in to manage your billing and invoices</p>
+            </div>
+
+            <!-- Tab Controls -->
+            <div class="auth-tabs" id="auth-tabs-bar">
+                <button class="auth-tab active" id="tab-signin-btn">Sign In</button>
+                <button class="auth-tab" id="tab-signup-btn">Sign Up</button>
+            </div>
+
+            <!-- Sign In Form -->
+            <form id="signin-form" class="auth-form-content">
+                <div class="form-group">
+                    <label for="signin-email">Email Address*</label>
+                    <input type="email" id="signin-email" placeholder="you@gmail.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="signin-password">Password*</label>
+                    <input type="password" id="signin-password" placeholder="••••••••" required>
+                </div>
+                <div id="signin-error" class="auth-error-msg" style="display: none;"></div>
+                <button type="submit" class="btn btn-primary full-width">Sign In</button>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form id="signup-form" class="auth-form-content" style="display: none;">
+                <div class="form-group">
+                    <label for="signup-company">My Company Name*</label>
+                    <input type="text" id="signup-company" placeholder="Techie Solutions Pvt Ltd" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Gmail Address*</label>
+                    <input type="email" id="signup-email" placeholder="billing@gmail.com" required>
+                    <span class="input-helper">Must be a valid @gmail.com address</span>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password*</label>
+                    <input type="password" id="signup-password" placeholder="e.g. A!12345" required>
+                    <span class="input-helper">Start with letter, contain special char, max 8 chars</span>
+                </div>
+                <div class="form-group">
+                    <label for="signup-confirm-password">Confirm Password*</label>
+                    <input type="password" id="signup-confirm-password" placeholder="••••••••" required>
+                </div>
+                <div id="signup-error" class="auth-error-msg" style="display: none;"></div>
+                <button type="submit" class="btn btn-primary full-width">Create Account & Verify</button>
+            </form>
+
+            <!-- Google OAuth Actions -->
+            <div class="auth-divider" id="auth-divider">
+                <span>or</span>
+            </div>
+
+            <button type="button" id="google-auth-btn" class="btn google-btn full-width">
+                <svg class="google-icon" viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.56-2.77c-.98.66-2.23 1.06-3.72 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+                </svg>
+                Continue with Google
+            </button>
+
+            <!-- Email Verification Pending Screen -->
+            <div id="verification-card" class="auth-form-content" style="display: none; text-align: center;">
+                <div class="verify-icon-wrapper">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                </div>
+                <h3>Verify Your Gmail Account</h3>
+                <p class="verify-details-text">
+                    We have dispatched a verification email to:<br>
+                    <strong id="verify-email-display" class="user-email-highlight">yourname@gmail.com</strong>
+                </p>
+                <p class="verify-instructions-text">
+                    Please log into your Gmail, verify the link, and click below to start using the generator.
+                </p>
+                
+                <div id="verify-error" class="auth-error-msg" style="display: none;"></div>
+                <div id="verify-success" class="auth-success-msg" style="display: none;">Verification email sent!</div>
+                
+                <div class="verify-button-group">
+                    <button type="button" id="verify-refresh-btn" class="btn btn-primary full-width">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                        I Have Verified (Proceed)
+                    </button>
+                    <button type="button" id="verify-resend-btn" class="btn btn-secondary full-width">Resend Verification Email</button>
+                    <button type="button" id="verify-signout-btn" class="btn btn-outline danger-outline full-width">Back to Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==========================================
+         MAIN INVOICE BUILDER APPLICATION
+         ========================================== -->
+    <div class="app-container" id="app-container">
+        <!-- Sidebar Navigation / Control Panel -->
+        <aside class="control-panel">
+            <header class="app-header">
+                <div class="logo-group">
+                    <div class="logo-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M9 7H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M9 12H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M9 17H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1>TECHIE</h1>
+                        <span class="sub-title">INVOICE GENERATOR</span>
+                    </div>
+                </div>
+                
+                <!-- Logged In User Status Indicator -->
+                <div class="user-badge" id="user-badge-header">
+                    <span class="user-email-text" id="user-email-text" title="Active user session">user@example.com</span>
+                    <button type="button" id="signout-btn" class="signout-icon-btn" title="Sign Out">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <div class="form-wrapper">
+                <div class="sections-accordion">
+                    <!-- SECTION 1: BUSINESS DETAILS -->
+                    <details open class="accordion-item">
+                        <summary>
+                            <span class="summary-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                My Business Details
+                            </span>
+                            <span class="chevron"></span>
+                        </summary>
+                        <div class="accordion-content">
+                            <div class="form-group logo-upload-group">
+                                <label>Business Logo</label>
+                                <div class="logo-dropzone" id="logo-dropzone">
+                                    <span class="dropzone-text">Click or Drag Image to Upload</span>
+                                    <input type="file" id="business-logo-input" accept="image/*">
+                                    <img id="logo-preview-img" src="" alt="Logo Preview" style="display:none;">
+                                </div>
+                                <button type="button" id="remove-logo-btn" class="text-btn danger-text" style="display:none;">Remove Logo</button>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group col-12">
+                                    <label for="biz-name">Company Name*</label>
+                                    <input type="text" id="biz-name" placeholder="Techie Solutions Pvt Ltd" value="Techie Solutions Ltd">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="biz-email">Email*</label>
+                                    <input type="email" id="biz-email" placeholder="billing@techie.com" value="billing@techiesolutions.com">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="biz-phone">Phone</label>
+                                    <input type="text" id="biz-phone" placeholder="+91 98765 43210" value="+1 (555) 019-2834">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="biz-gst">GSTIN / Tax No.*</label>
+                                    <input type="text" id="biz-gst" placeholder="27AAAAA0000A1Z5" value="GSTIN-27ABCDE1234F1Z5">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="biz-address">Address</label>
+                                    <textarea id="biz-address" rows="2" placeholder="102, Cyber Tower, IT Park, Mumbai">123 Tech Corridor, Silicon Valley, CA 94025</textarea>
+                                </div>
+                            </div>
+                            <button type="button" id="save-profile-defaults" class="btn btn-secondary btn-sm">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                                Save Details as Default
+                            </button>
+                        </div>
+                    </details>
+
+                    <!-- SECTION 2: CLIENT DETAILS -->
+                    <details open class="accordion-item">
+                        <summary>
+                            <span class="summary-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                Client Details
+                            </span>
+                            <span class="chevron"></span>
+                        </summary>
+                        <div class="accordion-content">
+                            <div class="form-grid">
+                                <div class="form-group col-12">
+                                    <label for="client-company">Client Company / Name*</label>
+                                    <input type="text" id="client-company" placeholder="Acme Corp" value="Acme Corporation">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="client-name">Contact Person</label>
+                                    <input type="text" id="client-name" placeholder="John Doe" value="John Doe">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="client-email">Email*</label>
+                                    <input type="email" id="client-email" placeholder="finance@acme.com" value="finance@acme.com">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="client-phone">Phone</label>
+                                    <input type="text" id="client-phone" placeholder="+91 99999 88888" value="+1 (555) 043-9876">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="client-gst">Client GSTIN / Tax No.</label>
+                                    <input type="text" id="client-gst" placeholder="27BBBBB0000B1Z5" value="">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="client-address">Address</label>
+                                    <textarea id="client-address" rows="2" placeholder="404, Tech Park, Bangalore">456 Enterprise Way, Suite 100, San Francisco, CA 94107</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- SECTION 3: INVOICE META -->
+                    <details open class="accordion-item">
+                        <summary>
+                            <span class="summary-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                Invoice Details
+                            </span>
+                            <span class="chevron"></span>
+                        </summary>
+                        <div class="accordion-content">
+                            <div class="form-grid">
+                                <div class="form-group col-6">
+                                    <label for="invoice-number">Invoice #*</label>
+                                    <input type="text" id="invoice-number" placeholder="INV-2026-001" value="INV-2026-001">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="currency-select">Currency*</label>
+                                    <select id="currency-select">
+                                        <option value="INR">₹ (INR)</option>
+                                        <option value="USD" selected>$ (USD)</option>
+                                        <option value="EUR">€ (EUR)</option>
+                                        <option value="GBP">£ (GBP)</option>
+                                        <option value="AUD">A$ (AUD)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="invoice-date">Issue Date*</label>
+                                    <input type="date" id="invoice-date">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="due-date">Due Date</label>
+                                    <input type="date" id="due-date">
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- SECTION 4: SERVICE / ITEM details -->
+                    <details open class="accordion-item">
+                        <summary>
+                            <span class="summary-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                                Services / Line Items
+                            </span>
+                            <span class="chevron"></span>
+                        </summary>
+                        <div class="accordion-content">
+                            <div id="items-container">
+                                <!-- Dynamic Item Rows added by JavaScript -->
+                            </div>
+                            <button type="button" id="add-item-btn" class="btn btn-secondary btn-sm full-width">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                Add Line Item
+                            </button>
+                        </div>
+                    </details>
+
+                    <!-- SECTION 5: NOTES & EXTRA INFO -->
+                    <details open class="accordion-item">
+                        <summary>
+                            <span class="summary-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                Notes & Bank Details
+                            </span>
+                            <span class="chevron"></span>
+                        </summary>
+                        <div class="accordion-content">
+                            <div class="form-grid">
+                                <div class="form-group col-12">
+                                    <label for="bank-details">Payment / Bank Details</label>
+                                    <textarea id="bank-details" rows="3" placeholder="Bank: Techie Bank&#10;A/C: 1234567890&#10;IFSC: TECH0001234">Bank: Silicon Valley Bank
+Account: 9876-5432-1010
+Routing Number: 121122243
+Swift Code: SVBSUS33XXX</textarea>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="invoice-notes">Terms & Conditions / Notes</label>
+                                    <textarea id="invoice-notes" rows="2" placeholder="Thank you for your business!">Payment is due within 15 days of invoice date. Late payments are subject to a 1.5% fee per month.</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <!-- Actions Panel -->
+            <div class="actions-panel">
+                <button type="button" id="save-invoice-btn" class="btn btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                    Save Invoice
+                </button>
+                <div class="action-row-split">
+                    <button type="button" id="print-invoice-btn" class="btn btn-accent">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                        Print / Download PDF
+                    </button>
+                    <button type="button" id="reset-invoice-btn" class="btn btn-outline danger-outline" title="Clear form">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2-2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Saved Invoices Sidebar History -->
+            <section class="saved-invoices-section">
+                <h3>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    Saved Invoices
+                </h3>
+                <div class="saved-list" id="saved-invoices-list">
+                    <!-- Loaded dynamically from localStorage/Firebase -->
+                    <div class="empty-state">No saved invoices found.</div>
+                </div>
+            </section>
+        </aside>
+
+        <!-- Live Preview Container -->
+        <main class="preview-area">
+            <div class="preview-header-bar">
+                <span class="status-indicator">
+                    <span class="pulse-dot"></span>
+                    Live A4 Preview
+                </span>
+                <span class="preview-hint">Perfect A4 formatting automatically applied when downloading</span>
+            </div>
+
+            <div class="invoice-scroll-wrapper">
+                <!-- High-fidelity A4 Page Mock -->
+                <div class="invoice-a4-sheet" id="invoice-print-area">
+                    <!-- Top Ribbon Accent (Modern Tech Vibe) -->
+                    <div class="sheet-accent-bar"></div>
+
+                    <!-- Invoice Header Grid -->
+                    <div class="sheet-header">
+                        <div class="header-left">
+                            <div class="preview-logo-container" id="preview-logo-container">
+                                <div class="default-logo-placeholder">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                        <polyline points="2 17 12 22 22 17"></polyline>
+                                        <polyline points="2 12 12 17 22 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h2 id="p-biz-name" class="biz-name-title">Techie Solutions Ltd</h2>
+                            <div class="biz-meta-details">
+                                <p id="p-biz-email">billing@techiesolutions.com</p>
+                                <p id="p-biz-phone">+1 (555) 019-2834</p>
+                                <p id="p-biz-address" class="address-text">123 Tech Corridor, Silicon Valley, CA 94025</p>
+                                <p id="p-biz-gst-wrapper" class="tax-pill">GSTIN: <span id="p-biz-gst">GSTIN-27ABCDE1234F1Z5</span></p>
+                            </div>
+                        </div>
+                        <div class="header-right">
+                            <div class="invoice-badge">INVOICE</div>
+                            <div class="invoice-meta-block">
+                                <div class="meta-row">
+                                    <span class="meta-label">Invoice Number</span>
+                                    <span class="meta-val" id="p-invoice-num">INV-2026-001</span>
+                                </div>
+                                <div class="meta-row">
+                                    <span class="meta-label">Date of Issue</span>
+                                    <span class="meta-val" id="p-invoice-date">2026-06-29</span>
+                                </div>
+                                <div class="meta-row">
+                                    <span class="meta-label">Due Date</span>
+                                    <span class="meta-val" id="p-due-date">2026-07-14</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sheet-divider"></div>
+
+                    <!-- Client Details Block -->
+                    <div class="sheet-client-details">
+                        <div class="client-block">
+                            <h3 class="section-sub-title">Billed To</h3>
+                            <h4 id="p-client-company" class="client-org">Acme Corporation</h4>
+                            <p id="p-client-name" class="client-contact">John Doe</p>
+                            <p id="p-client-email">finance@acme.com</p>
+                            <p id="p-client-phone">+1 (555) 043-9876</p>
+                            <p id="p-client-address" class="address-text">456 Enterprise Way, Suite 100, San Francisco, CA 94107</p>
+                            <p id="p-client-gst-wrapper" class="client-tax-info" style="display:none;">GSTIN: <span id="p-client-gst"></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Items Table -->
+                    <table class="preview-items-table">
+                        <thead>
+                            <tr>
+                                <th class="col-desc">Description</th>
+                                <th class="col-qty text-right">Qty</th>
+                                <th class="col-price text-right">Rate</th>
+                                <th class="col-tax text-right">Tax (%)</th>
+                                <th class="col-amount text-right">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="preview-items-body">
+                            <!-- Dynamic Table Rows added by JavaScript -->
+                        </tbody>
+                    </table>
+
+                    <!-- Totals & Payment block -->
+                    <div class="totals-and-notes-section">
+                        <!-- Left Details (Payment & Notes) -->
+                        <div class="details-pane">
+                            <div class="payment-instructions" id="p-bank-details-wrapper">
+                                <h5>Payment Information</h5>
+                                <p id="p-bank-details" class="pre-wrap">Bank: Silicon Valley Bank
+Account: 9876-5432-1010
+Routing Number: 121122243
+Swift Code: SVBSUS33XXX</p>
+                            </div>
+                            <div class="invoice-notes" id="p-invoice-notes-wrapper">
+                                <h5>Notes / Terms</h5>
+                                <p id="p-invoice-notes" class="pre-wrap">Payment is due within 15 days of invoice date. Late payments are subject to a 1.5% fee per month.</p>
+                            </div>
+                        </div>
+
+                        <!-- Right Totals Table -->
+                        <div class="totals-pane">
+                            <div class="totals-row">
+                                <span>Subtotal</span>
+                                <span id="p-subtotal">$0.00</span>
+                            </div>
+                            <div class="totals-row">
+                                <span>Tax Total</span>
+                                <span id="p-tax-total">$0.00</span>
+                            </div>
+                            <div class="sheet-divider short-divider"></div>
+                            <div class="totals-row grand-total-row">
+                                <span>Balance Due</span>
+                                <span id="p-grand-total">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Signature & Tech Info -->
+                    <div class="sheet-footer">
+                        <div class="footer-sign">
+                            <div class="sign-line"></div>
+                            <p>Authorized Signature</p>
+                        </div>
+                        <div class="footer-tagline">
+                            <p>Generated by TECHIE INVOICE GENERATOR</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification system for dynamic alerts -->
+    <div id="toast" class="toast">Invoice saved successfully!</div>
+
+    <script src="app.js"></script>
+</body>
+</html>

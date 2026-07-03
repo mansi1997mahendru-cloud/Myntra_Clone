@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Settings - Premium Grocery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "delivery-green": "#0C831F",
+                    "inverse-surface": "#2e3132",
+                    "surface": "#f8f9fa",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed-variant": "#524600",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-dim": "#d9dadb",
+                    "on-secondary-container": "#646464",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "surface-gray": "#F3F4F6",
+                    "on-error": "#ffffff",
+                    "text-primary": "#111827",
+                    "surface-variant": "#e1e3e4",
+                    "surface-container": "#edeeef",
+                    "primary": "#6d5e00",
+                    "on-surface": "#191c1d",
+                    "surface-tint": "#6d5e00",
+                    "surface-bright": "#f8f9fa",
+                    "on-secondary-fixed-variant": "#474747",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "primary-container": "#f7d700",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "background": "#f8f9fa",
+                    "secondary-container": "#e2e2e2",
+                    "on-tertiary-container": "#006b49",
+                    "surface-container-low": "#f3f4f5",
+                    "surface-container-high": "#e7e8e9",
+                    "secondary-fixed-dim": "#c6c6c6",
+                    "on-surface-variant": "#4c4732",
+                    "on-background": "#191c1d",
+                    "error-red": "#EF4444",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#ffe24a",
+                    "outline-variant": "#cfc6ab",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-secondary-fixed": "#1b1b1b",
+                    "secondary": "#5e5e5e",
+                    "on-primary-fixed": "#211b00",
+                    "primary-fixed-dim": "#e3c600",
+                    "secondary-fixed": "#e2e2e2",
+                    "text-secondary": "#6B7280",
+                    "surface-container-highest": "#e1e3e4",
+                    "on-tertiary-fixed": "#002113",
+                    "inverse-primary": "#e3c600",
+                    "tertiary-container": "#63f0b3",
+                    "success-green": "#10B981",
+                    "outline": "#7d775f",
+                    "on-primary-container": "#6c5d00",
+                    "tertiary": "#006c49",
+                    "inverse-on-surface": "#f0f1f2"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit-2": "16px",
+                    "unit-3": "24px",
+                    "margin-desktop": "64px",
+                    "unit-6": "48px",
+                    "unit-4": "32px",
+                    "unit-1": "8px",
+                    "margin-mobile": "16px",
+                    "gutter": "16px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "label-lg": ["Inter"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "title-lg": ["Plus Jakarta Sans"],
+                    "label-sm": ["Inter"],
+                    "headline-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f8f9fa;
+            color: #191c1d;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .toggle-switch {
+            width: 44px;
+            height: 24px;
+            background-color: #e2e2e2;
+            border-radius: 9999px;
+            position: relative;
+            transition: background-color 0.2s ease;
+        }
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            transition: transform 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .toggle-checkbox:checked + .toggle-switch {
+            background-color: #6d5e00;
+        }
+        .toggle-checkbox:checked + .toggle-switch::after {
+            transform: translateX(20px);
+        }
+        .safe-area-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-50 flex flex-col px-margin-mobile md:px-margin-desktop py-unit-1 bg-surface-container-lowest dark:bg-inverse-surface shadow-sm transition-all duration-300">
+<div class="flex items-center justify-between h-14">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary dark:text-primary-fixed hover:bg-surface-container-low p-2 rounded-full active:scale-95 transition-all">
+                    arrow_back
+                </button>
+<h1 class="font-title-lg text-title-lg text-primary dark:text-primary-fixed">Settings</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="material-symbols-outlined text-on-surface-variant dark:text-on-secondary-fixed-variant p-2 rounded-full hover:bg-surface-container-low transition-colors">
+                    mic
+                </button>
+</div>
+</div>
+</header>
+<main class="max-w-2xl mx-auto px-margin-mobile md:px-margin-desktop py-unit-4 space-y-unit-4">
+<!-- Preferences Section -->
+<section class="space-y-unit-2">
+<h2 class="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-wider px-1">Preferences</h2>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<!-- Dark Mode -->
+<div class="flex items-center justify-between p-unit-2 border-b border-outline-variant hover:bg-surface-container-low transition-colors group">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary p-2 bg-primary-container rounded-lg">dark_mode</span>
+<div>
+<p class="font-body-lg text-body-lg text-text-primary">Dark Mode</p>
+<p class="font-label-sm text-label-sm text-text-secondary">Reduce glare and save battery</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only toggle-checkbox" id="darkModeToggle" type="checkbox"/>
+<div class="toggle-switch"></div>
+</label>
+</div>
+<!-- Notifications -->
+<div class="flex items-center justify-between p-unit-2 border-b border-outline-variant hover:bg-surface-container-low transition-colors group">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary p-2 bg-primary-container rounded-lg">notifications</span>
+<div>
+<p class="font-body-lg text-body-lg text-text-primary">Push Notifications</p>
+<p class="font-label-sm text-label-sm text-text-secondary">Order updates and daily deals</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="toggle-switch"></div>
+</label>
+</div>
+<!-- Language -->
+<button class="w-full flex items-center justify-between p-unit-2 hover:bg-surface-container-low transition-colors group text-left">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary p-2 bg-primary-container rounded-lg">translate</span>
+<div>
+<p class="font-body-lg text-body-lg text-text-primary">Language</p>
+<p class="font-label-sm text-label-sm text-text-secondary">English (US)</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-active:translate-x-1 transition-transform">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- Security Section -->
+<section class="space-y-unit-2">
+<h2 class="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-wider px-1">Security &amp; Legal</h2>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<!-- Privacy Policy -->
+<button class="w-full flex items-center justify-between p-unit-2 border-b border-outline-variant hover:bg-surface-container-low transition-colors group text-left">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary p-2 bg-primary-container rounded-lg">lock</span>
+<p class="font-body-lg text-body-lg text-text-primary">Privacy Policy</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-active:translate-x-1 transition-transform">chevron_right</span>
+</button>
+<!-- Terms of Service -->
+<button class="w-full flex items-center justify-between p-unit-2 hover:bg-surface-container-low transition-colors group text-left">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary p-2 bg-primary-container rounded-lg">gavel</span>
+<p class="font-body-lg text-body-lg text-text-primary">Terms of Service</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-active:translate-x-1 transition-transform">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- About Section -->
+<section class="space-y-unit-2">
+<h2 class="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-wider px-1">About</h2>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<!-- App Info -->
+<button class="w-full flex items-center justify-between p-unit-2 border-b border-outline-variant hover:bg-surface-container-low transition-colors group text-left">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary p-2 bg-primary-container rounded-lg">info</span>
+<p class="font-body-lg text-body-lg text-text-primary">App Information</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-active:translate-x-1 transition-transform">chevron_right</span>
+</button>
+<!-- Support -->
+<button class="w-full flex items-center justify-between p-unit-2 hover:bg-surface-container-low transition-colors group text-left">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary p-2 bg-primary-container rounded-lg">support_agent</span>
+<p class="font-body-lg text-body-lg text-text-primary">Help &amp; Support</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-active:translate-x-1 transition-transform">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- Danger Zone -->
+<section class="mt-unit-6">
+<button class="w-full flex items-center gap-4 p-unit-2 bg-error-container text-on-error-container rounded-xl hover:opacity-90 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-lg text-label-lg">Logout Session</span>
+</button>
+</section>
+<!-- Version Info -->
+<div class="pt-unit-6 pb-unit-12 text-center space-y-1">
+<p class="font-label-sm text-label-sm text-text-secondary">Premium Grocery v4.12.0 (Build 902)</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">Made with ❤️ for faster delivery</p>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center bg-surface-container-lowest dark:bg-inverse-surface py-2 pb-safe px-4 border-t border-outline-variant dark:border-none shadow-lg z-50 md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-sm text-label-sm">Categories</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-sm text-label-sm">Cart</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-sm text-label-sm">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-fixed text-on-primary-container dark:text-on-primary-fixed rounded-xl px-3 py-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-sm text-label-sm">Account</span>
+</a>
+</nav>
+<script>
+        // Simple dark mode toggle logic for UI simulation
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // Micro-interaction: Header shadow on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 10) {
+                header.classList.add('shadow-md');
+                header.classList.remove('shadow-sm');
+            } else {
+                header.classList.add('shadow-sm');
+                header.classList.remove('shadow-md');
+            }
+        });
+
+        // Click effects for list items
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.style.transform = 'scale(0.98)';
+            });
+            button.addEventListener('mouseup', () => {
+                button.style.transform = 'scale(1)';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

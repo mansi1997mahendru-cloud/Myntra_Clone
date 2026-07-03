@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Success | Premium Grocery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "delivery-green": "#0C831F",
+                        "inverse-surface": "#2e3132",
+                        "surface": "#f8f9fa",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#524600",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d9dadb",
+                        "on-secondary-container": "#646464",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "surface-gray": "#F3F4F6",
+                        "on-error": "#ffffff",
+                        "text-primary": "#111827",
+                        "surface-variant": "#e1e3e4",
+                        "surface-container": "#edeeef",
+                        "primary": "#6d5e00",
+                        "on-surface": "#191c1d",
+                        "surface-tint": "#6d5e00",
+                        "surface-bright": "#f8f9fa",
+                        "on-secondary-fixed-variant": "#474747",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "primary-container": "#f7d700",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f8f9fa",
+                        "secondary-container": "#e2e2e2",
+                        "on-tertiary-container": "#006b49",
+                        "surface-container-low": "#f3f4f5",
+                        "surface-container-high": "#e7e8e9",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "on-surface-variant": "#4c4732",
+                        "on-background": "#191c1d",
+                        "error-red": "#EF4444",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#ffe24a",
+                        "outline-variant": "#cfc6ab",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-secondary-fixed": "#1b1b1b",
+                        "secondary": "#5e5e5e",
+                        "on-primary-fixed": "#211b00",
+                        "primary-fixed-dim": "#e3c600",
+                        "secondary-fixed": "#e2e2e2",
+                        "text-secondary": "#6B7280",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-tertiary-fixed": "#002113",
+                        "inverse-primary": "#e3c600",
+                        "tertiary-container": "#63f0b3",
+                        "success-green": "#10B981",
+                        "outline": "#7d775f",
+                        "on-primary-container": "#6c5d00",
+                        "tertiary": "#006c49",
+                        "inverse-on-surface": "#f0f1f2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit-2": "16px",
+                        "unit-3": "24px",
+                        "margin-desktop": "64px",
+                        "unit-6": "48px",
+                        "unit-4": "32px",
+                        "unit-1": "8px",
+                        "margin-mobile": "16px",
+                        "gutter": "16px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "label-lg": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "title-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        @keyframes scale-in {
+            0% { transform: scale(0); opacity: 0; }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes fade-up {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-scale-in { animation: scale-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        .animate-fade-up { animation: fade-up 0.8s ease-out forwards; }
+        .delay-1 { animation-delay: 0.2s; opacity: 0; }
+        .delay-2 { animation-delay: 0.4s; opacity: 0; }
+        .delay-3 { animation-delay: 0.6s; opacity: 0; }
+        .floating { animation: float 3s ease-in-out infinite; }
+        
+        .checkmark-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-lg text-on-surface selection:bg-primary-container min-h-screen flex flex-col items-center justify-center overflow-x-hidden p-margin-mobile md:p-margin-desktop">
+<!-- Success Feedback Section -->
+<main class="max-w-2xl w-full flex flex-col items-center text-center">
+<!-- Animated Icon Container -->
+<div class="relative mb-unit-4">
+<!-- Decorative Glow -->
+<div class="absolute inset-0 bg-primary-container blur-3xl opacity-30 rounded-full scale-150 animate-pulse"></div>
+<!-- Icon -->
+<div class="checkmark-container animate-scale-in bg-primary-container rounded-full flex items-center justify-center shadow-xl shadow-primary-container/20">
+<span class="material-symbols-outlined text-on-primary-container !text-7xl" style="font-variation-settings: 'FILL' 1;">
+                    check_circle
+                </span>
+</div>
+<!-- Floating Decoration Elements -->
+<div class="absolute -top-4 -right-4 floating">
+<span class="material-symbols-outlined text-primary-container !text-3xl opacity-60">shopping_bag</span>
+</div>
+<div class="absolute -bottom-2 -left-6 floating" style="animation-delay: 1s;">
+<span class="material-symbols-outlined text-delivery-green !text-3xl opacity-40">eco</span>
+</div>
+</div>
+<!-- Success Message -->
+<div class="animate-fade-up delay-1">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-text-primary mb-2">
+                Order Placed Successfully!
+            </h1>
+<p class="font-body-lg text-body-lg text-text-secondary max-w-md mx-auto">
+                Sit back and relax. Your groceries will be delivered in <span class="text-delivery-green font-bold">10 minutes</span>.
+            </p>
+</div>
+<!-- Order Summary Card -->
+<div class="animate-fade-up delay-2 w-full mt-unit-6 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-[0px_4px_12px_rgba(0,0,0,0.05)] text-left flex flex-col gap-4">
+<div class="flex justify-between items-center pb-4 border-b border-outline-variant">
+<div>
+<p class="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">Order ID</p>
+<p class="font-title-lg text-title-lg text-text-primary">#PG-8829410</p>
+</div>
+<div class="text-right">
+<p class="font-label-sm text-label-sm text-text-secondary uppercase tracking-wider">Estimated Time</p>
+<div class="flex items-center gap-1 text-delivery-green">
+<span class="material-symbols-outlined !text-base">schedule</span>
+<p class="font-label-lg text-label-lg">11:42 AM</p>
+</div>
+</div>
+</div>
+<!-- Items Preview (Bento-style snippet) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex items-center gap-4 p-3 bg-surface-container rounded-lg">
+<div class="w-12 h-12 rounded-lg overflow-hidden bg-white shrink-0">
+<img class="w-full h-full object-cover" data-alt="A macro studio photograph of fresh, vibrant organic strawberries with a shallow depth of field, high-end commercial food photography style on a clean white background, vibrant reds and greens with soft natural lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB99Sq1t5ChYsnLbXhWK0LBvV92ipX07crS4HWC6nuWXXc1nzAhiRKwON5CRazJP4nbTxdXlAKUxbtSzMvYTCxpSlwavGx6yqGprlxtoKmda_ALn3p_dECKsBK4A5hCfB3OgsWev9_Lm81hb2kaSxtlBgvsuEv4jBu4MRaKsMFMvLPIhun4L9e-30Z_9-7L8izSQelfqI9fp-ZjSlRhN1PyRQuvMiGXqhgC_rkQNwh8GiVz_lqTyNfWew"/>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-text-primary">Fresh Strawberries</p>
+<p class="font-label-sm text-label-sm text-text-secondary">250g • 1 unit</p>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 bg-surface-container rounded-lg">
+<div class="w-12 h-12 rounded-lg overflow-hidden bg-white shrink-0">
+<img class="w-full h-full object-cover" data-alt="High-quality studio shot of a premium glass bottle of whole milk with condensation droplets on the surface, bright and airy lighting, minimalist aesthetic with soft shadows, representing freshness and health." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnt-8BkKyJkB5e7VvMQwsYHCIeEnNvHK9nPrfWOGEOQ3qkH2eJiFZ8ZXCu1QhlsmEfAs15bChDMfueHuYGWD4gKCiLT0WbjkKHdogWCBtSVFpVNbWq-wMuvEkC8N_XqO0AGXSnBap5YUYUAJeB-IJGl8rlWYaEec5652k7skg8k-OupBxHNKJsPVyhz_5Ibi3Anex2EHkYJlnwyKgHLj_zDcxcQgccYiZ8Gpdjf4emnShBLo9A7cMgdw"/>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-text-primary">Organic Whole Milk</p>
+<p class="font-label-sm text-label-sm text-text-secondary">1L • 2 units</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2 text-text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined !text-sm">local_shipping</span>
+<span>Delivery to 42nd Avenue, Sector 4, Premium Towers</span>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="animate-fade-up delay-3 w-full mt-unit-6 flex flex-col sm:flex-row gap-4 items-center">
+<button class="w-full sm:flex-1 h-14 bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-transform shadow-lg shadow-primary-container/10">
+<span class="material-symbols-outlined">map</span>
+                Track Order
+            </button>
+<button class="w-full sm:flex-1 h-14 bg-transparent border-2 border-on-surface text-on-surface font-label-lg text-label-lg rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-transform">
+                Continue Shopping
+            </button>
+</div>
+<!-- Promotional Badge (Asymmetric layout helper) -->
+<div class="animate-fade-up delay-3 mt-12 p-4 bg-tertiary-container/20 rounded-2xl flex items-center gap-4 text-left border border-tertiary-container/30">
+<div class="w-10 h-10 bg-tertiary-container text-on-tertiary-container rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">redeem</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-tertiary-container">You earned 450 Loyalty Points!</p>
+<p class="font-label-sm text-label-sm text-on-tertiary-fixed-variant">Use them for a free delivery on your next order.</p>
+</div>
+</div>
+</main>
+<!-- Footer Space for safe area on mobile -->
+<div class="h-10"></div>
+<script>
+        // Micro-interaction: Confetti Effect on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            const container = document.body;
+            const colors = ['#F7D700', '#0C831F', '#6d5e00', '#ffe24a'];
+            
+            for (let i = 0; i < 40; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.opacity = Math.random();
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                
+                container.appendChild(confetti);
+                
+                const animation = confetti.animate([
+                    { transform: `translate3d(0, 0, 0) rotate(0deg)`, opacity: 1 },
+                    { transform: `translate3d(${(Math.random() - 0.5) * 200}px, 100vh, 0) rotate(${Math.random() * 1000}deg)`, opacity: 0 }
+                ], {
+                    duration: Math.random() * 3000 + 2000,
+                    easing: 'cubic-bezier(0, .9, .57, 1)',
+                    delay: Math.random() * 500
+                });
+
+                animation.onfinish = () => confetti.remove();
+            }
+        });
+    </script>
+</body></html>

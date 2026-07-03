@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Premium Grocery - Categories</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#f8f9fa",
+                    "surface-dim": "#d9dadb",
+                    "outline-variant": "#cfc6ab",
+                    "error-red": "#EF4444",
+                    "on-secondary-fixed-variant": "#474747",
+                    "on-primary-container": "#6c5d00",
+                    "primary-fixed": "#ffe24a",
+                    "surface-gray": "#F3F4F6",
+                    "delivery-green": "#0C831F",
+                    "primary-fixed-dim": "#e3c600",
+                    "background": "#f8f9fa",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed-dim": "#c6c6c6",
+                    "outline": "#7d775f",
+                    "inverse-primary": "#e3c600",
+                    "on-tertiary": "#ffffff",
+                    "surface-container": "#edeeef",
+                    "inverse-on-surface": "#f0f1f2",
+                    "surface-variant": "#e1e3e4",
+                    "tertiary-fixed": "#6ffbbe",
+                    "primary-container": "#f7d700",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#e2e2e2",
+                    "on-tertiary-fixed": "#002113",
+                    "surface-bright": "#f8f9fa",
+                    "inverse-surface": "#2e3132",
+                    "success-green": "#10B981",
+                    "on-background": "#191c1d",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed": "#211b00",
+                    "primary": "#6d5e00",
+                    "text-primary": "#111827",
+                    "tertiary": "#006c49",
+                    "on-secondary-container": "#646464",
+                    "on-secondary-fixed": "#1b1b1b",
+                    "surface-container-high": "#e7e8e9",
+                    "text-secondary": "#6B7280",
+                    "tertiary-container": "#63f0b3",
+                    "on-tertiary-container": "#006b49",
+                    "on-surface-variant": "#4c4732",
+                    "error": "#ba1a1a",
+                    "secondary": "#5e5e5e",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#e1e3e4",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-error-container": "#93000a",
+                    "surface-container-low": "#f3f4f5",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-primary-fixed-variant": "#524600",
+                    "on-error": "#ffffff",
+                    "on-surface": "#191c1d",
+                    "surface-tint": "#6d5e00",
+                    "secondary-container": "#e2e2e2"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "unit-3": "24px",
+                    "base": "8px",
+                    "unit-4": "32px",
+                    "margin-desktop": "64px",
+                    "unit-2": "16px",
+                    "unit-1": "8px",
+                    "unit-6": "48px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "label-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "title-lg": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f8f9fa;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        @media (min-width: 768px) {
+            .bento-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        .category-card {
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .category-card:active {
+            transform: scale(0.96);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-background">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-50 flex flex-col px-margin-mobile md:px-margin-desktop py-unit-1 bg-surface-container-lowest dark:bg-inverse-surface shadow-sm dark:bg-surface-container-high">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center gap-unit-2">
+<button class="material-symbols-outlined text-primary dark:text-primary-fixed p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-150">location_on</button>
+<h1 class="font-display-lg text-title-lg font-black text-primary dark:text-primary-fixed tracking-tight">Premium Grocery</h1>
+</div>
+<div class="flex items-center gap-unit-1">
+<button class="material-symbols-outlined text-primary dark:text-primary-fixed p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-150">mic</button>
+<div class="hidden md:flex items-center gap-unit-4 ml-unit-4">
+<span class="font-title-lg text-label-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container-low transition-colors px-3 py-1 rounded-lg cursor-pointer">Home</span>
+<span class="font-title-lg text-label-lg text-primary dark:text-primary-fixed font-bold bg-primary-container dark:bg-primary-fixed rounded-xl px-3 py-1 cursor-default">Categories</span>
+<span class="font-title-lg text-label-lg text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container-low transition-colors px-3 py-1 rounded-lg cursor-pointer">Cart</span>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop pb-32 pt-8">
+<!-- Search Bar -->
+<div class="mb-unit-4 relative">
+<div class="flex items-center bg-surface-container-low rounded-xl px-4 h-14 border border-transparent focus-within:border-primary-container transition-all shadow-sm">
+<span class="material-symbols-outlined text-text-secondary mr-3" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 w-full text-body-lg font-body-lg placeholder:text-text-secondary" placeholder="Search categories and products..." type="text"/>
+</div>
+</div>
+<!-- Section Title -->
+<div class="flex items-center justify-between mb-unit-3">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-text-primary">Shop by Category</h2>
+<div class="flex items-center gap-1 text-delivery-green font-label-lg text-label-lg bg-green-50 px-3 py-1 rounded-full">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span>8-10 MINS</span>
+</div>
+</div>
+<!-- Categories Bento Grid -->
+<div class="bento-grid">
+<!-- Fruits & Vegetables -->
+<div class="category-card relative overflow-hidden h-48 md:h-64 rounded-xl bg-white border border-surface-gray shadow-sm flex flex-col group cursor-pointer hover:shadow-md">
+<div class="p-4 flex flex-col h-full justify-between">
+<div>
+<span class="text-tertiary font-label-lg text-label-lg bg-tertiary-container/30 px-2 py-0.5 rounded-full mb-2 inline-block">Fresh</span>
+<h3 class="font-title-lg text-title-lg text-text-primary">Fruits &amp; Vegetables</h3>
+</div>
+<div class="flex justify-end items-end">
+<span class="material-symbols-outlined text-primary text-5xl opacity-80" data-icon="nutrition">nutrition</span>
+</div>
+</div>
+<div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-5 transition-opacity"></div>
+</div>
+<!-- Dairy & Bread -->
+<div class="category-card relative overflow-hidden h-48 md:h-64 rounded-xl bg-white border border-surface-gray shadow-sm flex flex-col group cursor-pointer hover:shadow-md">
+<div class="p-4 flex flex-col h-full justify-between">
+<div>
+<span class="text-on-secondary-fixed-variant font-label-lg text-label-lg bg-secondary-container px-2 py-0.5 rounded-full mb-2 inline-block">Daily</span>
+<h3 class="font-title-lg text-title-lg text-text-primary">Dairy, Bread &amp; Eggs</h3>
+</div>
+<div class="flex justify-end items-end">
+<span class="material-symbols-outlined text-primary text-5xl opacity-80" data-icon="egg_alt">egg_alt</span>
+</div>
+</div>
+<div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-5 transition-opacity"></div>
+</div>
+<!-- Snacks & Munchies (Wide on desktop) -->
+<div class="category-card relative overflow-hidden h-48 md:h-64 md:col-span-2 rounded-xl bg-white border border-surface-gray shadow-sm flex flex-col group cursor-pointer hover:shadow-md">
+<div class="p-4 flex flex-col h-full justify-between">
+<div class="md:max-w-[60%]">
+<span class="text-error-red font-label-lg text-label-lg bg-error-container/30 px-2 py-0.5 rounded-full mb-2 inline-block">Trending</span>
+<h3 class="font-title-lg text-title-lg text-text-primary">Snacks &amp; Munchies</h3>
+<p class="hidden md:block text-text-secondary font-body-md text-body-md mt-2">Grab a bite of your favorite chips, cookies, and savory bites delivered instantly.</p>
+</div>
+<div class="flex justify-end items-end">
+<span class="material-symbols-outlined text-primary text-5xl md:text-7xl opacity-80" data-icon="fastfood">fastfood</span>
+</div>
+</div>
+<div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-5 transition-opacity"></div>
+</div>
+<!-- Beverages -->
+<div class="category-card relative overflow-hidden h-48 md:h-64 rounded-xl bg-white border border-surface-gray shadow-sm flex flex-col group cursor-pointer hover:shadow-md">
+<div class="p-4 flex flex-col h-full justify-between">
+<div>
+<h3 class="font-title-lg text-title-lg text-text-primary">Cold Drinks &amp; Juices</h3>
+</div>
+<div class="flex justify-end items-end">
+<span class="material-symbols-outlined text-primary text-5xl opacity-80" data-icon="local_bar">local_bar</span>
+</div>
+</div>
+<div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-5 transition-opacity"></div>
+</div>
+<!-- Personal Care -->
+<div class="category-card relative overflow-hidden h-48 md:h-64 rounded-xl bg-white border border-surface-gray shadow-sm flex flex-col group cursor-pointer hover:shadow-md">
+<div class="p-4 flex flex-col h-full justify-between">
+<div>
+<h3 class="font-title-lg text-title-lg text-text-primary">Personal Care</h3>
+</div>
+<div class="flex justify-end items-end">
+<span class="material-symbols-outlined text-primary text-5xl opacity-80" data-icon="face_6">face_6</span>
+</div>
+</div>
+<div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-5 transition-opacity"></div>
+</div>
+<!-- Household Items (Wide on desktop) -->
+<div class="category-card relative overflow-hidden h-48 md:h-64 md:col-span-2 rounded-xl bg-white border border-surface-gray shadow-sm flex flex-col group cursor-pointer hover:shadow-md">
+<div class="p-4 flex flex-col h-full justify-between">
+<div class="md:max-w-[60%]">
+<h3 class="font-title-lg text-title-lg text-text-primary">Cleaning &amp; Household</h3>
+<p class="hidden md:block text-text-secondary font-body-md text-body-md mt-2">Essential items for a spotless home. From detergents to kitchen tools.</p>
+</div>
+<div class="flex justify-end items-end">
+<span class="material-symbols-outlined text-primary text-5xl md:text-7xl opacity-80" data-icon="home_repair_service">home_repair_service</span>
+</div>
+</div>
+<div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-5 transition-opacity"></div>
+</div>
+<!-- Baby Care -->
+<div class="category-card relative overflow-hidden h-48 md:h-64 rounded-xl bg-white border border-surface-gray shadow-sm flex flex-col group cursor-pointer hover:shadow-md">
+<div class="p-4 flex flex-col h-full justify-between">
+<div>
+<h3 class="font-title-lg text-title-lg text-text-primary">Baby Care</h3>
+</div>
+<div class="flex justify-end items-end">
+<span class="material-symbols-outlined text-primary text-5xl opacity-80" data-icon="child_care">child_care</span>
+</div>
+</div>
+<div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-5 transition-opacity"></div>
+</div>
+<!-- Pet Care -->
+<div class="category-card relative overflow-hidden h-48 md:h-64 rounded-xl bg-white border border-surface-gray shadow-sm flex flex-col group cursor-pointer hover:shadow-md">
+<div class="p-4 flex flex-col h-full justify-between">
+<div>
+<h3 class="font-title-lg text-title-lg text-text-primary">Pet Care</h3>
+</div>
+<div class="flex justify-end items-end">
+<span class="material-symbols-outlined text-primary text-5xl opacity-80" data-icon="pets">pets</span>
+</div>
+</div>
+<div class="absolute inset-0 bg-primary opacity-0 group-hover:opacity-5 transition-opacity"></div>
+</div>
+</div>
+<!-- Promo Banner -->
+<section class="mt-unit-6 rounded-xl overflow-hidden relative h-40 flex items-center bg-primary-container shadow-sm border border-outline-variant/30">
+<div class="absolute right-0 top-0 w-1/2 h-full opacity-10">
+<span class="material-symbols-outlined text-[200px] absolute -right-10 -top-10" data-icon="shopping_basket">shopping_basket</span>
+</div>
+<div class="relative z-10 px-unit-4">
+<h3 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-primary-fixed mb-1">Stock Up &amp; Save</h3>
+<p class="text-on-primary-fixed-variant font-body-lg text-body-lg">Get up to 25% off on monthly essentials.</p>
+<button class="mt-4 bg-black text-white px-6 py-2 rounded-xl font-label-lg text-label-lg hover:scale-105 transition-transform active:scale-95">Explore Deals</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center bg-surface-container-lowest dark:bg-inverse-surface py-2 pb-safe px-4 border-t border-outline-variant dark:border-none shadow-lg z-50">
+<!-- Home -->
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 hover:bg-surface-container-high transition-all active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</div>
+<!-- Categories (Active) -->
+<div class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-fixed text-on-primary-container dark:text-on-primary-fixed rounded-xl px-3 py-1 transition-all active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="grid_view" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+<span class="font-label-sm text-label-sm">Categories</span>
+</div>
+<!-- Cart -->
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 hover:bg-surface-container-high transition-all active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="font-label-sm text-label-sm">Cart</span>
+</div>
+<!-- Orders -->
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 hover:bg-surface-container-high transition-all active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-sm text-label-sm">Orders</span>
+</div>
+<!-- Account -->
+<div class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 hover:bg-surface-container-high transition-all active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Account</span>
+</div>
+</nav>
+<script>
+        // Simple micro-interaction for category cards
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const icon = card.querySelector('.material-symbols-outlined');
+                if (icon) {
+                    icon.style.transform = 'scale(1.1) rotate(-5deg)';
+                    icon.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                const icon = card.querySelector('.material-symbols-outlined');
+                if (icon) {
+                    icon.style.transform = 'scale(1) rotate(0deg)';
+                }
+            });
+        });
+    </script>
+</body></html>

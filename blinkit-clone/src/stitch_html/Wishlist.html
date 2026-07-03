@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Wishlist | Premium Grocery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config Verbatim -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface-variant": "#4c4732",
+                    "on-primary-container": "#6c5d00",
+                    "error-container": "#ffdad6",
+                    "surface-variant": "#e1e3e4",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#e3c600",
+                    "surface-container-highest": "#e1e3e4",
+                    "tertiary-container": "#63f0b3",
+                    "outline-variant": "#cfc6ab",
+                    "text-primary": "#111827",
+                    "primary": "#6d5e00",
+                    "background": "#f8f9fa",
+                    "on-surface": "#191c1d",
+                    "on-error-container": "#93000a",
+                    "text-secondary": "#6B7280",
+                    "primary-container": "#f7d700",
+                    "surface-gray": "#F3F4F6",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "success-green": "#10B981",
+                    "secondary-container": "#e2e2e2",
+                    "secondary": "#5e5e5e",
+                    "primary-fixed": "#ffe24a",
+                    "on-error": "#ffffff",
+                    "surface-container-high": "#e7e8e9",
+                    "inverse-surface": "#2e3132",
+                    "on-primary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "error-red": "#EF4444",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "secondary-fixed": "#e2e2e2",
+                    "on-primary-fixed": "#211b00",
+                    "secondary-fixed-dim": "#c6c6c6",
+                    "on-secondary-container": "#646464",
+                    "surface-container-low": "#f3f4f5",
+                    "surface-container": "#edeeef",
+                    "on-tertiary-fixed": "#002113",
+                    "outline": "#7d775f",
+                    "on-tertiary": "#ffffff",
+                    "surface": "#f8f9fa",
+                    "primary-fixed-dim": "#e3c600",
+                    "on-secondary-fixed": "#1b1b1b",
+                    "delivery-green": "#0C831F",
+                    "surface-bright": "#f8f9fa",
+                    "tertiary-fixed": "#6ffbbe",
+                    "surface-tint": "#6d5e00",
+                    "surface-dim": "#d9dadb",
+                    "on-tertiary-container": "#006b49",
+                    "on-secondary-fixed-variant": "#474747",
+                    "on-primary-fixed-variant": "#524600",
+                    "inverse-on-surface": "#f0f1f2",
+                    "on-background": "#191c1d",
+                    "tertiary": "#006c49"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit-6": "48px",
+                    "margin-desktop": "64px",
+                    "unit-2": "16px",
+                    "unit-4": "32px",
+                    "margin-mobile": "16px",
+                    "unit-3": "24px",
+                    "base": "8px",
+                    "unit-1": "8px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "title-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        @media (min-width: 768px) {
+            .wishlist-grid {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-50 flex flex-col px-margin-mobile md:px-margin-desktop py-unit-1 bg-surface-container-lowest dark:bg-inverse-surface shadow-sm transition-all duration-150">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center gap-4">
+<button class="md:hidden p-2 rounded-full hover:bg-surface-container-low transition-colors" onclick="history.back()">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-display-lg text-title-lg font-black text-primary dark:text-primary-fixed">Premium Grocery</h1>
+</div>
+<div class="hidden md:flex items-center gap-unit-6">
+<nav class="flex gap-unit-4">
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Home</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Categories</a>
+<a class="font-body-md text-primary font-bold" href="#">Wishlist</a>
+<a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Orders</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">mic</span>
+</button>
+<div class="h-10 w-10 rounded-full bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container">person</span>
+</div>
+</div>
+</div>
+<div class="md:hidden flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">mic</span>
+</div>
+</div>
+</header>
+<main class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-unit-4">
+<!-- Page Header -->
+<div class="flex flex-col gap-1 mb-unit-4">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-text-primary">Saved Items</h2>
+<p class="font-body-md text-text-secondary"><span id="item-count">3</span> items found in your wishlist</p>
+</div>
+<!-- Wishlist Content Area -->
+<div class="wishlist-grid" id="wishlist-container">
+<!-- Product Card 1 -->
+<div class="product-card group relative bg-surface-container-lowest border border-surface-variant rounded-xl overflow-hidden p-4 shadow-sm hover:shadow-md transition-all duration-200">
+<button aria-label="Remove item" class="absolute top-3 right-3 z-10 p-2 bg-white/80 backdrop-blur-sm rounded-full text-error hover:bg-error-container transition-colors shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">delete</span>
+</button>
+<div class="aspect-square w-full mb-4 bg-surface-gray rounded-lg overflow-hidden flex items-center justify-center relative">
+<img class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-500" data-alt="A high-end, studio-lit photograph of a cluster of organic, deep purple grapes with morning dew droplets. The lighting is crisp and professional, highlighting the translucent quality of the fruit. The overall aesthetic is clean and premium, consistent with a high-end corporate grocery brand, set against a soft, neutral off-white background with subtle ambient shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTLgRrioaqDbiZeqrL6_zjMwhJBvhYIv1-dIxp95t9WWabfYPCcG2w1NBUUsHPWaZwu_bwcxJuExVMfgOeS_TzuV_4aPa779KHX77uiZyXDnvbxo96nkeWZ7W9jVGBBBZlpFaMJUps517d0xWeLRUNkphz9eFOrWkr2hi96Q2r4FlPb4WwevR2-4b8dQNMRzOFFS9oUDxy3rUSGZWa-KvwO2zsu9KxzvTjxU2KClzRfemkW3IvR7l0wA"/>
+<span class="absolute bottom-2 left-2 px-2 py-1 bg-delivery-green text-white text-[10px] font-bold rounded">8-10 MINS</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-text-secondary uppercase tracking-wider">Organic Fruits</span>
+<h3 class="font-title-lg text-body-lg text-text-primary font-bold truncate">Premium Black Grapes</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-headline-lg-mobile text-text-primary font-bold text-lg">$4.99</span>
+<span class="font-body-md text-text-secondary line-through">$6.50</span>
+<span class="text-error-red font-bold text-sm">23% OFF</span>
+</div>
+</div>
+<div class="mt-4">
+<button class="w-full bg-primary-container text-on-primary-container font-label-lg py-3 rounded-xl hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-base">shopping_cart</span>
+                        Move to Cart
+                    </button>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="product-card group relative bg-surface-container-lowest border border-surface-variant rounded-xl overflow-hidden p-4 shadow-sm hover:shadow-md transition-all duration-200">
+<button aria-label="Remove item" class="absolute top-3 right-3 z-10 p-2 bg-white/80 backdrop-blur-sm rounded-full text-error hover:bg-error-container transition-colors shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">delete</span>
+</button>
+<div class="aspect-square w-full mb-4 bg-surface-gray rounded-lg overflow-hidden flex items-center justify-center relative">
+<img class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-500" data-alt="A macro studio shot of a high-quality artisanal sourdough bread loaf, sliced to reveal a perfect airy crumb. The crust is golden-brown and dusted with flour. Lighting is warm and atmospheric, emphasizing texture and quality. The background is a clean, modern kitchen surface, maintaining a professional corporate grocery delivery aesthetic with vibrant yellow accents in the distance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-zxHQyQDuNR8ujqMQmOGjeIDJypHBwrlNzxMPmeMYUYZOTQhF6AYndAMFfVa7dWkcMXfUL-8pzvhWSMikAgAnEYi07uSPJ6AM5SBwv5Tv5ZYFKOz35BxhCtCbvYWFstpujblh1OFrVLRgFj8_Vi9yICMTPRpZ6LFC4ONJo8CJPscYStU2mm-TbZ6BBdbwTGLJgtuSoA1VLG2ySheU0GFj5exZoJzep8mw2ZdePsy4rsuayOCzYuES1w"/>
+<span class="absolute bottom-2 left-2 px-2 py-1 bg-delivery-green text-white text-[10px] font-bold rounded">15 MINS</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-text-secondary uppercase tracking-wider">Bakery</span>
+<h3 class="font-title-lg text-body-lg text-text-primary font-bold truncate">Artisanal Sourdough</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-headline-lg-mobile text-text-primary font-bold text-lg">$7.50</span>
+</div>
+</div>
+<div class="mt-4">
+<button class="w-full bg-primary-container text-on-primary-container font-label-lg py-3 rounded-xl hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-base">shopping_cart</span>
+                        Move to Cart
+                    </button>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="product-card group relative bg-surface-container-lowest border border-surface-variant rounded-xl overflow-hidden p-4 shadow-sm hover:shadow-md transition-all duration-200">
+<button aria-label="Remove item" class="absolute top-3 right-3 z-10 p-2 bg-white/80 backdrop-blur-sm rounded-full text-error hover:bg-error-container transition-colors shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">delete</span>
+</button>
+<div class="aspect-square w-full mb-4 bg-surface-gray rounded-lg overflow-hidden flex items-center justify-center relative">
+<img class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-500" data-alt="A sleek, minimalist glass bottle of premium cold-pressed green juice, containing spinach, kale, and apple. The juice is a vibrant, healthy green. The bottle sits on a reflective white surface with soft ambient shadows. The overall composition is elegant and fresh, conveying health and premium quality within a modern digital grocery application context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxeWAz4AcSO4x7Wtvn1dx8Yrcu7QczZLOvcHju51oOrrnup7nQ1COiJxYdS2Bk0JCWQt1UNPPJOLzBKDkViuWX6-N-G59i5Pmh3380447qqTyNcfLluJfMAqo18p7IGTyC0TR7UHqtXb4DWH37QM9VPiB8hbFW9bv3XZcqrYU3Evt2Egx_dSyP7vTbU59x74JyXP-_dxe2ACfgScGS8CVvOBD3crMgV43ST3zQiE3DJClVhJ-WT4vOsg"/>
+<span class="absolute bottom-2 left-2 px-2 py-1 bg-delivery-green text-white text-[10px] font-bold rounded">10 MINS</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-text-secondary uppercase tracking-wider">Cold Pressed</span>
+<h3 class="font-title-lg text-body-lg text-text-primary font-bold truncate">Power Green Detox</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-headline-lg-mobile text-text-primary font-bold text-lg">$5.25</span>
+</div>
+</div>
+<div class="mt-4">
+<button class="w-full bg-primary-container text-on-primary-container font-label-lg py-3 rounded-xl hover:opacity-90 active:scale-95 transition-all flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-base">shopping_cart</span>
+                        Move to Cart
+                    </button>
+</div>
+</div>
+</div>
+<!-- Empty State (Hidden by default) -->
+<div class="hidden flex-col items-center justify-center py-unit-6 text-center" id="empty-state">
+<div class="w-64 h-64 mb-unit-4 relative">
+<div class="absolute inset-0 bg-primary-container/10 rounded-full animate-pulse"></div>
+
+</div>
+<h3 class="font-headline-lg-mobile md:font-headline-lg text-text-primary mb-2">Your wishlist is empty</h3>
+<p class="font-body-lg text-text-secondary max-w-sm mb-unit-4">Looks like you haven't saved anything yet. Explore our fresh products and save your favorites!</p>
+<button class="bg-primary text-on-primary font-label-lg px-unit-6 py-4 rounded-xl hover:opacity-90 active:scale-95 transition-all shadow-md">
+                Start Shopping
+            </button>
+</div>
+<!-- Suggestions Section (Bento Grid Style) -->
+<section class="mt-unit-6">
+<div class="flex items-center justify-between mb-unit-4">
+<h2 class="font-title-lg text-text-primary">Recommended for you</h2>
+<a class="text-primary font-label-lg flex items-center gap-1 hover:underline" href="#">
+                    View all
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 h-auto md:h-80">
+<!-- Large Feature -->
+<div class="md:col-span-2 relative rounded-2xl overflow-hidden group cursor-pointer border border-surface-variant">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A panoramic, vibrant bento-style display of assorted fresh tropical fruits: sliced mango, kiwi, dragonfruit, and berries. The colors are incredibly saturated and appetizing. Shot with a shallow depth of field in a clean, high-contrast environment. Professional lighting creates a premium, luxury grocery feel suitable for a banner." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeWaVf9MmzswEAenS8DePW9tzpsGkF1Aj3KL7uyGfjAk1ybO4FEBC8Kr9Upy02pICpC50_rKYbcjqzZPVdMiwr03HASb_OGd3Nc2GwowRIM--BMtKs8MZw8SSNgVXX-V8oc-jjVDrPr4DPuln1egSte7aJ84G-BPdJyvQK-rVO05eA8LITij8zPZ2Dle6m8DmMmp7X5AxIUdP_vPWEy7DaZLWmmR-1NXQFZ-oUl4ejQQB-vxMI6b-WPQ"/>
+<div class="absolute bottom-0 left-0 p-6 z-20">
+<span class="inline-block px-3 py-1 bg-primary-container text-on-primary-container rounded-full text-xs font-bold mb-2 uppercase tracking-widest">Seasonal</span>
+<h3 class="font-headline-lg-mobile text-white mb-2">Exotic Fruit Platter</h3>
+<p class="text-white/80 font-body-md">Freshly cut and ready to serve. Delivered in 10 mins.</p>
+</div>
+</div>
+<!-- Secondary Feature -->
+<div class="relative rounded-2xl overflow-hidden group cursor-pointer border border-surface-variant bg-surface-container">
+<div class="p-6 h-full flex flex-col justify-between">
+<div>
+<span class="text-delivery-green font-bold text-sm flex items-center gap-1 mb-2">
+<span class="material-symbols-outlined text-sm">bolt</span> Fresh Arrival
+                            </span>
+<h3 class="font-title-lg text-text-primary">Organic Honey</h3>
+<p class="text-text-secondary text-sm mt-1">Direct from local farms.</p>
+</div>
+<div class="mt-auto self-end">
+<img class="w-32 h-32 object-contain group-hover:rotate-12 transition-transform duration-300" data-alt="A small, elegant glass jar of pure golden organic honey with a wooden dipper resting beside it. The lighting is warm and glowing, making the honey look amber and rich. Minimalist, clean corporate product photography style against a neutral light gray background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA39Zg_ScAfHNtWW9Dx86sOgxhhQNd6OG-6N4GkzdAPOVGun39LPe0Ee9OcmroONQFLmT3TkDvq0ixPvAnYQQ5v0D4VTJvH9T29ET2_QNx1HMRdTbTywKj0yLWjbpCl3hl9qbw0HcKhz1bpNfrYTA9b8jZSMzjIw0Ey1yFqplsCS5S2UsFkYLbBLEvmC5-P9_BCyJEJafsI6R4lZduahSH64euYMQKOq4ASSVJa365_6QKAjjFwep6d9A"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center bg-surface-container-lowest dark:bg-inverse-surface py-2 pb-safe px-4 border-t border-outline-variant dark:border-none shadow-lg z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-sm text-label-sm">Categories</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-sm text-label-sm">Cart</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-fixed text-on-primary-container dark:text-on-primary-fixed rounded-xl px-3 py-1 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-label-sm text-label-sm">Wishlist</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-secondary-fixed-variant px-3 py-1 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Account</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interactions for deleting items
+        document.querySelectorAll('.product-card button[aria-label="Remove item"]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const card = this.closest('.product-card');
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.9)';
+                
+                setTimeout(() => {
+                    card.remove();
+                    updateItemCount();
+                }, 300);
+            });
+        });
+
+        function updateItemCount() {
+            const count = document.querySelectorAll('.product-card').length;
+            document.getElementById('item-count').textContent = count;
+            
+            if (count === 0) {
+                document.getElementById('wishlist-container').classList.add('hidden');
+                document.getElementById('empty-state').classList.remove('hidden');
+                document.getElementById('empty-state').classList.add('flex');
+            }
+        }
+        
+        // Active Navigation Logic Check (already applied in HTML via shared components style classes)
+    </script>
+</body></html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Premium Grocery - Onboarding</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Shared Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-surface": "#2e3132",
+                    "on-secondary-fixed": "#1b1b1b",
+                    "secondary-fixed": "#e2e2e2",
+                    "on-tertiary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed": "#002113",
+                    "tertiary-container": "#63f0b3",
+                    "text-secondary": "#6B7280",
+                    "on-tertiary-container": "#006b49",
+                    "surface-tint": "#6d5e00",
+                    "on-error": "#ffffff",
+                    "background": "#f8f9fa",
+                    "surface-container-highest": "#e1e3e4",
+                    "inverse-primary": "#e3c600",
+                    "secondary-container": "#e2e2e2",
+                    "error-red": "#EF4444",
+                    "surface-variant": "#e1e3e4",
+                    "on-primary-fixed-variant": "#524600",
+                    "surface": "#f8f9fa",
+                    "surface-container-low": "#f3f4f5",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "text-primary": "#111827",
+                    "inverse-on-surface": "#f0f1f2",
+                    "on-error-container": "#93000a",
+                    "on-surface-variant": "#4c4732",
+                    "on-secondary": "#ffffff",
+                    "on-primary-container": "#6c5d00",
+                    "on-surface": "#191c1d",
+                    "delivery-green": "#0C831F",
+                    "primary-fixed-dim": "#e3c600",
+                    "on-secondary-fixed-variant": "#474747",
+                    "outline-variant": "#cfc6ab",
+                    "surface-container-lowest": "#ffffff",
+                    "primary": "#6d5e00",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "surface-gray": "#F3F4F6",
+                    "on-background": "#191c1d",
+                    "primary-container": "#f7d700",
+                    "secondary": "#5e5e5e",
+                    "on-primary-fixed": "#211b00",
+                    "tertiary-fixed": "#6ffbbe",
+                    "surface-bright": "#f8f9fa",
+                    "surface-container": "#edeeef",
+                    "outline": "#7d775f",
+                    "tertiary": "#006c49",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#e7e8e9",
+                    "primary-fixed": "#ffe24a",
+                    "error": "#ba1a1a",
+                    "on-secondary-container": "#646464",
+                    "surface-dim": "#d9dadb",
+                    "success-green": "#10B981",
+                    "secondary-fixed-dim": "#c6c6c6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px",
+                    "btn": "20px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "unit-3": "24px",
+                    "margin-desktop": "64px",
+                    "unit-4": "32px",
+                    "unit-1": "8px",
+                    "gutter": "16px",
+                    "unit-2": "16px",
+                    "unit-6": "48px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "title-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "label-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        
+        .onboarding-gradient {
+            background: radial-gradient(circle at top right, #fffde6 0%, #ffffff 50%);
+        }
+
+        .motion-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .step-indicator {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col font-body-md overflow-hidden onboarding-gradient">
+<!-- Top AppBar (Simplified for Onboarding) -->
+<header class="sticky top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-unit-3">
+<div class="flex items-center gap-2">
+<span class="font-display-lg text-headline-lg-mobile md:text-headline-lg font-black text-primary">Premium</span>
+</div>
+<button class="text-on-surface-variant font-label-lg hover:text-primary transition-colors px-4 py-2">
+            Skip
+        </button>
+</header>
+<main class="flex-1 flex flex-col items-center justify-center px-margin-mobile text-center relative max-w-lg mx-auto">
+<!-- Illustration Container -->
+<div class="relative w-full aspect-square max-h-[400px] mb-unit-6 flex items-center justify-center">
+<!-- Background Decorative Shape -->
+<div class="absolute inset-0 bg-primary-container/20 rounded-full blur-3xl scale-75"></div>
+<!-- Modern Delivery Rider Illustration -->
+<div class="relative z-10 w-full h-full motion-float flex items-center justify-center">
+<img class="w-full h-full object-contain drop-shadow-2xl" data-alt="A high-end, contemporary 3D digital illustration of a stylized delivery rider on a sleek electric scooter, wearing a modern yellow uniform. The rider is moving fast, with blurred motion lines trailing behind, symbolizing rapid 10-minute speed. The lighting is bright and optimistic, set against a clean white-label background with soft ambient shadows. The overall aesthetic is professional, corporate-modern, and utilizes a vibrant primary yellow as the focal color for the delivery gear and scooter accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuJmHrOlul8DizhlgEiWbOSBezlkSaq3wrdioy3HR5C0JKFnHKT4StzNl5bfIBKmGiH0V-EtJpsLpjL2OOhUZczJgbxAZd69oDILJTBT-SDy2d3DOjmihIBBu-vk9R3p-n5MvYI_YugTsmvJ8CEnEs2wwYWnOWaIOJ6xQQ2O1AbXrsB1xSMl8vvNHxW2RaNHDyUWMNQuKpLB-FX7NOeysWa-tOkROwsh0Jd9ZjEFNORix1PZIy8vCQXw"/>
+</div>
+<!-- Delivery Badge -->
+<div class="absolute top-4 right-4 bg-white shadow-lg rounded-xl p-3 flex flex-col items-start gap-1 border border-outline-variant transform rotate-3">
+<div class="flex items-center gap-1 text-delivery-green">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">timer</span>
+<span class="font-label-sm uppercase tracking-wider font-bold">Arriving in</span>
+</div>
+<span class="font-title-lg text-primary">8-10 MINS</span>
+</div>
+</div>
+<!-- Text Content -->
+<div class="space-y-4 mb-12">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-text-primary tracking-tight">
+                10 Minute Delivery <br/> <span class="text-primary">At Your Doorstep</span>
+</h1>
+<p class="font-body-lg text-body-lg text-text-secondary max-w-xs mx-auto">
+                Experience the magic of ultra-fast grocery delivery. Freshness delivered in minutes, not hours.
+            </p>
+</div>
+<!-- Progress Indicators -->
+<div class="flex gap-2 mb-12">
+<div class="h-2 w-8 rounded-full bg-primary step-indicator"></div>
+<div class="h-2 w-2 rounded-full bg-surface-container-highest step-indicator"></div>
+<div class="h-2 w-2 rounded-full bg-surface-container-highest step-indicator"></div>
+</div>
+</main>
+<!-- Footer Controls -->
+<footer class="w-full px-margin-mobile md:px-margin-desktop py-8 flex flex-col gap-4 max-w-lg mx-auto">
+<button class="w-full h-14 bg-primary-container text-on-primary-fixed font-label-lg rounded-[20px] shadow-sm hover:shadow-md active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2">
+            Next
+            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<!-- Mobile Bottom Handle Bar (Visual Only) -->
+<div class="w-32 h-1.5 bg-surface-dim rounded-full mx-auto mt-4 md:hidden"></div>
+</footer>
+<!-- Atmosphere/Interaction Script -->
+<script>
+        // Simple entry animation for text elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('h1, p, .flex.gap-2');
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s cubic-bezier(0.22, 1, 0.36, 1)';
+                
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 100 * (index + 1));
+            });
+        });
+    </script>
+</body></html>

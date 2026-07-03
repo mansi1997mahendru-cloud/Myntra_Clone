@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface-variant": "#4c4732",
+                    "on-primary-container": "#6c5d00",
+                    "error-container": "#ffdad6",
+                    "surface-variant": "#e1e3e4",
+                    "error": "#ba1a1a",
+                    "inverse-primary": "#e3c600",
+                    "surface-container-highest": "#e1e3e4",
+                    "tertiary-container": "#63f0b3",
+                    "outline-variant": "#cfc6ab",
+                    "text-primary": "#111827",
+                    "primary": "#6d5e00",
+                    "background": "#f8f9fa",
+                    "on-surface": "#191c1d",
+                    "on-error-container": "#93000a",
+                    "text-secondary": "#6B7280",
+                    "primary-container": "#f7d700",
+                    "surface-gray": "#F3F4F6",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "success-green": "#10B981",
+                    "secondary-container": "#e2e2e2",
+                    "secondary": "#5e5e5e",
+                    "primary-fixed": "#ffe24a",
+                    "on-error": "#ffffff",
+                    "surface-container-high": "#e7e8e9",
+                    "inverse-surface": "#2e3132",
+                    "on-primary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "error-red": "#EF4444",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "secondary-fixed": "#e2e2e2",
+                    "on-primary-fixed": "#211b00",
+                    "secondary-fixed-dim": "#c6c6c6",
+                    "on-secondary-container": "#646464",
+                    "surface-container-low": "#f3f4f5",
+                    "surface-container": "#edeeef",
+                    "on-tertiary-fixed": "#002113",
+                    "outline": "#7d775f",
+                    "on-tertiary": "#ffffff",
+                    "surface": "#f8f9fa",
+                    "primary-fixed-dim": "#e3c600",
+                    "on-secondary-fixed": "#1b1b1b",
+                    "delivery-green": "#0C831F",
+                    "surface-bright": "#f8f9fa",
+                    "tertiary-fixed": "#6ffbbe",
+                    "surface-tint": "#6d5e00",
+                    "surface-dim": "#d9dadb",
+                    "on-tertiary-container": "#006b49",
+                    "on-secondary-fixed-variant": "#474747",
+                    "on-primary-fixed-variant": "#524600",
+                    "inverse-on-surface": "#f0f1f2",
+                    "on-background": "#191c1d",
+                    "tertiary": "#006c49"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit-6": "48px",
+                    "margin-desktop": "64px",
+                    "unit-2": "16px",
+                    "unit-4": "32px",
+                    "margin-mobile": "16px",
+                    "unit-3": "24px",
+                    "base": "8px",
+                    "unit-1": "8px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "title-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .glass-header { backdrop-filter: blur(12px); background-color: rgba(255, 255, 255, 0.85); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary-container">
+<!-- Top AppBar (from JSON) -->
+<header class="sticky top-0 w-full z-50 flex flex-col px-margin-mobile md:px-margin-desktop py-unit-1 bg-surface-container-lowest dark:bg-inverse-surface shadow-sm dark:bg-surface-container-high glass-header">
+<div class="flex items-center justify-between h-14">
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-title-lg text-title-lg font-black text-primary dark:text-primary-fixed">Premium Grocery</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary">share</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary">favorite</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-unit-4 pb-32">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-unit-6 items-start">
+<!-- Gallery Section -->
+<section class="space-y-unit-3">
+<div class="relative aspect-square bg-white rounded-3xl overflow-hidden shadow-sm border border-outline-variant/30 flex items-center justify-center p-unit-4">
+<img class="w-full h-full object-contain" data-alt="Close up studio photography of a perfectly ripe Organic Hass Avocado sliced in half, showing the creamy light green interior and dark brown textured skin. The fruit is resting on a clean white marble surface with soft, diffused cinematic lighting that highlights the buttery texture and fresh droplets of water. The overall aesthetic is clean, premium, and appetizing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyCU3ZcUWyw5HScLFut4tjYrWZzgaiaIAeIlgSmw-AivHWaDcp0FOpH0xyyvDu2L5y80r9MPJNRmlcRouR51Eb8c5GqRpkfRNoqltkQu7Ii5YGZNSHVPrw559ahoInLvWBJiYN-EFKpjqXzP87Tug5cjZbUwbKNTlaPb4FFbMGoJMkCMzqnsLddtoNsa4cwIVI2kI061t7flIBEzSr8NCl6KWQBHiMAyF1K1d2D8klOXqqDe9SeAcItA"/>
+<div class="absolute top-4 left-4 bg-delivery-green text-white px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">timer</span>
+<span class="font-label-lg text-label-lg">8-10 MINS</span>
+</div>
+</div>
+<div class="flex gap-4 overflow-x-auto no-scrollbar">
+<div class="min-w-[80px] h-[80px] rounded-xl border-2 border-primary overflow-hidden bg-white cursor-pointer ring-offset-2">
+<img class="w-full h-full object-cover" data-alt="Close-up of a whole dark-skinned Hass avocado with its distinctive pebbly texture, set against a bright, professional white background for a grocery delivery app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVQdjZ2Tm_-I_L2dZO82BapeduQweBajL3Bg_d97vwTRe_5tmfrwsI-s7woYoZbCkG9OMJa4a7PLml8WS4ePrHFsjsDhf28pwCHI2XVs0qNTuXtMpQyorxiveQIKjYJYpciMKgEzjK4jHCpDtMcsB1qth3Fxu_SvDscCMNAOMtqzpoPDORq7J-C3htoslEfIi484XMaTrxH6_AB6MB0-kWzF9Tkcn8E9CNh903dKLiXvkcsSfuSTHizQ"/>
+</div>
+<div class="min-w-[80px] h-[80px] rounded-xl border border-outline-variant/30 overflow-hidden bg-white cursor-pointer hover:border-primary/50 transition-colors">
+<img class="w-full h-full object-cover" data-alt="Macro view of a sliced avocado pit and the golden-green creamy flesh surrounding it, bright and fresh lighting, ultra-high resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_P9jKTR0r0cOyWBUwwJBfLLuBbTUA33D9zUI3HSCo5cxgxdeXdxgazBNEDiG8kLv73OzKmGGk-rBUkNEyXFCFwQ6J4Jhm6DMChm6OeLhNZhuf_yFZAboo9immpZd3o7sl0H8tztahj-Vx2NxbfN3JYF86Ft6qgMHze4k4nystATYBYZ4dnQZ342nbM24wjqwpJtvrbpszqzZ2oxlvYh3WSEbh_YmQWi6Vni_7IRxojSHeCk84xFs0Hg"/>
+</div>
+<div class="min-w-[80px] h-[80px] rounded-xl border border-outline-variant/30 overflow-hidden bg-white cursor-pointer hover:border-primary/50 transition-colors">
+<img class="w-full h-full object-cover" data-alt="Three organic avocados in a rustic woven basket, illustrating farm-fresh quality with soft natural sunlight and vibrant greens." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBl3wOxwVlZYqbpFSyDyK2O_8T9kELddpzI-wPVZ9tHmEs-Rct5dKl9RnlHLOjkhsoBm_yPRpaa1EXSdKwVOIdK8aghz1YzdupN57eu5_hgOuPnP3-s8-gytEQbRZKn9CKI0xsxpcBdNQ8BBFXlhOjXKU-XX_K2-rndR3t2WdHl9dMj3EUbm4ZBcPJeYzzUpsUYtEODloZKZiR_crTL-AJx_xftkXTXcl-MTKWJPmeaeIwgRchLgyNMOQ"/>
+</div>
+<div class="min-w-[80px] h-[80px] rounded-xl border border-outline-variant/30 overflow-hidden bg-white cursor-pointer hover:border-primary/50 transition-colors">
+<img class="w-full h-full object-cover" data-alt="A person's hand holding a ripe avocado to show scale and quality, bright clean kitchen background, premium food photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBW25OYK-42t0zxxBKGyKlH7Ydi5a3-y7nd35U-XadcC27MoiLPHkPfnvEqtl1B58INaJyLzueprRnXSlOOv-G4hTwydgGLVsHD-_6xT91GyNKo48jaBXOM7Vq19BF7-JbdWtC0QzcbfBXzuoF6cVxwRDTHHqClXRI-M12x8O9qO53HD8m2b15IaNXGiV8wo2-TsC4n6JWm7P4ote6AJTVtCAI1R6EHciAAQd3IVG8CyKzudIqgyz1piA"/>
+</div>
+</div>
+</section>
+<!-- Product Info Section -->
+<section class="space-y-unit-4">
+<div class="space-y-2">
+<p class="font-label-lg text-label-lg text-tertiary uppercase tracking-wider">Organic Fruits</p>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Organic Hass Avocado</h2>
+<div class="flex items-center gap-2 mt-2">
+<div class="flex items-center bg-primary-container/20 px-2 py-0.5 rounded text-primary">
+<span class="font-label-lg text-label-lg">4.8</span>
+<span class="material-symbols-outlined text-[16px] ml-0.5" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="text-on-surface-variant font-body-md text-body-md">(2.4k Reviews)</span>
+</div>
+</div>
+<div class="flex items-end gap-3">
+<div class="space-y-1">
+<span class="font-display-lg text-[36px] font-extrabold text-on-surface leading-none">₹399</span>
+<p class="text-on-surface-variant font-body-md text-body-md">Inclusive of all taxes</p>
+</div>
+<div class="mb-5 flex flex-col items-start">
+<span class="text-error-red font-label-lg text-label-lg line-through">₹499</span>
+<span class="bg-error-container text-on-error-container px-2 py-0.5 rounded-md font-label-sm text-label-sm font-bold">20% OFF</span>
+</div>
+</div>
+<div class="p-4 bg-surface-container rounded-2xl border border-outline-variant/20 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[32px]">scale</span>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Weight</p>
+<p class="font-body-md text-body-md text-on-surface-variant">500g (Approx. 2-3 pieces)</p>
+</div>
+</div>
+<button class="bg-white px-4 py-2 rounded-xl font-label-lg text-label-lg border border-outline-variant shadow-sm active:scale-95 transition-transform">Change</button>
+</div>
+<div class="space-y-unit-2">
+<h3 class="font-title-lg text-title-lg text-on-surface">Product Description</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                        Indulge in the buttery, rich flavor of our premium Organic Hass Avocados. Sourced directly from certified organic farms, these avocados are picked at the perfect peak of ripeness to ensure a creamy texture that's ideal for everything from classic guacamole to morning toast. Rich in heart-healthy monounsaturated fats and essential nutrients.
+                    </p>
+</div>
+<!-- Nutritional Info Accordion (Static) -->
+<div class="border-t border-outline-variant/30 pt-unit-2">
+<details class="group">
+<summary class="flex justify-between items-center cursor-pointer list-none py-2">
+<span class="font-title-lg text-title-lg">Nutritional Information</span>
+<span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="grid grid-cols-2 gap-4 py-4 text-on-surface-variant">
+<div class="flex justify-between border-b border-outline-variant/10 pb-1">
+<span>Calories</span>
+<span class="font-bold text-on-surface">160 kcal</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant/10 pb-1">
+<span>Potassium</span>
+<span class="font-bold text-on-surface">485 mg</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant/10 pb-1">
+<span>Healthy Fats</span>
+<span class="font-bold text-on-surface">15g</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant/10 pb-1">
+<span>Dietary Fiber</span>
+<span class="font-bold text-on-surface">7g</span>
+</div>
+</div>
+</details>
+</div>
+</section>
+</div>
+<!-- Frequently Bought Together -->
+<section class="mt-unit-6">
+<div class="flex items-center justify-between mb-unit-3">
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile font-bold">Frequently Bought Together</h3>
+<button class="text-primary font-label-lg text-label-lg hover:underline">View All</button>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+<!-- Item 1 -->
+<div class="bg-white p-3 rounded-2xl border border-surface-variant shadow-sm hover:shadow-md transition-all group">
+<div class="aspect-square rounded-xl overflow-hidden mb-3 bg-surface-gray">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform" data-alt="A clear plastic clamshell container of fresh, bright red cherry tomatoes with green stems, presented on a clean white background, high contrast, commercial grocery style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAu2xcqAgcHuMQFQpPez3fPXq6GXD-6T1LqfQUpKoywG8g85XD36CYgAlfInB_rZt7sHaNinpx2Ee7wnh26MaMWhH1QHVJ1the2v1LQEih43A0O40JnBGpfnElGpCfWH4Gdy9aC-Q8bwARsnO4e5ZcI1MbIuEhMIUg2asqaIkODGEA41LzXO24HnWkB7OfT_7wd2bXk28o5hq41zxY7kKzZ861fNTUi9LJmec2rVk_sndhPxsAywZOxEA"/>
+</div>
+<p class="font-label-lg text-label-lg text-on-surface line-clamp-1">Organic Cherry Tomatoes</p>
+<p class="text-on-surface-variant text-label-sm font-label-sm">250g</p>
+<div class="flex items-center justify-between mt-2">
+<span class="font-bold text-on-surface">₹89</span>
+<button class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="bg-white p-3 rounded-2xl border border-surface-variant shadow-sm hover:shadow-md transition-all group">
+<div class="aspect-square rounded-xl overflow-hidden mb-3 bg-surface-gray">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform" data-alt="A loaf of artisanal sourdough bread with a golden-brown crust and dusted with flour, sliced to show the airy crumb, minimalist studio setting, high-end bakery aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAkbfRFT8aySoL1adp2zbHm5EiLTrB5zwZH8OJxJkM8zD63VhuC8ceknE1_OUD8GTDWa5Z-TVXP0dODOPTJCzbGlC1QEzc6ZeMF7UmGwWnw4-b9zV0xtDvUqFQ-3-arlfAOB8AZtaaINaF7qS9RkQwr7xgF141bnMXZP05A43MFNgsnGjj6krSIZtqqlyx1MpvusaxyXDq5vNKcCLEhwGchYvGmyQBcNc0Jb2-d9QAYyAR61yyPCwqwQ"/>
+</div>
+<p class="font-label-lg text-label-lg text-on-surface line-clamp-1">Fresh Sourdough Bread</p>
+<p class="text-on-surface-variant text-label-sm font-label-sm">400g</p>
+<div class="flex items-center justify-between mt-2">
+<span class="font-bold text-on-surface">₹145</span>
+<button class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="bg-white p-3 rounded-2xl border border-surface-variant shadow-sm hover:shadow-md transition-all group">
+<div class="aspect-square rounded-xl overflow-hidden mb-3 bg-surface-gray">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform" data-alt="A bowl of fresh Mexican limes with glossy green skin and one lime cut in half to show the juicy interior, bright citrus lighting, clean white studio background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9HtMk-ZahIp9H1cGSWRlvQ4zaAG_k9qHckRK5T537CeouX0ABIeIxQw2uNeCsqcrf7vGRo8dCpn8SAB3YcpUn3KR0V30BBkXvgKT1ac03un_a4awvtGTxMcueStVGip82egyVzIlWiZ3bUDxvburwSP61nm91zFADTESg1oetOoeAXXf3_nIM-VIPQOE-ow-c-gLd-4pULBbCR8hXXDyXktBy7QIBzG0kOej4ULHCxW6iHqw-fIEm4Q"/>
+</div>
+<p class="font-label-lg text-label-lg text-on-surface line-clamp-1">Premium Seedless Limes</p>
+<p class="text-on-surface-variant text-label-sm font-label-sm">250g</p>
+<div class="flex items-center justify-between mt-2">
+<span class="font-bold text-on-surface">₹42</span>
+<button class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="bg-white p-3 rounded-2xl border border-surface-variant shadow-sm hover:shadow-md transition-all group">
+<div class="aspect-square rounded-xl overflow-hidden mb-3 bg-surface-gray">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform" data-alt="A bundle of vibrant green fresh organic cilantro tied with a simple jute string, showing morning dew droplets, professional produce photography on white." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDN7GHn5U4Psu_E9dArFFw50NHaKPQM7ICBsFv7hAAmgqJ5PIfQbF_EdJrNqf9dXSE5VdwZVk6ke1oQq_aOSFJigBVbev-L5ZQsgzznKrBFvy_yAW2f2PHZF39jkdXBuOz0-oFyvZeQvJqKx40skyLAh-f5vxCoP9hGqKPJAeGRw3SWTj6b7ijLjSEm4xsZp6x1nnM_XwqKwGeKM4gJUAI6c58Tb3SGG-C9SUKzp4I4nnmRL0ecZwxadw"/>
+</div>
+<p class="font-label-lg text-label-lg text-on-surface line-clamp-1">Organic Fresh Cilantro</p>
+<p class="text-on-surface-variant text-label-sm font-label-sm">Bunch</p>
+<div class="flex items-center justify-between mt-2">
+<span class="font-bold text-on-surface">₹20</span>
+<button class="w-8 h-8 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Customer Reviews -->
+<section class="mt-unit-6 border-t border-outline-variant/20 pt-unit-4">
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile font-bold mb-unit-3">Customer Reviews</h3>
+<div class="space-y-unit-3">
+<div class="p-4 bg-white rounded-2xl border border-outline-variant/20 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center font-bold text-on-secondary-container">AR</div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Ananya Rao</p>
+<div class="flex text-primary-container">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div></div></div></div></div></div></section></main></body></html>
