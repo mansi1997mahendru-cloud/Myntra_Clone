@@ -194,10 +194,10 @@ def simulate_send_email(to_email: str, subject: str, body_text: str, body_html: 
         print(f"Error writing to {EMAIL_INBOX_FILE}: {str(e)}")
 
 
-# Configure CORS to allow connection from the Vite Frontend
+# Configure CORS to allow connection from all Frontends (including Vercel)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
