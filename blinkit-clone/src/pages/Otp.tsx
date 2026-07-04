@@ -222,12 +222,12 @@ export const Otp: React.FC = () => {
           </form>
         </div>
 
-        {/* Local Testing Inbox Notice */}
-        <div className="bg-blue-50 border border-blue-200 p-3.5 rounded-xl flex items-start space-x-2.5 text-left mb-2 shadow-sm">
-          <Info className="h-4.5 w-4.5 text-blue-600 mt-0.5 flex-shrink-0" />
-          <div className="text-[10px] leading-relaxed text-blue-800">
-            <span className="font-extrabold">Local Testing Inbox</span>
-            <p className="font-medium">Open the log file at <code className="font-black">backend/email_inbox.txt</code> in VS Code to retrieve your verification OTP and click direct activation links!</p>
+        {/* Hackathon Demo Notice */}
+        <div className="bg-yellow-50 border border-yellow-200 p-3.5 rounded-xl flex items-start space-x-2.5 text-left mb-2 shadow-sm">
+          <Info className="h-4.5 w-4.5 text-yellow-600 mt-0.5 flex-shrink-0" />
+          <div className="text-[10px] leading-relaxed text-yellow-800">
+            <span className="font-extrabold">Hackathon Demo Notice</span>
+            <p className="font-medium">To easily test the application without setting up private SMTP mail credentials in Render, you can verify your account instantly by entering the Master OTP code: <code className="font-black bg-yellow-100 px-1 py-0.5 rounded text-[11px]">123456</code>.</p>
           </div>
         </div>
 
