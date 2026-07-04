@@ -60,7 +60,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
           const headers: any = {};
           if (token) headers['Authorization'] = `Bearer ${token}`;
           
-          const res = await fetch(`http://localhost:8000/api/cart/${user.uid}`, { headers });
+          const res = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/cart/${user.uid}`, { headers });
           if (res.ok) {
             const data = await res.json();
             // Transform backend shape { product_id, qty, product } to flat CartItem list
@@ -125,7 +125,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
           const headers: any = { 'Content-Type': 'application/json' };
           if (token) headers['Authorization'] = `Bearer ${token}`;
 
-          await fetch(`http://localhost:8000/api/cart/${user.uid}`, {
+          await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/cart/${user.uid}`, {
             method: 'POST',
             headers,
             body: JSON.stringify(payload)
@@ -210,7 +210,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.removeItem('blinkit_cart_anon');
     } else {
       localStorage.removeItem(`blinkit_cart_${user.uid}`);
-      fetch(`http://localhost:8000/api/cart/${user.uid}`, {
+      fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/cart/${user.uid}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify([])

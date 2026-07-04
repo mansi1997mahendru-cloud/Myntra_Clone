@@ -47,7 +47,7 @@ export const AIAssistant: React.FC = () => {
         text: m.text
       }));
 
-      const res = await fetch('http://localhost:8000/api/chat', {
+      const res = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -75,7 +75,7 @@ export const AIAssistant: React.FC = () => {
         ...prev,
         {
           sender: 'assistant',
-          text: '⚠️ Sorry, I could not complete your request. Please check if your FastAPI server is running on `http://localhost:8000`.'
+          text: '⚠️ Sorry, I could not complete your request. Please check if your FastAPI server is running.'
         }
       ]);
     } finally {

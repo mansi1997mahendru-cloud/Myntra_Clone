@@ -51,7 +51,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Helper to fetch profile with access token
   const fetchProfile = async (token: string): Promise<UserSessionProfile | null> => {
     try {
-      const res = await fetch('http://localhost:8000/api/auth/me', {
+      const res = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/auth/me', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -75,7 +75,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Helper to refresh access token
   const refreshSession = async (rToken: string): Promise<string | null> => {
     try {
-      const res = await fetch('http://localhost:8000/api/auth/refresh', {
+      const res = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/auth/refresh', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ refresh_token: rToken })
@@ -127,7 +127,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (loginId: string, pass: string) => {
-    const res = await fetch('http://localhost:8000/api/auth/login', {
+    const res = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ login_id: loginId, password: pass })
@@ -152,7 +152,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const register = async (fullName: string, mobile: string, email: string, pass: string, confirmPass: string) => {
-    const res = await fetch('http://localhost:8000/api/auth/register', {
+    const res = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -171,7 +171,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const verifyOtp = async (email: string, otp: string) => {
-    const res = await fetch('http://localhost:8000/api/auth/verify', {
+    const res = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/auth/verify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, otp })
@@ -196,7 +196,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const forgotPassword = async (email: string) => {
-    const res = await fetch('http://localhost:8000/api/auth/forgot-password', {
+    const res = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/auth/forgot-password', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email })
@@ -209,7 +209,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const resetPassword = async (token: string, pass: string, confirmPass: string) => {
-    const res = await fetch('http://localhost:8000/api/auth/reset-password', {
+    const res = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/auth/reset-password', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token, password: pass, confirm_password: confirmPass })
@@ -222,7 +222,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const resendOtp = async (email: string) => {
-    const res = await fetch('http://localhost:8000/api/auth/resend-otp', {
+    const res = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/auth/resend-otp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email })
@@ -238,7 +238,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const accToken = localStorage.getItem('access_token');
     if (!accToken) return [];
     
-    const res = await fetch('http://localhost:8000/api/addresses', {
+    const res = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/addresses', {
       headers: { 'Authorization': `Bearer ${accToken}` }
     });
     if (res.ok) {
@@ -251,7 +251,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const accToken = localStorage.getItem('access_token');
     if (!accToken) throw new Error("No active authentication token found.");
 
-    const res = await fetch('http://localhost:8000/api/addresses', {
+    const res = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/addresses', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -271,7 +271,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const accToken = localStorage.getItem('access_token');
     if (!accToken) throw new Error("No active authentication token found.");
 
-    const res = await fetch(`http://localhost:8000/api/addresses/${id}/default`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/addresses/${id}/default`, {
       method: 'PUT',
       headers: { 'Authorization': `Bearer ${accToken}` }
     });
@@ -287,7 +287,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const accToken = localStorage.getItem('access_token');
     if (!accToken) throw new Error("No active authentication token found.");
 
-    const res = await fetch(`http://localhost:8000/api/addresses/${id}`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/addresses/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${accToken}` }
     });

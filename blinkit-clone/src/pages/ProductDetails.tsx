@@ -42,7 +42,7 @@ export const ProductDetails: React.FC = () => {
     setError(null);
     try {
       // 1. Fetch Product Info
-      const res = await fetch(`http://localhost:8000/api/products/${id}`);
+      const res = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/products/${id}`);
       if (!res.ok) {
         if (res.status === 404) throw new Error('Product not found');
         throw new Error('Server returned an error');
@@ -59,7 +59,7 @@ export const ProductDetails: React.FC = () => {
       }
 
       // 2. Fetch Similar items
-      const similarRes = await fetch(`http://localhost:8000/api/products/${data.id}/similar`);
+      const similarRes = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/products/${data.id}/similar`);
       if (similarRes.ok) {
         const similarData: Product[] = await similarRes.json();
         setSimilarProducts(similarData);
@@ -67,7 +67,7 @@ export const ProductDetails: React.FC = () => {
 
       // 3. Check if wishlisted
       if (user) {
-        const wishRes = await fetch(`http://localhost:8000/api/wishlist/${user.uid}`);
+        const wishRes = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/wishlist/${user.uid}`);
         if (wishRes.ok) {
           const wishData = await wishRes.json();
           const found = wishData.some((item: any) => String(item.product_id) === String(id));
@@ -89,12 +89,12 @@ export const ProductDetails: React.FC = () => {
     }
     try {
       if (isWishlisted) {
-        const res = await fetch(`http://localhost:8000/api/wishlist/${user.uid}/${id}`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/wishlist/${user.uid}/${id}`, {
           method: 'DELETE'
         });
         if (res.ok) setIsWishlisted(false);
       } else {
-        const res = await fetch(`http://localhost:8000/api/wishlist/${user.uid}`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/wishlist/${user.uid}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ product_id: Number(id) })

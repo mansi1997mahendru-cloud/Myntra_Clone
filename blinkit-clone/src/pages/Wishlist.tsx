@@ -38,7 +38,7 @@ export const Wishlist: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`http://localhost:8000/api/wishlist/${user.uid}`);
+      const res = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/wishlist/${user.uid}`);
       if (res.ok) {
         const data = await res.json();
         setItems(data);
@@ -60,7 +60,7 @@ export const Wishlist: React.FC = () => {
   const handleRemove = async (productId: number) => {
     if (!user) return;
     try {
-      const res = await fetch(`http://localhost:8000/api/wishlist/${user.uid}/${productId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/wishlist/${user.uid}/${productId}`, {
         method: 'DELETE'
       });
       if (res.ok) {

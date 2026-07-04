@@ -104,16 +104,16 @@ export const Admin: React.FC = () => {
     setLoading(true);
     try {
       if (activeTab === 'products') {
-        const res = await fetch("http://localhost:8000/api/products/search?q=");
+        const res = await fetch((import.meta.env.VITE_API_URL || "http://localhost:8000") + "/api/products/search?q=");
         if (res.ok) setProducts(await res.json());
       } else if (activeTab === 'orders') {
-        const res = await fetch("http://localhost:8000/api/admin/orders");
+        const res = await fetch((import.meta.env.VITE_API_URL || "http://localhost:8000") + "/api/admin/orders");
         if (res.ok) setOrders(await res.json());
       } else if (activeTab === 'users') {
-        const res = await fetch("http://localhost:8000/api/admin/users");
+        const res = await fetch((import.meta.env.VITE_API_URL || "http://localhost:8000") + "/api/admin/users");
         if (res.ok) setUsersList(await res.json());
       } else if (activeTab === 'coupons') {
-        const res = await fetch("http://localhost:8000/api/coupons");
+        const res = await fetch((import.meta.env.VITE_API_URL || "http://localhost:8000") + "/api/coupons");
         if (res.ok) setCoupons(await res.json());
       }
     } catch (err) {
@@ -149,8 +149,8 @@ export const Admin: React.FC = () => {
 
     try {
       const url = editingProduct 
-        ? `http://localhost:8000/api/admin/products/${editingProduct.id}`
-        : "http://localhost:8000/api/admin/products";
+        ? `${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/admin/products/${editingProduct.id}`
+        : (import.meta.env.VITE_API_URL || "http://localhost:8000") + "/api/admin/products";
       const method = editingProduct ? "PUT" : "POST";
       
       const res = await fetch(url, {
@@ -187,7 +187,7 @@ export const Admin: React.FC = () => {
   const handleDeleteProduct = async (id: number) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
     try {
-      const res = await fetch(`http://localhost:8000/api/admin/products/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/admin/products/${id}`, {
         method: "DELETE"
       });
       if (res.ok) {
@@ -200,7 +200,7 @@ export const Admin: React.FC = () => {
 
   const handleUpdateOrderStatus = async (orderId: number, status: string) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/admin/orders/${orderId}/status`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/admin/orders/${orderId}/status`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status })
@@ -215,7 +215,7 @@ export const Admin: React.FC = () => {
 
   const handleToggleUser = async (userId: number, currentActive: boolean) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/admin/users/${userId}/status`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/admin/users/${userId}/status`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ is_active: !currentActive })
@@ -238,7 +238,7 @@ export const Admin: React.FC = () => {
       description: couponDesc
     };
     try {
-      const res = await fetch("http://localhost:8000/api/coupons", {
+      const res = await fetch((import.meta.env.VITE_API_URL || "http://localhost:8000") + "/api/coupons", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)

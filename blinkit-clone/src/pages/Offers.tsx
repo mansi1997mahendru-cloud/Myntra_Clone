@@ -21,7 +21,7 @@ export const Offers: React.FC = () => {
   useEffect(() => {
     const fetchCoupons = async () => {
       try {
-        const res = await fetch("http://localhost:8000/api/coupons");
+        const res = await fetch((import.meta.env.VITE_API_URL || "http://localhost:8000") + "/api/coupons");
         if (res.ok) {
           const data = await res.json();
           setCoupons(data);

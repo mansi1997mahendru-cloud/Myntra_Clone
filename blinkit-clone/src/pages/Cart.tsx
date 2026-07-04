@@ -68,7 +68,7 @@ export const Cart: React.FC = () => {
   useEffect(() => {
     const fetchCoupons = async () => {
       try {
-        const res = await fetch("http://localhost:8000/api/coupons");
+        const res = await fetch((import.meta.env.VITE_API_URL || "http://localhost:8000") + "/api/coupons");
         if (res.ok) {
           const data = await res.json();
           setAvailableCoupons(data);
@@ -104,7 +104,7 @@ export const Cart: React.FC = () => {
     const code = codeStr.toUpperCase().trim();
     
     try {
-      const res = await fetch("http://localhost:8000/api/coupons/apply", {
+      const res = await fetch((import.meta.env.VITE_API_URL || "http://localhost:8000") + "/api/coupons/apply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code, cart_total: cartTotal })

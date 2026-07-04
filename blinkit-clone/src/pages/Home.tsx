@@ -172,7 +172,7 @@ export const Home: React.FC = () => {
 
     try {
       // Connect directly to the local backend SQL database search endpoint
-      const res = await fetch('http://localhost:8000/api/products/search?q=');
+      const res = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/products/search?q=');
       if (res.ok) {
         const data = await res.json();
         const mappedProducts = data.map((p: any) => ({

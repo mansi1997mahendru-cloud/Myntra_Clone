@@ -46,7 +46,7 @@ export const Orders: React.FC = () => {
       const headers: any = {};
       if (token) headers['Authorization'] = `Bearer ${token}`;
 
-      const res = await fetch(`http://localhost:8000/api/orders/${user.uid}`, { headers });
+      const res = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/orders/${user.uid}`, { headers });
       if (res.ok) {
         const data = await res.json();
         setOrders(data);

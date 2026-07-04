@@ -97,7 +97,7 @@ export const Checkout: React.FC = () => {
     try {
       // 1. Simulating payment gateways processing first for Stripe/UPI
       if (paymentMethod === 'stripe') {
-        const intentRes = await fetch('http://localhost:8000/api/orders/stripe-intent', {
+        const intentRes = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/orders/stripe-intent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ amount: grandTotal })
@@ -114,7 +114,7 @@ export const Checkout: React.FC = () => {
       const headers: any = { 'Content-Type': 'application/json' };
       if (token) headers['Authorization'] = `Bearer ${token}`;
 
-      const orderRes = await fetch(`http://localhost:8000/api/orders/${uid}`, {
+      const orderRes = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/orders/${uid}`, {
         method: 'POST',
         headers,
         body: JSON.stringify(orderPayload)

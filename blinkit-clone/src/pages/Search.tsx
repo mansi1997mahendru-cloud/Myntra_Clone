@@ -59,14 +59,14 @@ export const Search: React.FC = () => {
       
       try {
         // Fetch Autocomplete Suggestions
-        const suggRes = await fetch(`http://localhost:8000/api/products/autocomplete?q=${encodeURIComponent(debouncedQuery)}`);
+        const suggRes = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/products/autocomplete?q=${encodeURIComponent(debouncedQuery)}`);
         if (suggRes.ok) {
           const suggData = await suggRes.json();
           setSuggestions(suggData);
         }
 
         // Fetch Matching Products Grid
-        const prodRes = await fetch(`http://localhost:8000/api/products/search?q=${encodeURIComponent(debouncedQuery)}`);
+        const prodRes = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:8000') + ''}/api/products/search?q=${encodeURIComponent(debouncedQuery)}`);
         if (prodRes.ok) {
           const prodData = await prodRes.json();
           setProducts(prodData);
