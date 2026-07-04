@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, Query, Header
+from fastapi import FastAPI, Depends, HTTPException, Query, Header, Request
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
@@ -132,10 +132,10 @@ def send_real_email(to_email: str, subject: str, body_text: str) -> bool:
             print(f"Failed to send email via Resend API: {str(resend_err)}")
 
     # 2. Fallback to standard SMTP if configured
-    smtp_host = os.getenv("SMTP_HOST")
-    smtp_port = os.getenv("SMTP_PORT")
-    smtp_user = os.getenv("SMTP_USER")
-    smtp_pass = os.getenv("SMTP_PASSWORD")
+    smtp_host = os.getenv("SMTP_HOST") or "smtp.gmail.com"
+    smtp_port = os.getenv("SMTP_PORT") or "587"
+    smtp_user = os.getenv("SMTP_USER") or "dharampal1255@gmail.com"
+    smtp_pass = os.getenv("SMTP_PASSWORD") or "oytnblqvqyidoqcb"
     
     if not smtp_host or not smtp_port or not smtp_user or not smtp_pass:
         print("Neither SMTP nor Resend variables are configured in backend/.env. Real email not sent.")
@@ -1106,7 +1106,7 @@ def get_current_user(authorization: Optional[str] = Header(None), db: Session = 
         raise HTTPException(status_code=401, detail="Invalid Token Format")
 
 @app.post("/api/auth/register")
-def register_user(reg: schemas.UserRegister, db: Session = Depends(get_db)):
+def register_user(reg: schemas.UserRegister, request: Request, db: Session = Depends(get_db)):
     if not reg.full_name or not reg.full_name.strip():
         raise HTTPException(status_code=400, detail="Name is required")
         
@@ -1150,7 +1150,8 @@ def register_user(reg: schemas.UserRegister, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_user)
     
-    verify_url = f"http://localhost:8000/api/auth/verify-link?token={verification_token}"
+    base_url = str(request.base_url).rstrip("/")
+    verify_url = f"{base_url}/api/auth/verify-link?token={verification_token}"
     body_text = (
         f"Hi {new_user.full_name},\n\n"
         f"Thank you for registering at Blinkit Clone! Please verify your email using either option below:\n\n"
