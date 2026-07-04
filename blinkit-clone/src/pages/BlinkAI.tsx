@@ -106,11 +106,12 @@ export const BlinkAI: React.FC = () => {
       await new Promise((resolve) => setTimeout(resolve, 150));
     }
 
+    const API_BASE = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/$/, '');
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 1200); // 1.2 seconds timeout limit!
 
     try {
-      const res = await fetch('http://localhost:8000/api/blinkai/plan', {
+      const res = await fetch(`${API_BASE}/api/blinkai/plan`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -142,7 +143,7 @@ export const BlinkAI: React.FC = () => {
     try {
       let products: any[] = [];
       try {
-        const searchRes = await fetch('http://localhost:8000/api/products/search?q=');
+        const searchRes = await fetch(`${API_BASE}/api/products/search?q=`);
         if (searchRes.ok) {
           products = await searchRes.json();
         }
