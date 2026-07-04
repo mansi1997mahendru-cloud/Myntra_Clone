@@ -104,3 +104,64 @@ Here is your new 6-digit verification OTP code:
 Regards,
 Blinkit Security Team
 ------------------------------------------------------------------------
+
+Timestamp: 2026-07-03T14:20:33.765571
+To: abhilasha.varshney@abes.ac.in
+Subject: Verify Your Blinkit Account
+Text Content:
+Hi Abhilasha Varshney,
+
+Thank you for registering at Blinkit Clone! Please verify your email using either option below:
+
+Option 1: Enter this 6-digit OTP code on the verification screen:
+👉  504476  👈
+
+Option 2: Click this link to activate your account directly:
+🔗  http://localhost:8000/api/auth/verify-link?token=a1ab50d2-5610-4eb3-b18e-08d507dc4347
+
+Regards,
+Blinkit Security Team
+------------------------------------------------------------------------
+
+Timestamp: 2026-07-03T14:21:09.500339
+To: abhilasha.varshney@abes.ac.in
+Subject: Your New Blinkit Verification Code
+Text Content:
+Hi Abhilasha Varshney,
+
+Here is your new 6-digit verification OTP code:
+👉  410485  👈
+
+Regards,
+Blinkit Security Team
+------------------------------------------------------------------------
+
+Timestamp: 2026-07-03T14:21:11.044856
+To: abhilasha.varshney@abes.ac.in
+Subject: Your New Blinkit Verification Code
+Text Content:
+Hi Abhilasha Varshney,
+
+Here is your new 6-digit verification OTP code:
+👉  058567  👈
+
+Regards,
+Blinkit Security Team
+------------------------------------------------------------------------
+
+Timestamp: 2026-07-03T15:16:24.104853
+To: mansi1997mahendru@gmail.com
+Subject: Reset Your Blinkit Password
+Text Content:
+Hi Mansi Mahendru,
+
+We received a request to reset your password for your Blinkit account.
+Please click the link below to set a new password:
+
+🔗  http://localhost:5173/reset-password?token=41b8bf0f-acdd-4e55-af2a-9485074a8d60
+
+If you did not request this, you can safely ignore this email.
+
+Regards,
+Blinkit Security Team
+------------------------------------------------------------------------

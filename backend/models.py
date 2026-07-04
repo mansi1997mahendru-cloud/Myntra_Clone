@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, Text, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, Boolean, Text, ForeignKey, DateTime, Float
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from database import Base
@@ -11,7 +11,8 @@ class Product(Base):
     size = Column(String(50), nullable=True)
     price = Column(Integer, nullable=False)
     original_price = Column(Integer, nullable=True)
-    icon = Column(String(50), nullable=True)
+    icon = Column(Text, nullable=True)
+    images_list = Column(Text, nullable=True)
     discount = Column(String(50), nullable=True)
     brand = Column(String(100), nullable=True, index=True)
     category = Column(String(100), nullable=True, index=True)
@@ -76,4 +77,75 @@ class User(Base):
     failed_login_attempts = Column(Integer, default=0, nullable=False)
     lockout_until = Column(DateTime(timezone=True), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    addresses = relationship("Address", back_populates="user", cascade="all, delete-orphan")
+
+
+class Address(Base):
+    __tablename__ = "addresses"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    house_flat_number = Column(String(255), nullable=False)
+    building_name = Column(String(255), nullable=False)
+    street = Column(String(255), nullable=False)
+    landmark = Column(String(255), nullable=True)
+    area = Column(String(255), nullable=False)
+    city = Column(String(255), nullable=False)
+    state = Column(String(255), nullable=False)
+    pincode = Column(String(50), nullable=False)
+    latitude = Column(Float, nullable=True)
+    longitude = Column(Float, nullable=True)
+    label = Column(String(50), default="Home", nullable=False) # Home, Work, Other
+    is_default = Column(Boolean, default=False, nullable=False)
+
+    user = relationship("User", back_populates="addresses")
+
+
+class WishlistItem(Base):
+    __tablename__ = "wishlist_items"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(String(255), nullable=False, index=True)
+    product_id = Column(Integer, ForeignKey("products.id", ondelete="CASCADE"), nullable=False)
+
+    product = relationship("Product")
+
+
+class Coupon(Base):
+    __tablename__ = "coupons"
+
+    id = Column(Integer, primary_key=True, index=True)
+    code = Column(String(50), unique=True, index=True, nullable=False)
+    discount_percentage = Column(Integer, nullable=False)
+    max_discount = Column(Integer, nullable=True)
+    min_order_value = Column(Integer, default=0, nullable=False)
+    description = Column(String(255), nullable=True)
+    is_active = Column(Boolean, default=True, nullable=False)
+
+
+class Review(Base):
+    __tablename__ = "reviews"
+
+    id = Column(Integer, primary_key=True, index=True)
+    product_id = Column(Integer, ForeignKey("products.id", ondelete="CASCADE"), nullable=False)
+    user_name = Column(String(255), nullable=False)
+    rating = Column(Integer, nullable=False)
+    comment = Column(Text, nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    product = relationship("Product")
+
+
+class Notification(Base):
+    __tablename__ = "notifications"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(String(255), nullable=False, index=True)
+    title = Column(String(255), nullable=False)
+    message = Column(Text, nullable=False)
+    is_read = Column(Boolean, default=False, nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+
 

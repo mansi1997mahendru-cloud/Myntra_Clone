@@ -72,7 +72,7 @@ export const Orders: React.FC = () => {
   // Show order as Active if placed in the last 60 seconds (simulates live dispatch)
   const isOrderActive = (order: Order) => {
     const elapsed = Date.now() - new Date(order.created_at).getTime();
-    return elapsed < 60000; // 60 seconds delivery loop
+    return elapsed < 600000; // 10 minutes delivery active window
   };
 
   const activeOrders = orders.filter(isOrderActive);
@@ -142,7 +142,7 @@ export const Orders: React.FC = () => {
             Active Orders (Live Tracking)
           </h3>
           {activeOrders.map((order) => {
-            const timeLeft = Math.max(1, Math.round((60000 - (Date.now() - new Date(order.created_at).getTime())) / 1000));
+             const timeLeft = Math.max(1, Math.round((600000 - (Date.now() - new Date(order.created_at).getTime())) / 1000));
             return (
               <div 
                 key={order.id} 
@@ -159,7 +159,7 @@ export const Orders: React.FC = () => {
                     Order ID: #{order.id}
                   </span>
                   <h4 className="text-sm font-black text-emerald-600 leading-tight">
-                    Arriving in {timeLeft}s
+                    Arriving in {Math.ceil(timeLeft / 60)} mins
                   </h4>
                   <p className="text-[10px] text-neutral-500 font-medium">Placed at {formatDate(order.created_at)}</p>
                 </div>
@@ -170,7 +170,7 @@ export const Orders: React.FC = () => {
                 </div>
 
                 <button 
-                  onClick={() => alert(`Tracking details: Your order is leaving partner center. ETA ${timeLeft} seconds.`)}
+                  onClick={() => navigate(`/track-order/${order.id}`)}
                   className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-xs flex justify-center items-center space-x-1 shadow-sm active:scale-98 transition-transform cursor-pointer"
                 >
                   <span>Track Live Delivery</span>

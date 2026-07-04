@@ -1,10 +1,11 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { Navigate } from 'react-router-dom';
-import { LogOut, User, Mail, Smartphone, ShieldCheck } from 'lucide-react';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { LogOut, User, Mail, Smartphone, ShieldCheck, Heart, Tag, Settings, Shield } from 'lucide-react';
 
 export const Profile: React.FC = () => {
   const { user, loading, logout } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -26,6 +27,8 @@ export const Profile: React.FC = () => {
   if (!user) {
     return <Navigate to="/login" replace />;
   }
+
+  const isAdmin = user.email === 'mansi1997mahendru@gmail.com' || user.email.includes('admin');
 
   return (
     <div className="max-w-2xl mx-auto p-4 space-y-6 text-left pb-16">
@@ -66,14 +69,48 @@ export const Profile: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl border border-neutral-150 p-5 shadow-sm space-y-3">
-          <h4 className="text-xs font-black text-neutral-400 uppercase tracking-wider">Account Options</h4>
+        <div className="bg-white rounded-2xl border border-neutral-150 p-5 shadow-sm space-y-1.5 text-neutral-700">
+          <h4 className="text-xs font-black text-neutral-400 uppercase tracking-wider mb-2">Account Options</h4>
           
           <button
-            onClick={handleLogout}
-            className="w-full flex items-center justify-between py-2 text-rose-600 hover:text-rose-700 font-bold text-sm cursor-pointer"
+            onClick={() => navigate('/wishlist')}
+            className="w-full flex items-center justify-between py-2.5 border-b border-neutral-100 last:border-0 text-left font-bold text-xs cursor-pointer hover:text-yellow-600"
           >
-            <span className="flex items-center"><LogOut className="h-4 w-4 mr-2" /> Sign Out</span>
+            <span className="flex items-center"><Heart className="h-4 w-4 mr-2.5 text-rose-500" /> Saved Wishlist</span>
+            <span>&rarr;</span>
+          </button>
+
+          <button
+            onClick={() => navigate('/offers')}
+            className="w-full flex items-center justify-between py-2.5 border-b border-neutral-100 last:border-0 text-left font-bold text-xs cursor-pointer hover:text-yellow-600"
+          >
+            <span className="flex items-center"><Tag className="h-4 w-4 mr-2.5 text-emerald-600" /> Offers & Coupons</span>
+            <span>&rarr;</span>
+          </button>
+
+          <button
+            onClick={() => navigate('/complete-profile')}
+            className="w-full flex items-center justify-between py-2.5 border-b border-neutral-100 last:border-0 text-left font-bold text-xs cursor-pointer hover:text-yellow-600"
+          >
+            <span className="flex items-center"><Settings className="h-4 w-4 mr-2.5 text-blue-500" /> Manage Delivery Addresses</span>
+            <span>&rarr;</span>
+          </button>
+
+          {isAdmin && (
+            <button
+              onClick={() => navigate('/admin')}
+              className="w-full flex items-center justify-between py-2.5 border-b border-neutral-100 last:border-0 text-left font-bold text-xs cursor-pointer hover:text-yellow-600"
+            >
+              <span className="flex items-center"><Shield className="h-4 w-4 mr-2.5 text-amber-500" /> Admin Control Dashboard</span>
+              <span>&rarr;</span>
+            </button>
+          )}
+
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center justify-between py-2.5 text-rose-600 hover:text-rose-700 font-bold text-xs cursor-pointer text-left"
+          >
+            <span className="flex items-center"><LogOut className="h-4 w-4 mr-2.5" /> Sign Out</span>
             <span>&rarr;</span>
           </button>
         </div>

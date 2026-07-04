@@ -7,37 +7,19 @@ import {
   CheckCircle, Loader2, Sparkles, Plus, AlertCircle 
 } from 'lucide-react';
 
-interface SavedAddress {
-  id: string;
-  tag: 'Home' | 'Office' | 'Other';
-  details: string;
-}
-
 export const Checkout: React.FC = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, fetchAddresses } = useAuth();
   const { cartItems, cartTotal, clearCart } = useCart();
 
   // Steps: 'address' | 'payment' | 'confirming' | 'success'
   const [step, setStep] = useState<'address' | 'payment' | 'confirming' | 'success'>('address');
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Address States
-  const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([
-    { id: '1', tag: 'Home', details: 'Flat 405, Block B, Silver Palms, Sector 62, Noida, 201301' },
-    { id: '2', tag: 'Office', details: 'T-Hub Building, Level 3, Sector 62, Noida, 201301' }
-  ]);
-  const [selectedAddressId, setSelectedAddressId] = useState('1');
-  const [showNewAddressForm, setShowNewAddressForm] = useState(false);
-  
-  // New Address Form fields
-  const [flatNo, setFlatNo] = useState('');
-  const [area, setArea] = useState('');
-  const [landmark, setLandmark] = useState('');
-  const [pinCode, setPinCode] = useState('');
-  const [city, setCity] = useState('');
-  const [addressTag, setAddressTag] = useState<'Home' | 'Office' | 'Other'>('Home');
+  const [addresses, setAddresses] = useState<any[]>([]);
+  const [selectedAddressId, setSelectedAddressId] = useState('');
 
   // Payment States
   const [paymentMethod, setPaymentMethod] = useState<'stripe' | 'upi' | 'cod'>('stripe');
@@ -64,35 +46,34 @@ export const Checkout: React.FC = () => {
     }
   }, [cartItems, navigate, step]);
 
-  const handleAddNewAddress = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!flatNo || !area || !pinCode || !city) return;
-
-    const newDetails = `${flatNo}, ${area}, ${landmark ? landmark + ', ' : ''}${city} - ${pinCode}`;
-    const newAddr: SavedAddress = {
-      id: Date.now().toString(),
-      tag: addressTag,
-      details: newDetails
+  // Load saved addresses from backend
+  useEffect(() => {
+    const loadSavedAddresses = async () => {
+      try {
+        const addrList = await fetchAddresses();
+        setAddresses(addrList);
+        const def = addrList.find((a: any) => a.is_default);
+        if (def) {
+          setSelectedAddressId(String(def.id));
+        } else if (addrList.length > 0) {
+          setSelectedAddressId(String(addrList[0].id));
+        }
+      } catch (err) {
+        console.error("Failed to load addresses:", err);
+      }
     };
-
-    setSavedAddresses(prev => [...prev, newAddr]);
-    setSelectedAddressId(newAddr.id);
-    setShowNewAddressForm(false);
-    
-    // Clear inputs
-    setFlatNo('');
-    setArea('');
-    setLandmark('');
-    setPinCode('');
-    setCity('');
-  };
+    loadSavedAddresses();
+  }, []);
 
   const handlePlaceOrder = async () => {
     setStep('confirming');
     setLoading(true);
     setError(null);
 
-    const activeAddress = savedAddresses.find(a => a.id === selectedAddressId)?.details || 'Noida Delivery Point';
+    const selectedAddr = addresses.find(a => String(a.id) === String(selectedAddressId));
+    const activeAddress = selectedAddr 
+      ? `${selectedAddr.house_flat_number}, ${selectedAddr.building_name}, ${selectedAddr.street}, ${selectedAddr.area}, ${selectedAddr.city}, ${selectedAddr.state} - ${selectedAddr.pincode}` 
+      : 'Noida Delivery Point';
 
     // Build items payload
     const orderItems = cartItems.map(item => ({
@@ -116,17 +97,14 @@ export const Checkout: React.FC = () => {
     try {
       // 1. Simulating payment gateways processing first for Stripe/UPI
       if (paymentMethod === 'stripe') {
-        // Post stripe-intent request
         const intentRes = await fetch('http://localhost:8000/api/orders/stripe-intent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ amount: grandTotal })
         });
         if (!intentRes.ok) throw new Error('Failed to generate payment intent');
-        // Simulate credit card handshake loader
         await new Promise(resolve => setTimeout(resolve, 1500));
       } else if (paymentMethod === 'upi') {
-        // Simulate UPI push notification confirmation
         await new Promise(resolve => setTimeout(resolve, 1500));
       }
 
@@ -143,7 +121,8 @@ export const Checkout: React.FC = () => {
       });
 
       if (!orderRes.ok) {
-        throw new Error('Failed to save order to database');
+        const errObj = await orderRes.json();
+        throw new Error(errObj.detail || 'Failed to save order to database');
       }
 
       const orderData = await orderRes.json();
@@ -198,54 +177,40 @@ export const Checkout: React.FC = () => {
               <span className="font-extrabold text-neutral-800">Deliver To:</span> {placedOrder.address}
             </p>
             <p className="text-[11px]">
-              <span className="font-extrabold text-neutral-800">Paid Via:</span> {placedOrder.payment_method} ({placedOrder.payment_status})
-            </p>
-            <p className="text-[11px]">
-              <span className="font-extrabold text-neutral-800">Grand Total:</span> ₹{placedOrder.grand_total}
+              <span className="font-extrabold text-neutral-800">Payment Status:</span> {placedOrder.payment_status}
             </p>
           </div>
         </div>
 
-        <div className="flex w-full space-x-3.5 pt-4">
-          <button
-            onClick={() => navigate('/orders')}
-            className="flex-1 py-3.5 px-4 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 font-black rounded-2xl text-xs transition-colors cursor-pointer"
-          >
-            Track Order
-          </button>
-          <button
-            onClick={() => navigate('/home')}
-            className="flex-1 py-3.5 px-4 bg-yellow-400 hover:bg-yellow-500 text-neutral-900 font-black rounded-2xl text-xs shadow-md transition-all cursor-pointer active:scale-95"
-          >
-            Back to Home
-          </button>
-        </div>
+        <button
+          onClick={() => navigate(`/track-order/${placedOrder.id}`)}
+          className="w-full py-3.5 bg-yellow-400 hover:bg-yellow-500 text-neutral-900 text-xs font-black rounded-2xl shadow-md uppercase tracking-wider tracking-wide transition-all duration-200 active:scale-[0.97]"
+        >
+          Track on Map & Keep Shopping
+        </button>
       </div>
     );
   }
 
-  // --- STEP 3: PROCESSING / CONFIRMING VIEW ---
+  // Loader overlay for checking payment gates
   if (step === 'confirming') {
     return (
       <div className="max-w-md mx-auto p-6 flex flex-col justify-center items-center text-center min-h-[calc(100vh-140px)] space-y-4">
-        <Loader2 className="h-10 w-10 animate-spin text-emerald-600" />
-        <h3 className="text-base font-black text-neutral-850">Securing Payment & Placing Order...</h3>
-        <p className="text-xs text-neutral-400 font-semibold">Please do not refresh this page or click back.</p>
+        <Loader2 className="h-12 w-12 text-yellow-500 animate-spin stroke-[2]" />
+        <h3 className="text-sm font-black text-neutral-800 tracking-tight">Authenticating Secure Transaction...</h3>
+        <p className="text-xs text-neutral-500 font-semibold">Please do not refresh or click back</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-4 space-y-6 text-left pb-16">
+    <div className="max-w-4xl mx-auto p-4 space-y-6 pb-20">
       
-      {/* Checkout Header */}
-      <div className="flex items-center space-x-3">
+      {/* Back button header */}
+      <div className="flex items-center space-x-2.5 pb-2 border-b border-neutral-100">
         <button 
-          onClick={() => {
-            if (step === 'payment') setStep('address');
-            else navigate('/cart');
-          }}
-          className="p-1.5 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-colors cursor-pointer"
+          onClick={() => step === 'payment' ? setStep('address') : navigate('/cart')}
+          className="p-1.5 rounded-full hover:bg-neutral-100 text-neutral-600 transition-colors"
         >
           <ArrowLeft className="h-5 w-5" />
         </button>
@@ -262,133 +227,76 @@ export const Checkout: React.FC = () => {
           {/* STEP 1: ADDRESS SELECTION SECTION */}
           {step === 'address' && (
             <div className="space-y-4">
-              <div className="grid grid-cols-1 gap-3.5">
-                {savedAddresses.map((addr) => (
-                  <div 
-                    key={addr.id}
-                    onClick={() => setSelectedAddressId(addr.id)}
-                    className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-start space-x-3 shadow-sm ${
-                      selectedAddressId === addr.id
-                        ? 'border-yellow-400 bg-yellow-50/10 ring-1 ring-yellow-400'
-                        : 'border-neutral-200 bg-white hover:border-neutral-300'
-                    }`}
+              {addresses.length === 0 ? (
+                <div className="bg-rose-50 text-rose-800 border border-rose-200 p-6 rounded-2xl text-xs font-semibold space-y-4 text-center">
+                  <div className="h-12 w-12 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 mx-auto shadow-inner">
+                    <AlertCircle className="h-6 w-6" />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="font-extrabold text-sm text-neutral-800">No Saved Address Found</h3>
+                    <p className="text-neutral-500 font-medium max-w-sm mx-auto leading-normal">
+                      Blinkit requires a configured delivery address to calculate delivery parameters. You cannot place orders without one.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => navigate('/complete-profile')}
+                    className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all shadow cursor-pointer mx-auto block"
                   >
-                    <div className="h-8 w-8 rounded-xl bg-neutral-100 flex items-center justify-center text-neutral-500 shrink-0">
-                      <MapPin className="h-4.5 w-4.5" />
-                    </div>
-                    <div className="space-y-0.5 text-left flex-grow">
-                      <span className="text-[10px] font-black uppercase text-neutral-450 tracking-wider">
-                        {addr.tag}
-                      </span>
-                      <p className="text-xs font-semibold text-neutral-700 leading-normal">
-                        {addr.details}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {!showNewAddressForm ? (
-                <button
-                  onClick={() => setShowNewAddressForm(true)}
-                  className="w-full py-3.5 px-4 bg-white hover:bg-neutral-50 border border-dashed border-neutral-300 rounded-2xl text-xs font-black text-neutral-700 flex items-center justify-center space-x-1.5 transition-colors cursor-pointer"
-                >
-                  <Plus className="h-4 w-4" />
-                  <span>Add New Delivery Address</span>
-                </button>
+                    Configure Delivery Profile Address
+                  </button>
+                </div>
               ) : (
-                <form 
-                  onSubmit={handleAddNewAddress}
-                  className="bg-white border border-neutral-200 rounded-2xl p-5 space-y-4 shadow-sm"
-                >
-                  <h3 className="text-xs font-black text-neutral-800 uppercase tracking-wider">
-                    New Address Details
-                  </h3>
-                  
-                  <div className="grid grid-cols-2 gap-3">
-                    <input 
-                      type="text" 
-                      placeholder="House/Flat/Office No. *" 
-                      value={flatNo}
-                      onChange={e => setFlatNo(e.target.value)}
-                      required
-                      className="col-span-2 text-xs border border-neutral-200 rounded-xl px-3.5 py-3 focus:outline-none focus:border-yellow-400 font-semibold"
-                    />
-                    <input 
-                      type="text" 
-                      placeholder="Street, Sector or Area *" 
-                      value={area}
-                      onChange={e => setArea(e.target.value)}
-                      required
-                      className="col-span-2 text-xs border border-neutral-200 rounded-xl px-3.5 py-3 focus:outline-none focus:border-yellow-400 font-semibold"
-                    />
-                    <input 
-                      type="text" 
-                      placeholder="Landmark (Optional)" 
-                      value={landmark}
-                      onChange={e => setLandmark(e.target.value)}
-                      className="col-span-2 text-xs border border-neutral-200 rounded-xl px-3.5 py-3 focus:outline-none focus:border-yellow-400 font-semibold"
-                    />
-                    <input 
-                      type="text" 
-                      placeholder="Pin Code *" 
-                      value={pinCode}
-                      onChange={e => setPinCode(e.target.value)}
-                      required
-                      className="text-xs border border-neutral-200 rounded-xl px-3.5 py-3 focus:outline-none focus:border-yellow-400 font-semibold"
-                    />
-                    <input 
-                      type="text" 
-                      placeholder="City *" 
-                      value={city}
-                      onChange={e => setCity(e.target.value)}
-                      required
-                      className="text-xs border border-neutral-200 rounded-xl px-3.5 py-3 focus:outline-none focus:border-yellow-400 font-semibold"
-                    />
-                  </div>
-
-                  <div className="flex items-center space-x-2.5">
-                    {(['Home', 'Office', 'Other'] as const).map(tag => (
-                      <button
-                        key={tag}
-                        type="button"
-                        onClick={() => setAddressTag(tag)}
-                        className={`px-4 py-2 border rounded-xl text-xs font-black transition-all cursor-pointer ${
-                          addressTag === tag 
-                            ? 'bg-neutral-900 border-neutral-900 text-white shadow-sm' 
-                            : 'bg-white border-neutral-200 hover:border-neutral-350 text-neutral-700'
+                <>
+                  <div className="grid grid-cols-1 gap-3.5">
+                    {addresses.map((addr) => (
+                      <div 
+                        key={addr.id}
+                        onClick={() => setSelectedAddressId(String(addr.id))}
+                        className={`p-4 rounded-2xl border transition-all cursor-pointer flex items-start space-x-3 shadow-sm ${
+                          selectedAddressId === String(addr.id)
+                            ? 'border-yellow-400 bg-yellow-50/10 ring-1 ring-yellow-400'
+                            : 'border-neutral-200 bg-white hover:border-neutral-300'
                         }`}
                       >
-                        {tag}
-                      </button>
+                        <div className="h-8 w-8 rounded-xl bg-neutral-100 flex items-center justify-center text-neutral-500 shrink-0">
+                          <MapPin className="h-4.5 w-4.5" />
+                        </div>
+                        <div className="space-y-0.5 text-left flex-grow">
+                          <div className="flex items-center space-x-2">
+                            <span className="text-[10px] font-black uppercase text-neutral-450 tracking-wider">
+                              {addr.label}
+                            </span>
+                            {addr.is_default && (
+                              <span className="bg-emerald-50 text-emerald-700 text-[8px] font-black uppercase px-1.5 py-0.5 rounded-md tracking-wider">
+                                Default
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs font-semibold text-neutral-700 leading-normal">
+                            {addr.house_flat_number}, {addr.building_name}, {addr.street}, {addr.area}, {addr.city}, {addr.state} - {addr.pincode}
+                          </p>
+                        </div>
+                      </div>
                     ))}
                   </div>
 
-                  <div className="flex space-x-3.5 pt-2">
-                    <button
-                      type="button"
-                      onClick={() => setShowNewAddressForm(false)}
-                      className="flex-1 py-3 text-xs font-black bg-neutral-100 hover:bg-neutral-200 rounded-xl transition-colors cursor-pointer"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="flex-1 py-3 text-xs font-black bg-yellow-400 hover:bg-yellow-500 rounded-xl transition-colors cursor-pointer"
-                    >
-                      Save Address
-                    </button>
-                  </div>
-                </form>
-              )}
+                  <button
+                    onClick={() => navigate('/complete-profile')}
+                    className="w-full py-3.5 px-4 bg-white hover:bg-neutral-50 border border-dashed border-neutral-300 rounded-2xl text-xs font-black text-neutral-700 flex items-center justify-center space-x-1.5 transition-colors cursor-pointer"
+                  >
+                    <Plus className="h-4 w-4" />
+                    <span>Add New Delivery Address</span>
+                  </button>
 
-              <button
-                onClick={() => setStep('payment')}
-                disabled={!selectedAddressId}
-                className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-2xl text-xs tracking-wider uppercase transition-all shadow-md active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-              >
-                Proceed to Payment
-              </button>
+                  <button
+                    onClick={() => setStep('payment')}
+                    disabled={!selectedAddressId}
+                    className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-2xl text-xs tracking-wider uppercase transition-all shadow-md active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                  >
+                    Proceed to Payment Mode Selection
+                  </button>
+                </>
+              )}
             </div>
           )}
 
@@ -398,169 +306,117 @@ export const Checkout: React.FC = () => {
               
               {error && (
                 <div className="p-4 bg-rose-50 border border-rose-200 rounded-2xl flex items-center space-x-2.5 text-rose-700 text-xs font-semibold">
-                  <AlertCircle className="h-4.5 w-4.5 shrink-0" />
+                  <AlertCircle className="h-4.5 w-4.5 text-rose-600 shrink-0" />
                   <span>{error}</span>
                 </div>
               )}
 
+              {/* Stripe Credit Card Section */}
               <div className="bg-white border border-neutral-200 rounded-2xl p-5 shadow-sm space-y-4">
-                <h3 className="text-xs font-black text-neutral-400 uppercase tracking-wider">
-                  Select Payment Option
-                </h3>
+                <label className="flex items-center space-x-3 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="payment"
+                    checked={paymentMethod === 'stripe'}
+                    onChange={() => setPaymentMethod('stripe')}
+                    className="text-yellow-400 focus:ring-yellow-400 h-4.5 w-4.5"
+                  />
+                  <div className="flex items-center space-x-2">
+                    <CreditCard className="h-5 w-5 text-neutral-500" />
+                    <span className="text-xs font-black text-neutral-800 uppercase tracking-wider">Stripe Credit Card</span>
+                  </div>
+                </label>
 
-                <div className="space-y-3">
-                  
-                  {/* Stripe Card Selection */}
-                  <div 
-                    onClick={() => setPaymentMethod('stripe')}
-                    className={`p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
-                      paymentMethod === 'stripe'
-                        ? 'border-yellow-400 bg-yellow-50/10 ring-1 ring-yellow-400'
-                        : 'border-neutral-200 hover:border-neutral-300'
-                    }`}
-                  >
-                    <div className="flex items-center space-x-3.5">
-                      <CreditCard className={`h-5 w-5 ${paymentMethod === 'stripe' ? 'text-neutral-900' : 'text-neutral-400'}`} />
-                      <div className="text-left">
-                        <h4 className="text-xs font-black text-neutral-800">Credit / Debit Card</h4>
-                        <p className="text-[10px] text-neutral-450 font-bold">Stripe Secure Card Payment (Test Mode)</p>
-                      </div>
+                {paymentMethod === 'stripe' && (
+                  <div className="grid grid-cols-3 gap-3.5 pt-2 max-w-md text-left">
+                    <div className="col-span-3 space-y-1">
+                      <span className="text-[9px] font-black text-neutral-450 uppercase tracking-wider">Card Number</span>
+                      <input
+                        type="text"
+                        placeholder="4242 •••• •••• 4242"
+                        value={cardNumber}
+                        onChange={e => setCardNumber(e.target.value.replace(/\D/g, '').substring(0, 16))}
+                        className="w-full text-xs border border-neutral-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-yellow-400 font-bold"
+                      />
                     </div>
-                    <div className={`h-4 w-4 rounded-full border flex items-center justify-center shrink-0 ${
-                      paymentMethod === 'stripe' ? 'border-neutral-900 bg-neutral-900 text-white' : 'border-neutral-300'
-                    }`}>
-                      {paymentMethod === 'stripe' && <span className="h-2 w-2 rounded-full bg-yellow-400" />}
+                    <div className="space-y-1">
+                      <span className="text-[9px] font-black text-neutral-450 uppercase tracking-wider">Expiry</span>
+                      <input
+                        type="text"
+                        placeholder="MM/YY"
+                        value={expiry}
+                        onChange={e => setExpiry(e.target.value.substring(0, 5))}
+                        className="w-full text-xs border border-neutral-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-yellow-400 font-bold"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <span className="text-[9px] font-black text-neutral-450 uppercase tracking-wider">CVC</span>
+                      <input
+                        type="password"
+                        placeholder="•••"
+                        value={cvc}
+                        onChange={e => setCvc(e.target.value.replace(/\D/g, '').substring(0, 3))}
+                        className="w-full text-xs border border-neutral-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-yellow-400 font-bold"
+                      />
                     </div>
                   </div>
-
-                  {/* UPI Selection */}
-                  <div 
-                    onClick={() => setPaymentMethod('upi')}
-                    className={`p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
-                      paymentMethod === 'upi'
-                        ? 'border-yellow-400 bg-yellow-50/10 ring-1 ring-yellow-400'
-                        : 'border-neutral-200 hover:border-neutral-300'
-                    }`}
-                  >
-                    <div className="flex items-center space-x-3.5">
-                      <Smartphone className={`h-5 w-5 ${paymentMethod === 'upi' ? 'text-neutral-900' : 'text-neutral-400'}`} />
-                      <div className="text-left">
-                        <h4 className="text-xs font-black text-neutral-800">UPI (GPay, Paytm, PhonePe)</h4>
-                        <p className="text-[10px] text-neutral-450 font-bold">Pay instantly using any UPI App</p>
-                      </div>
-                    </div>
-                    <div className={`h-4 w-4 rounded-full border flex items-center justify-center shrink-0 ${
-                      paymentMethod === 'upi' ? 'border-neutral-900 bg-neutral-900 text-white' : 'border-neutral-300'
-                    }`}>
-                      {paymentMethod === 'upi' && <span className="h-2 w-2 rounded-full bg-yellow-400" />}
-                    </div>
-                  </div>
-
-                  {/* Cash on Delivery Selection */}
-                  <div 
-                    onClick={() => setPaymentMethod('cod')}
-                    className={`p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
-                      paymentMethod === 'cod'
-                        ? 'border-yellow-400 bg-yellow-50/10 ring-1 ring-yellow-400'
-                        : 'border-neutral-200 hover:border-neutral-300'
-                    }`}
-                  >
-                    <div className="flex items-center space-x-3.5">
-                      <Truck className={`h-5 w-5 ${paymentMethod === 'cod' ? 'text-neutral-900' : 'text-neutral-400'}`} />
-                      <div className="text-left">
-                        <h4 className="text-xs font-black text-neutral-800">Cash on Delivery (COD)</h4>
-                        <p className="text-[10px] text-neutral-450 font-bold">Pay cash or scan QR at your doorstep</p>
-                      </div>
-                    </div>
-                    <div className={`h-4 w-4 rounded-full border flex items-center justify-center shrink-0 ${
-                      paymentMethod === 'cod' ? 'border-neutral-900 bg-neutral-900 text-white' : 'border-neutral-300'
-                    }`}>
-                      {paymentMethod === 'cod' && <span className="h-2 w-2 rounded-full bg-yellow-400" />}
-                    </div>
-                  </div>
-
-                </div>
+                )}
               </div>
 
-              {/* Step-Specific Inputs */}
-              {paymentMethod === 'stripe' && (
-                <div className="bg-white border border-neutral-200 rounded-2xl p-5 shadow-sm space-y-4">
-                  <h3 className="text-xs font-black text-neutral-800 uppercase tracking-wider">
-                    Enter Card Details (Test Mode)
-                  </h3>
-                  
-                  <div className="grid grid-cols-3 gap-3">
-                    <input 
-                      type="text" 
-                      placeholder="Card Number (4242 4242 4242 4242) *" 
-                      value={cardNumber}
-                      onChange={e => setCardNumber(e.target.value.replace(/\D/g, '').substring(0, 16))}
-                      required
-                      className="col-span-3 text-xs border border-neutral-200 rounded-xl px-3.5 py-3 focus:outline-none focus:border-yellow-400 font-semibold"
-                    />
-                    <input 
-                      type="text" 
-                      placeholder="MM/YY *" 
-                      value={expiry}
-                      onChange={e => setExpiry(e.target.value.substring(0, 5))}
-                      required
-                      className="col-span-2 text-xs border border-neutral-200 rounded-xl px-3.5 py-3 focus:outline-none focus:border-yellow-400 font-semibold"
-                    />
-                    <input 
-                      type="text" 
-                      placeholder="CVC *" 
-                      value={cvc}
-                      onChange={e => setCvc(e.target.value.replace(/\D/g, '').substring(0, 3))}
-                      required
-                      className="text-xs border border-neutral-200 rounded-xl px-3.5 py-3 focus:outline-none focus:border-yellow-400 font-semibold"
-                    />
-                  </div>
-                  <p className="text-[10px] text-neutral-400 font-bold">Use the standard test credit card 4242... for mock checkout confirmation</p>
-                </div>
-              )}
-
-              {paymentMethod === 'upi' && (
-                <div className="bg-white border border-neutral-200 rounded-2xl p-5 shadow-sm space-y-4 text-center flex flex-col items-center">
-                  <h3 className="text-xs font-black text-neutral-800 uppercase tracking-wider self-start">
-                    UPI Payment
-                  </h3>
-                  
-                  <div className="bg-neutral-100 p-4 rounded-xl border border-neutral-200 flex flex-col items-center max-w-[200px] mb-2 select-none">
-                    {/* Simulated QR Code */}
-                    <div className="h-32 w-32 bg-white rounded border border-neutral-300 flex items-center justify-center text-4xl mb-2">
-                      📱
-                    </div>
-                    <span className="text-[9px] text-neutral-450 font-black uppercase tracking-wider">Scan QR to pay</span>
-                  </div>
-
-                  <span className="text-xs text-neutral-400 font-bold">OR Enter UPI ID</span>
-                  <input 
-                    type="text" 
-                    placeholder="user@upi *" 
-                    value={upiId}
-                    onChange={e => setUpiId(e.target.value)}
-                    className="w-full text-xs border border-neutral-200 rounded-xl px-3.5 py-3 focus:outline-none focus:border-yellow-400 font-semibold"
+              {/* UPI Section */}
+              <div className="bg-white border border-neutral-200 rounded-2xl p-5 shadow-sm space-y-4">
+                <label className="flex items-center space-x-3 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="payment"
+                    checked={paymentMethod === 'upi'}
+                    onChange={() => setPaymentMethod('upi')}
+                    className="text-yellow-400 focus:ring-yellow-400 h-4.5 w-4.5"
                   />
-                </div>
-              )}
+                  <div className="flex items-center space-x-2">
+                    <Smartphone className="h-5 w-5 text-neutral-500" />
+                    <span className="text-xs font-black text-neutral-800 uppercase tracking-wider">Instant UPI Payment</span>
+                  </div>
+                </label>
 
-              {paymentMethod === 'cod' && (
-                <div className="bg-white border border-neutral-200 rounded-2xl p-5 shadow-sm flex items-center space-x-3.5">
-                  <span className="text-3xl select-none">💵</span>
-                  <p className="text-xs font-semibold text-neutral-600">
-                    No advance payment required. Please pay cash or request UPI scan when the delivery partner arrives.
-                  </p>
-                </div>
-              )}
+                {paymentMethod === 'upi' && (
+                  <div className="pt-2 max-w-md text-left space-y-1">
+                    <span className="text-[9px] font-black text-neutral-450 uppercase tracking-wider">UPI ID</span>
+                    <input
+                      type="text"
+                      placeholder="username@okhdfcbank"
+                      value={upiId}
+                      onChange={e => setUpiId(e.target.value)}
+                      className="w-full text-xs border border-neutral-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-yellow-400 font-bold"
+                    />
+                  </div>
+                )}
+              </div>
 
+              {/* Cash On Delivery */}
+              <div className="bg-white border border-neutral-200 rounded-2xl p-5 shadow-sm">
+                <label className="flex items-center space-x-3 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="payment"
+                    checked={paymentMethod === 'cod'}
+                    onChange={() => setPaymentMethod('cod')}
+                    className="text-yellow-400 focus:ring-yellow-400 h-4.5 w-4.5"
+                  />
+                  <div className="flex items-center space-x-2">
+                    <Truck className="h-5 w-5 text-neutral-500" />
+                    <span className="text-xs font-black text-neutral-800 uppercase tracking-wider">Cash / Pay on Delivery (COD)</span>
+                  </div>
+                </label>
+              </div>
+
+              {/* Final Place Order button */}
               <button
                 onClick={handlePlaceOrder}
-                disabled={loading || (paymentMethod === 'stripe' && (!cardNumber || !expiry || !cvc))}
-                className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-2xl text-xs tracking-wider uppercase transition-all shadow-md active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-2xl text-xs tracking-wider uppercase transition-all shadow-md active:scale-98 cursor-pointer"
               >
-                Pay & Place Order
+                Place Order (₹{grandTotal})
               </button>
-
             </div>
           )}
 
@@ -568,19 +424,24 @@ export const Checkout: React.FC = () => {
 
         {/* Right Bill Details Column (Sticky panel) */}
         <div className="w-full md:col-span-1 space-y-6 mt-6 md:mt-0 md:sticky md:top-24">
-          <div className="bg-white rounded-2xl border border-neutral-200 p-5 shadow-sm space-y-4">
+          <div className="bg-white rounded-2xl border border-neutral-200 p-5 shadow-sm space-y-4 text-left">
             <h3 className="text-xs font-black text-neutral-400 uppercase tracking-wider">
               Selected Address
             </h3>
             <div className="flex items-start space-x-2 text-xs font-semibold text-neutral-600">
-              <MapPin className="h-4.5 w-4.5 text-neutral-400 shrink-0" />
+              <MapPin className="h-4.5 w-4.5 text-neutral-450 shrink-0" />
               <p className="leading-normal">
-                {savedAddresses.find(a => a.id === selectedAddressId)?.details || 'Noida Delivery Point'}
+                {(() => {
+                  const selectedAddr = addresses.find(a => String(a.id) === String(selectedAddressId));
+                  return selectedAddr 
+                    ? `${selectedAddr.house_flat_number}, ${selectedAddr.building_name}, ${selectedAddr.street}, ${selectedAddr.area}, ${selectedAddr.city}, ${selectedAddr.state} - ${selectedAddr.pincode}` 
+                    : 'No address selected';
+                })()}
               </p>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-neutral-200 p-5 shadow-sm space-y-4">
+          <div className="bg-white rounded-2xl border border-neutral-200 p-5 shadow-sm space-y-4 text-left">
             <h3 className="text-xs font-black text-neutral-400 uppercase tracking-wider">
               Payment Summary
             </h3>
@@ -593,29 +454,29 @@ export const Checkout: React.FC = () => {
                 <span>Delivery Charge</span>
                 <span>₹{deliveryCharge}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between border-b border-neutral-100 pb-2.5">
                 <span>Handling Charge</span>
                 <span>₹{handlingCharge}</span>
               </div>
-              <hr className="border-neutral-100" />
               <div className="flex justify-between text-neutral-900 font-black text-sm pt-1">
-                <span>Total Bill</span>
+                <span>Grand Total</span>
                 <span>₹{grandTotal}</span>
               </div>
             </div>
           </div>
 
-          {/* Contact Details Trust */}
-          <div className="flex items-center space-x-3 bg-neutral-100/80 p-4 rounded-2xl border border-neutral-200">
-            <ShieldCheck className="h-6 w-6 text-neutral-500 flex-shrink-0" />
-            <p className="text-[10px] text-neutral-500 font-bold leading-normal">
-              Secure checkout guaranteed. Stripe systems are PCI-DSS compliant.
-            </p>
+          <div className="bg-emerald-50 border border-emerald-150 p-4 rounded-2xl flex items-start space-x-3 text-left">
+            <ShieldCheck className="h-5 w-5 text-emerald-500 shrink-0 mt-0.5" />
+            <div className="space-y-0.5 text-neutral-800 text-[10px] leading-relaxed">
+              <h5 className="font-extrabold uppercase text-emerald-700 tracking-wider">Safe & Secure Payments</h5>
+              <p className="font-semibold text-neutral-500">
+                100% safe checkout. Your payment details are fully encrypted before transmission.
+              </p>
+            </div>
           </div>
         </div>
 
       </div>
-
     </div>
   );
 };

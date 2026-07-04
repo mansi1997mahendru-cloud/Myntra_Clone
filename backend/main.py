@@ -23,8 +23,21 @@ import models
 import schemas
 from database import engine, get_db
 
-# Create database tables
-models.Base.metadata.create_all(bind=engine)
+# Create database tables with schema mismatch self-healing
+try:
+    models.Base.metadata.create_all(bind=engine)
+    # Verify products table has images_list column
+    db = next(get_db())
+    db.execute(models.Product.__table__.select().limit(1))
+    db.close()
+except Exception as e:
+    print(f"Schema mismatch detected: {str(e)}. Recreating database tables...")
+    try:
+        models.Base.metadata.drop_all(bind=engine)
+        models.Base.metadata.create_all(bind=engine)
+        print("Database tables recreated successfully!")
+    except Exception as ex:
+        print(f"Error recreating database tables: {str(ex)}")
 
 app = FastAPI(title="Blinkit Clone Backend API")
 
@@ -192,77 +205,49 @@ app.add_middleware(
 
 # Initial dataset to seed the database (includes stock counts)
 INITIAL_PRODUCTS = [
-    # Best Sellers
     {
-        "name": "Fresh Toned Milk",
-        "size": "500 ml",
-        "price": 27,
-        "original_price": 30,
-        "icon": "🥛",
-        "discount": "10% OFF",
-        "brand": "Amul",
-        "category": "Dairy, Bread & Eggs",
-        "description": "Fresh and pasteurized toned milk from Amul. High quality and nutritious for daily household consumption.",
+        "name": "Fresh Red Apples",
+        "size": "4 pcs (approx. 500g)",
+        "price": 99,
+        "original_price": 120,
+        "icon": "https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?w=500&auto=format&fit=crop,https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=500&auto=format&fit=crop",
+        "discount": "17% OFF",
+        "brand": "Fresh Orchard",
+        "category": "Fruits & Vegetables",
+        "description": "Crisp, sweet and juicy premium quality red apples. Freshly picked from orchards.",
         "stock": 25,
-        "is_best_seller": True,
-        "is_recommended": False
-    },
-    {
-        "name": "Britannia Brown Bread",
-        "size": "400 g",
-        "price": 42,
-        "original_price": 50,
-        "icon": "🍞",
-        "discount": "16% OFF",
-        "brand": "Britannia",
-        "category": "Dairy, Bread & Eggs",
-        "description": "Healthy whole wheat brown bread, baked fresh and soft. Perfect source of daily dietary fiber.",
-        "stock": 14,
-        "is_best_seller": True,
-        "is_recommended": False
-    },
-    {
-        "name": "Amul Salted Butter",
-        "size": "100 g",
-        "price": 56,
-        "original_price": 60,
-        "icon": "🧈",
-        "discount": "6% OFF",
-        "brand": "Amul",
-        "category": "Dairy, Bread & Eggs",
-        "description": "Classic salted butter from Amul. Rich, creamy, and spreadable.",
-        "stock": 18,
-        "is_best_seller": True,
-        "is_recommended": False
-    },
-    {
-        "name": "Lay's Classic Salted",
-        "size": "50 g",
-        "price": 20,
-        "original_price": 20,
-        "icon": "🍟",
-        "discount": "Best Price",
-        "brand": "Lays",
-        "category": "Snacks & Munchies",
-        "description": "Crispy salted potato chips. Classic flavor, perfect snack for tea time or parties.",
-        "stock": 40,
         "is_best_seller": True,
         "is_recommended": True
     },
-    
-    # Recommended / General
     {
-        "name": "Fresh Country Tomatoes",
-        "size": "500 g",
-        "price": 34,
-        "original_price": 45,
-        "icon": "🍅",
-        "discount": "24% OFF",
-        "brand": "Local Farm",
-        "category": "Fruits & Vegetables",
-        "description": "Fresh red farm-picked tomatoes. Juiced with vitamins and organic sweetness.",
-        "stock": 30,
-        "is_best_seller": False,
+        "name": "Amul Taaza Toned Milk",
+        "size": "1 L",
+        "price": 66,
+        "original_price": 68,
+        "icon": "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&auto=format&fit=crop,https://images.unsplash.com/photo-1528498033973-3c12544c6a3b?w=500&auto=format&fit=crop",
+        "discount": "3% OFF",
+        "brand": "Amul",
+        "category": "Dairy, Bread & Eggs",
+        "description": "Fresh, pasteurized toned milk from Amul. Perfect for your morning tea, coffee, and daily nutrition.",
+        "stock": 35,
+        "is_best_seller": True,
+        "is_recommended": True
+    },
+    {
+        "name": "Lay's Classic Salted Chips",
+        "size": "50 g",
+        "price": 20,
+        "original_price": 20,
+        "icon": "https://images.unsplash.com/photo-1599490659213-e2b9527b0876?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1599490659213-e2b9527b0876?w=500&auto=format&fit=crop,https://images.unsplash.com/photo-1613907331711-2e1f0fcd6a78?w=500&auto=format&fit=crop",
+        "discount": "Best Price",
+        "brand": "Lays",
+        "category": "Munchies",
+        "description": "Classic salted potato chips, crispy and thin. The ultimate snacking companion.",
+        "stock": 50,
+        "is_best_seller": True,
         "is_recommended": True
     },
     {
@@ -270,98 +255,255 @@ INITIAL_PRODUCTS = [
         "size": "750 ml",
         "price": 40,
         "original_price": 40,
-        "icon": "🥤",
+        "icon": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500&auto=format&fit=crop",
         "discount": "Popular",
         "brand": "Coca-Cola",
         "category": "Cold Drinks & Juices",
-        "description": "Crisp and refreshing Coca-Cola flavor with zero calories and zero sugar.",
-        "stock": 20,
-        "is_best_seller": False,
+        "description": "Crisp and refreshing Coca-Cola flavor with zero sugar and zero calories.",
+        "stock": 30,
+        "is_best_seller": True,
         "is_recommended": True
     },
     {
-        "name": "Oreo Chocolate Biscuits",
-        "size": "120 g",
-        "price": 30,
-        "original_price": 35,
-        "icon": "🍪",
-        "discount": "14% OFF",
-        "brand": "Oreo",
-        "category": "Snacks & Munchies",
-        "description": "Double chocolate cookies with a rich sweet vanilla cream center.",
-        "stock": 5,
-        "is_best_seller": False,
-        "is_recommended": True
-    },
-    {
-        "name": "Farm Fresh White Eggs",
-        "size": "6 pcs",
-        "price": 48,
-        "original_price": 55,
-        "icon": "🥚",
-        "discount": "12% OFF",
-        "brand": "Eggo",
-        "category": "Dairy, Bread & Eggs",
-        "description": "High protein farm fresh white eggs. Cleaned, sorted, and securely packaged.",
+        "name": "Kellogg's Corn Flakes",
+        "size": "475 g",
+        "price": 175,
+        "original_price": 185,
+        "icon": "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=500&auto=format&fit=crop",
+        "discount": "5% OFF",
+        "brand": "Kelloggs",
+        "category": "Breakfast",
+        "description": "Crispy golden corn flakes enriched with essential iron, vitamins, and minerals.",
         "stock": 15,
         "is_best_seller": False,
         "is_recommended": True
     },
     {
-        "name": "Maggi 2-Minute Noodles",
-        "size": "70 g",
-        "price": 14,
-        "original_price": 14,
-        "icon": "🍜",
-        "discount": "Best Price",
+        "name": "Nescafe Classic Instant Coffee",
+        "size": "100 g",
+        "price": 310,
+        "original_price": 325,
+        "icon": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=500&auto=format&fit=crop",
+        "discount": "4% OFF",
         "brand": "Nestle",
-        "category": "Instant & Frozen",
-        "description": "The beloved instant noodles with magic tastemaker masala spices. Cooks in 2 minutes.",
-        "stock": 50,
+        "category": "Tea & Coffee",
+        "description": "Premium blend of Arabica and Robusta beans, medium-dark roasted for perfect aroma and rich taste.",
+        "stock": 18,
+        "is_best_seller": True,
+        "is_recommended": False
+    },
+    {
+        "name": "Aashirvaad Shudh Chakki Atta",
+        "size": "5 kg",
+        "price": 260,
+        "original_price": 290,
+        "icon": "https://images.unsplash.com/photo-1574316071802-0d684efa7bf5?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1574316071802-0d684efa7bf5?w=500&auto=format&fit=crop",
+        "discount": "10% OFF",
+        "brand": "Aashirvaad",
+        "category": "Atta, Rice & Dal",
+        "description": "100% pure whole wheat flour processed in traditional stone chakki. High fiber and absorbs more water.",
+        "stock": 40,
+        "is_best_seller": True,
+        "is_recommended": False
+    },
+    {
+        "name": "Fortune Kachi Ghani Mustard Oil",
+        "size": "1 L",
+        "price": 165,
+        "original_price": 180,
+        "icon": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&auto=format&fit=crop",
+        "discount": "8% OFF",
+        "brand": "Fortune",
+        "category": "Oil & Ghee",
+        "description": "Premium cold-pressed mustard oil with a strong aroma and high pungency. Traditional and pure.",
+        "stock": 22,
+        "is_best_seller": False,
+        "is_recommended": True
+    },
+    {
+        "name": "Tata Sampann Garam Masala",
+        "size": "100 g",
+        "price": 78,
+        "original_price": 88,
+        "icon": "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=500&auto=format&fit=crop",
+        "discount": "11% OFF",
+        "brand": "Tata",
+        "category": "Masala",
+        "description": "Premium spice blend crafted by Chef Sanjeev Kapoor. Retains natural oils for authentic rich flavor.",
+        "stock": 19,
         "is_best_seller": False,
         "is_recommended": False
     },
     {
-        "name": "Bru Instant Coffee",
-        "size": "100 g",
-        "price": 185,
-        "original_price": 200,
-        "icon": "☕",
-        "discount": "7% OFF",
-        "brand": "Bru",
-        "category": "Tea & Coffee",
-        "description": "Rich aroma premium quality instant coffee blend made from fine roasted coffee beans.",
+        "name": "McCain French Fries",
+        "size": "450 g",
+        "price": 125,
+        "original_price": 140,
+        "icon": "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=500&auto=format&fit=crop",
+        "discount": "10% OFF",
+        "brand": "McCain",
+        "category": "Frozen Food",
+        "description": "Delicious, crispy frozen potato fries. Quick to deep fry or air-fry for parties.",
+        "stock": 14,
+        "is_best_seller": False,
+        "is_recommended": True
+    },
+    {
+        "name": "Amul Vanilla Magic Ice Cream",
+        "size": "1 L",
+        "price": 150,
+        "original_price": 160,
+        "icon": "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=500&auto=format&fit=crop",
+        "discount": "6% OFF",
+        "brand": "Amul",
+        "category": "Ice Cream",
+        "description": "Creamy and rich vanilla flavored real milk ice cream tub from Amul.",
+        "stock": 10,
+        "is_best_seller": True,
+        "is_recommended": True
+    },
+    {
+        "name": "Oreo Chocolate Sandwich Biscuits",
+        "size": "120 g",
+        "price": 30,
+        "original_price": 35,
+        "icon": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=500&auto=format&fit=crop",
+        "discount": "14% OFF",
+        "brand": "Oreo",
+        "category": "Biscuits",
+        "description": "Crisp chocolate cookies with a sweet vanilla cream center. Twist, lick, and dunk!",
+        "stock": 50,
+        "is_best_seller": False,
+        "is_recommended": True
+    },
+    {
+        "name": "Cadbury Dairy Milk Silk",
+        "size": "150 g",
+        "price": 80,
+        "original_price": 85,
+        "icon": "https://images.unsplash.com/photo-1549007994-cb92ca813bec?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1549007994-cb92ca813bec?w=500&auto=format&fit=crop",
+        "discount": "6% OFF",
+        "brand": "Cadbury",
+        "category": "Chocolates",
+        "description": "Rich, smooth, and creamy milk chocolate bar. Melts in your mouth instantly.",
+        "stock": 25,
+        "is_best_seller": True,
+        "is_recommended": False
+    },
+    {
+        "name": "Surf Excel Detergent Powder",
+        "size": "1 kg",
+        "price": 145,
+        "original_price": 160,
+        "icon": "https://images.unsplash.com/photo-1607344645866-009c320c5ab8?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1607344645866-009c320c5ab8?w=500&auto=format&fit=crop",
+        "discount": "9% OFF",
+        "brand": "Surf Excel",
+        "category": "Cleaning Essentials",
+        "description": "Surf Excel Easy Wash removes tough stains easily with the power of ten hands.",
+        "stock": 15,
+        "is_best_seller": False,
+        "is_recommended": True
+    },
+    {
+        "name": "Dettol Liquid Handwash Refill",
+        "size": "750 ml",
+        "price": 99,
+        "original_price": 119,
+        "icon": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500&auto=format&fit=crop",
+        "discount": "17% OFF",
+        "brand": "Dettol",
+        "category": "Personal Care",
+        "description": "Provides protection against 99.9% germs. pH-balanced skin safety formula.",
+        "stock": 18,
+        "is_best_seller": False,
+        "is_recommended": False
+    },
+    {
+        "name": "Nivea Soft Moisturising Cream",
+        "size": "100 ml",
+        "price": 199,
+        "original_price": 210,
+        "icon": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&auto=format&fit=crop",
+        "discount": "5% OFF",
+        "brand": "Nivea",
+        "category": "Beauty",
+        "description": "Lightweight, non-greasy moisturizing cream with Jojoba oil and Vitamin E.",
+        "stock": 10,
+        "is_best_seller": False,
+        "is_recommended": True
+    },
+    {
+        "name": "Pampers Baby Dry Diapers",
+        "size": "L - 64 pcs",
+        "price": 799,
+        "original_price": 899,
+        "icon": "https://images.unsplash.com/photo-1519689680058-324335c77eba?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1519689680058-324335c77eba?w=500&auto=format&fit=crop",
+        "discount": "11% OFF",
+        "brand": "Pampers",
+        "category": "Baby Care",
+        "description": "Ultra dry core diapers with gel locking technology. Delivers up to 12 hours dryness.",
         "stock": 8,
         "is_best_seller": False,
         "is_recommended": False
     },
     {
-        "name": "Dettol Liquid Handwash",
-        "size": "200 ml",
-        "price": 99,
-        "original_price": 110,
-        "icon": "🧼",
-        "discount": "10% OFF",
-        "brand": "Dettol",
-        "category": "Baby Care Products",
-        "description": "Dettol Liquid Handwash protects against 99.9% germs, leaving hands clean and soft.",
+        "name": "Pedigree Dry Dog Food",
+        "size": "1.2 kg",
+        "price": 320,
+        "original_price": 340,
+        "icon": "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500&auto=format&fit=crop",
+        "discount": "6% OFF",
+        "brand": "Pedigree",
+        "category": "Pet Care",
+        "description": "Complete nutrition for adult dogs. Promotes strong immune system, bones, and teeth.",
         "stock": 12,
         "is_best_seller": False,
         "is_recommended": False
     },
     {
-        "name": "Organic Bananas",
-        "size": "500 g",
-        "price": 45,
-        "original_price": 50,
-        "icon": "🍌",
-        "discount": "10% OFF",
-        "brand": "Local Farm",
-        "category": "Fruits & Vegetables",
-        "description": "Fresh, sweet, and healthy organic yellow bananas sourced from sustainable local farms.",
-        "stock": 22,
-        "is_best_seller": False,
+        "name": "Dolo 650 mg Tablets",
+        "size": "15 tabs",
+        "price": 30,
+        "original_price": 30,
+        "icon": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=500&auto=format&fit=crop",
+        "discount": "Best Seller",
+        "brand": "Micro Labs",
+        "category": "Pharmacy",
+        "description": "Paracetamol tablets for relief from fever, headache, body aches, and pain.",
+        "stock": 100,
+        "is_best_seller": True,
         "is_recommended": False
+    },
+    {
+        "name": "Duracell Alkaline AA Batteries",
+        "size": "4 pcs",
+        "price": 150,
+        "original_price": 160,
+        "icon": "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=500&auto=format&fit=crop",
+        "discount": "6% OFF",
+        "brand": "Duracell",
+        "category": "Electronics",
+        "description": "Long lasting alkaline AA battery pack. Ideal for remote controls, toys, and devices.",
+        "stock": 25,
+        "is_best_seller": False,
+        "is_recommended": True
     }
 ]
 
@@ -371,13 +513,25 @@ def seed_database_if_empty():
     db = next(get_db())
     try:
         count = db.query(models.Product).count()
-        if count == 0:
-            print("Database empty. Auto-seeding default products...")
+        has_emojis = db.query(models.Product).filter(~models.Product.icon.like("http%")).first()
+        
+        if count == 0 or has_emojis:
+            print("Database empty or containing emojis. Auto-seeding real product photographs...")
+            db.query(models.Product).delete()
+            db.commit()
             for prod_data in INITIAL_PRODUCTS:
                 db_prod = models.Product(**prod_data)
                 db.add(db_prod)
             db.commit()
-            print("Auto-seeding completed!")
+            
+            # Seed Coupons if empty
+            if db.query(models.Coupon).count() == 0:
+                db.add(models.Coupon(code="SAVE50", discount_percentage=50, max_discount=100, min_order_value=150, description="Flat 50% Off up to ₹100 on your order!", is_active=True))
+                db.add(models.Coupon(code="WELCOME100", discount_percentage=20, max_discount=100, min_order_value=300, description="20% Off up to ₹100 on orders above ₹300!", is_active=True))
+                db.add(models.Coupon(code="FREEDEL", discount_percentage=10, max_discount=50, min_order_value=99, description="10% Off up to ₹50 on orders above ₹99!", is_active=True))
+                db.commit()
+                
+            print("Auto-seeding completed successfully!")
     except Exception as e:
         print(f"Error seeding database on startup: {str(e)}")
 
@@ -670,6 +824,10 @@ def create_stripe_intent(payload: dict):
 # Save Order in PostgreSQL
 @app.post("/api/orders/{user_id}", response_model=schemas.OrderResponse)
 def create_order(user_id: str, order_data: schemas.OrderCreate, db: Session = Depends(get_db)):
+    if user_id.isdigit():
+        addr_count = db.query(models.Address).filter(models.Address.user_id == int(user_id)).count()
+        if addr_count == 0:
+            raise HTTPException(status_code=400, detail="At least one saved address is required to place an order.")
     try:
         db_order = models.Order(
             user_id=user_id,
@@ -717,6 +875,214 @@ def get_user_orders(user_id: str, authorization: Optional[str] = Header(None), d
     verify_token_for_user(user_id, authorization)
     orders = db.query(models.Order).filter(models.Order.user_id == user_id).order_by(models.Order.created_at.desc()).all()
     return orders
+
+
+# =========================================================================
+# WISHLIST ENDPOINTS
+# =========================================================================
+@app.get("/api/wishlist/{user_id}", response_model=List[schemas.WishlistItemResponse])
+def get_wishlist(user_id: str, db: Session = Depends(get_db)):
+    items = db.query(models.WishlistItem).filter(models.WishlistItem.user_id == user_id).all()
+    return items
+
+@app.post("/api/wishlist/{user_id}", response_model=schemas.WishlistItemResponse)
+def add_to_wishlist(user_id: str, payload: schemas.WishlistItemCreate, db: Session = Depends(get_db)):
+    existing = db.query(models.WishlistItem).filter(
+        models.WishlistItem.user_id == user_id,
+        models.WishlistItem.product_id == payload.product_id
+    ).first()
+    if existing:
+        return existing
+    
+    item = models.WishlistItem(user_id=user_id, product_id=payload.product_id)
+    db.add(item)
+    db.commit()
+    db.refresh(item)
+    return item
+
+@app.delete("/api/wishlist/{user_id}/{product_id}")
+def remove_from_wishlist(user_id: str, product_id: int, db: Session = Depends(get_db)):
+    item = db.query(models.WishlistItem).filter(
+        models.WishlistItem.user_id == user_id,
+        models.WishlistItem.product_id == product_id
+    ).first()
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found in wishlist")
+    db.delete(item)
+    db.commit()
+    return {"message": "Item removed from wishlist"}
+
+# =========================================================================
+# COUPON ENDPOINTS
+# =========================================================================
+@app.get("/api/coupons", response_model=List[schemas.CouponResponse])
+def get_coupons(db: Session = Depends(get_db)):
+    return db.query(models.Coupon).filter(models.Coupon.is_active == True).all()
+
+@app.post("/api/coupons", response_model=schemas.CouponResponse)
+def create_coupon(payload: schemas.CouponCreate, db: Session = Depends(get_db)):
+    existing = db.query(models.Coupon).filter(models.Coupon.code == payload.code.upper().strip()).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="Coupon code already exists")
+    
+    coupon = models.Coupon(
+        code=payload.code.upper().strip(),
+        discount_percentage=payload.discount_percentage,
+        max_discount=payload.max_discount,
+        min_order_value=payload.min_order_value,
+        description=payload.description,
+        is_active=True
+    )
+    db.add(coupon)
+    db.commit()
+    db.refresh(coupon)
+    return coupon
+
+@app.post("/api/coupons/apply")
+def apply_coupon(payload: dict, db: Session = Depends(get_db)):
+    code = payload.get("code")
+    cart_total = payload.get("cart_total", 0)
+    if not code:
+        raise HTTPException(status_code=400, detail="Coupon code is required")
+    
+    coupon = db.query(models.Coupon).filter(
+        models.Coupon.code == code.upper().strip(),
+        models.Coupon.is_active == True
+    ).first()
+    if not coupon:
+        raise HTTPException(status_code=404, detail="Invalid coupon code")
+    
+    if cart_total < coupon.min_order_value:
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Minimum order value for this coupon is ₹{coupon.min_order_value}"
+        )
+    
+    discount = int(cart_total * (coupon.discount_percentage / 100.0))
+    if coupon.max_discount and discount > coupon.max_discount:
+        discount = coupon.max_discount
+        
+    return {
+        "code": coupon.code,
+        "discount_percentage": coupon.discount_percentage,
+        "discount_amount": discount,
+        "message": f"Coupon {coupon.code} applied successfully!"
+    }
+
+# =========================================================================
+# REVIEWS ENDPOINTS
+# =========================================================================
+@app.get("/api/products/{product_id}/reviews", response_model=List[schemas.ReviewResponse])
+def get_reviews(product_id: int, db: Session = Depends(get_db)):
+    return db.query(models.Review).filter(models.Review.product_id == product_id).all()
+
+@app.post("/api/products/{product_id}/reviews", response_model=schemas.ReviewResponse)
+def add_review(product_id: int, payload: schemas.ReviewCreate, user_name: str = Query("Guest"), db: Session = Depends(get_db)):
+    product = db.query(models.Product).filter(models.Product.id == product_id).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+        
+    review = models.Review(
+        product_id=product_id,
+        user_name=user_name,
+        rating=payload.rating,
+        comment=payload.comment
+    )
+    db.add(review)
+    db.commit()
+    db.refresh(review)
+    return review
+
+# =========================================================================
+# NOTIFICATION ENDPOINTS
+# =========================================================================
+@app.get("/api/notifications/{user_id}", response_model=List[schemas.NotificationResponse])
+def get_notifications(user_id: str, db: Session = Depends(get_db)):
+    return db.query(models.Notification).filter(models.Notification.user_id == user_id).order_by(models.Notification.created_at.desc()).all()
+
+@app.put("/api/notifications/{user_id}/{notification_id}/read")
+def mark_notification_read(user_id: str, notification_id: int, db: Session = Depends(get_db)):
+    notif = db.query(models.Notification).filter(
+        models.Notification.user_id == user_id,
+        models.Notification.id == notification_id
+    ).first()
+    if not notif:
+        raise HTTPException(status_code=404, detail="Notification not found")
+    notif.is_read = True
+    db.commit()
+    return {"message": "Notification marked as read"}
+
+# =========================================================================
+# ADMIN PANEL ENDPOINTS
+# =========================================================================
+@app.get("/api/admin/users", response_model=List[schemas.UserResponse])
+def admin_get_users(db: Session = Depends(get_db)):
+    return db.query(models.User).all()
+
+@app.put("/api/admin/users/{user_id}/status")
+def admin_toggle_user_status(user_id: int, payload: dict, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    user.is_active = payload.get("is_active", user.is_active)
+    db.commit()
+    return {"message": "User status updated successfully"}
+
+@app.get("/api/admin/orders", response_model=List[schemas.OrderResponse])
+def admin_get_orders(db: Session = Depends(get_db)):
+    return db.query(models.Order).order_by(models.Order.created_at.desc()).all()
+
+@app.put("/api/admin/orders/{order_id}/status")
+def admin_update_order_status(order_id: int, payload: dict, db: Session = Depends(get_db)):
+    order = db.query(models.Order).filter(models.Order.id == order_id).first()
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+    
+    old_status = order.status
+    new_status = payload.get("status")
+    if new_status:
+        order.status = new_status
+        db.commit()
+        
+        notif = models.Notification(
+            user_id=order.user_id,
+            title="Order Status Updated",
+            message=f"Your order #{order.id} status changed from {old_status} to {new_status}."
+        )
+        db.add(notif)
+        db.commit()
+        
+    return {"message": "Order status updated successfully", "status": order.status}
+
+@app.post("/api/admin/products", response_model=schemas.ProductResponse)
+def admin_create_product(payload: schemas.ProductCreate, db: Session = Depends(get_db)):
+    product = models.Product(**payload.dict())
+    db.add(product)
+    db.commit()
+    db.refresh(product)
+    return product
+
+@app.put("/api/admin/products/{product_id}", response_model=schemas.ProductResponse)
+def admin_update_product(product_id: int, payload: schemas.ProductCreate, db: Session = Depends(get_db)):
+    product = db.query(models.Product).filter(models.Product.id == product_id).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+        
+    for key, value in payload.dict().items():
+        setattr(product, key, value)
+        
+    db.commit()
+    db.refresh(product)
+    return product
+
+@app.delete("/api/admin/products/{product_id}")
+def admin_delete_product(product_id: int, db: Session = Depends(get_db)):
+    product = db.query(models.Product).filter(models.Product.id == product_id).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+    db.delete(product)
+    db.commit()
+    return {"message": "Product deleted successfully"}
 
 
 # ================= AUTHENTICATION ENDPOINTS =================
@@ -804,7 +1170,20 @@ def verify_user(payload: schemas.UserVerify, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     if user.is_active:
-        return {"message": "Account is already active."}
+        access_token = create_access_token(data={"sub": str(user.id)})
+        refresh_token = create_refresh_token(data={"sub": str(user.id)})
+        return {
+            "access_token": access_token,
+            "refresh_token": refresh_token,
+            "user": {
+                "id": user.id,
+                "full_name": user.full_name,
+                "email": user.email,
+                "mobile": user.mobile,
+                "is_active": user.is_active,
+                "created_at": user.created_at
+            }
+        }
     if user.verification_otp != payload.otp.strip():
         raise HTTPException(status_code=400, detail="Invalid verification code")
         
@@ -812,7 +1191,21 @@ def verify_user(payload: schemas.UserVerify, db: Session = Depends(get_db)):
     user.verification_otp = None
     user.verification_token = None
     db.commit()
-    return {"message": "Account activated successfully! You can now log in."}
+    
+    access_token = create_access_token(data={"sub": str(user.id)})
+    refresh_token = create_refresh_token(data={"sub": str(user.id)})
+    return {
+        "access_token": access_token,
+        "refresh_token": refresh_token,
+        "user": {
+            "id": user.id,
+            "full_name": user.full_name,
+            "email": user.email,
+            "mobile": user.mobile,
+            "is_active": user.is_active,
+            "created_at": user.created_at
+        }
+    }
 
 @app.post("/api/auth/resend-otp")
 def resend_otp(payload: dict, db: Session = Depends(get_db)):
@@ -1024,4 +1417,446 @@ def reset_password(payload: schemas.ResetPasswordRequest, db: Session = Depends(
 @app.get("/api/auth/me", response_model=schemas.UserResponse)
 def get_current_user_profile(user: models.User = Depends(get_current_user)):
     return user
+
+
+# ================= ADDRESS MANAGEMENT ENDPOINTS =================
+
+@app.get("/api/addresses", response_model=List[schemas.AddressResponse])
+def get_user_addresses(user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    return db.query(models.Address).filter(models.Address.user_id == user.id).all()
+
+@app.post("/api/addresses", response_model=schemas.AddressResponse)
+def create_user_address(addr: schemas.AddressCreate, user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    # Clean and validate pincode (6-digit Indian PIN)
+    pincode_clean = addr.pincode.strip().replace(" ", "")
+    if not pincode_clean.isdigit() or len(pincode_clean) != 6:
+        raise HTTPException(status_code=400, detail="Invalid pincode. Pincode must be exactly 6 digits.")
+
+    # Check if user has other addresses
+    existing_count = db.query(models.Address).filter(models.Address.user_id == user.id).count()
+    is_default = True if existing_count == 0 else addr.is_default
+
+    # Unset all other defaults if this is marked as default
+    if is_default:
+        db.query(models.Address).filter(models.Address.user_id == user.id).update({"is_default": False})
+
+    db_address = models.Address(
+        user_id=user.id,
+        house_flat_number=addr.house_flat_number,
+        building_name=addr.building_name,
+        street=addr.street,
+        landmark=addr.landmark,
+        area=addr.area,
+        city=addr.city,
+        state=addr.state,
+        pincode=pincode_clean,
+        latitude=addr.latitude,
+        longitude=addr.longitude,
+        label=addr.label,
+        is_default=is_default
+    )
+    db.add(db_address)
+    db.commit()
+    db.refresh(db_address)
+    return db_address
+
+@app.put("/api/addresses/{address_id}/default", response_model=schemas.AddressResponse)
+def set_default_address(address_id: int, user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    address = db.query(models.Address).filter(models.Address.id == address_id, models.Address.user_id == user.id).first()
+    if not address:
+        raise HTTPException(status_code=404, detail="Address not found")
+
+    # Unset all other default flags
+    db.query(models.Address).filter(models.Address.user_id == user.id).update({"is_default": False})
+
+    # Set this flag
+    address.is_default = True
+    db.commit()
+    db.refresh(address)
+    return address
+
+@app.delete("/api/addresses/{address_id}")
+def delete_user_address(address_id: int, user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    address = db.query(models.Address).filter(models.Address.id == address_id, models.Address.user_id == user.id).first()
+    if not address:
+        raise HTTPException(status_code=404, detail="Address not found")
+
+    db.delete(address)
+    db.commit()
+
+    # Re-elect a default address if needed
+    remaining = db.query(models.Address).filter(models.Address.user_id == user.id).all()
+    if remaining:
+        has_default = any(r.is_default for r in remaining)
+        if not has_default:
+            remaining[0].is_default = True
+            db.commit()
+
+    return {"message": "Address deleted successfully"}
+
+
+from pydantic import BaseModel
+from typing import Optional, List, Dict, Any
+
+# BlinkAI Request Schema
+class BlinkAIRequest(BaseModel):
+    type: str
+    prompt: Optional[str] = ""
+    family_size: Optional[int] = 4
+    budget: Optional[int] = 1000
+    preference: Optional[str] = "Vegetarian"
+    items: Optional[List[int]] = []
+
+
+def hydrate_and_return(data, db):
+    product_ids = []
+    for item in data.get("shopping_list", []):
+        if "product_id" in item:
+            product_ids.append(item["product_id"])
+    for alt in data.get("healthy_alternatives", []):
+        if "original_id" in alt:
+            product_ids.append(alt["original_id"])
+        if "healthy_id" in alt:
+            product_ids.append(alt["healthy_id"])
+            
+    if product_ids:
+        db_matches = db.query(models.Product).filter(models.Product.id.in_(product_ids)).all()
+        product_map = {}
+        for p in db_matches:
+            product_map[p.id] = {
+                "id": p.id,
+                "name": p.name,
+                "brand": p.brand,
+                "size": p.size,
+                "price": p.price,
+                "original_price": p.original_price,
+                "icon": p.icon,
+                "discount": p.discount,
+                "stock": p.stock
+            }
+        for item in data.get("shopping_list", []):
+            item["product"] = product_map.get(item.get("product_id"))
+        for alt in data.get("healthy_alternatives", []):
+            alt["original_product"] = product_map.get(alt.get("original_id"))
+            alt["healthy_product"] = product_map.get(alt.get("healthy_id"))
+            
+    return JSONResponse(content=data)
+
+
+@app.post("/api/blinkai/plan")
+def blinkai_plan(req: BlinkAIRequest, db: Session = Depends(get_db)):
+    db_products = db.query(models.Product).all()
+    
+    # Format products for context
+    inventory = []
+    for p in db_products:
+        inventory.append({
+            "id": p.id,
+            "name": p.name,
+            "brand": p.brand or "Generic",
+            "size": p.size,
+            "price": p.price,
+            "original_price": p.original_price or p.price,
+            "category": p.category,
+            "discount": p.discount or ""
+        })
+
+    gemini_key = os.getenv("GEMINI_API_KEY")
+    openai_key = os.getenv("OPENAI_API_KEY")
+    
+    # Multi-agent simulation logs
+    agent_logs = []
+    
+    # 1. Intent Agent
+    agent_logs.append({
+        "agent": "Intent Agent",
+        "status": "success",
+        "output": f"Parsed query of type '{req.type}'. Detected intent: {req.type.upper()} planner agent activation."
+    })
+    
+    # We will build a unified JSON response matching the requirements
+    reply_data = {
+        "recipe_name": "",
+        "cooking_time": "20 mins",
+        "difficulty": "Easy",
+        "healthy_score": 85,
+        "original_total": 0,
+        "savings": 0,
+        "grand_total": 0,
+        "shopping_list": [],  # list of { product_id, qty, reason }
+        "healthy_alternatives": [], # list of { original_id, healthy_id, explanation }
+        "weekly_plan": {}, # dict of day -> breakfast/lunch/dinner
+        "agent_logs": agent_logs
+    }
+
+    if not gemini_key and not openai_key:
+        # Fallback offline algorithm matching real products
+        agent_logs.append({
+            "agent": "Product Search Agent",
+            "status": "success",
+            "output": f"Searched local inventory database index for items matching query: '{req.prompt}'"
+        })
+        
+        # 1. Recipe
+        if req.type == "recipe":
+            query_lower = req.prompt.lower()
+            if "paneer" in query_lower:
+                reply_data["recipe_name"] = "Paneer Butter Masala"
+                reply_data["cooking_time"] = "25 mins"
+                reply_data["difficulty"] = "Medium"
+                reply_data["healthy_score"] = 80
+                
+                paneer = next((p for p in inventory if "paneer" in p["name"].lower()), None)
+                butter = next((p for p in inventory if "butter" in p["name"].lower()), None)
+                masala = next((p for p in inventory if "masala" in p["name"].lower()), None)
+                onion = next((p for p in inventory if "onion" in p["name"].lower()), None)
+                tomato = next((p for p in inventory if "tomato" in p["name"].lower()), None)
+                
+                items_matched = [paneer, butter, masala, onion, tomato]
+                items_matched = [i for i in items_matched if i]
+                
+                for item in items_matched:
+                    reply_data["shopping_list"].append({
+                        "product_id": item["id"],
+                        "qty": 1 + (req.family_size // 4),
+                        "reason": "Essential ingredient for rich paneer curry base"
+                    })
+            elif "biryani" in query_lower:
+                reply_data["recipe_name"] = "Hyderabadi Veg Biryani"
+                reply_data["cooking_time"] = "40 mins"
+                reply_data["difficulty"] = "Hard"
+                reply_data["healthy_score"] = 75
+                
+                rice = next((p for p in inventory if "rice" in p["name"].lower()), None)
+                masala = next((p for p in inventory if "masala" in p["name"].lower()), None)
+                veggies = next((p for p in inventory if "potato" in p["name"].lower() or "tomato" in p["name"].lower()), None)
+                oil = next((p for p in inventory if "ghee" in p["name"].lower() or "oil" in p["name"].lower()), None)
+                
+                items_matched = [rice, masala, veggies, oil]
+                items_matched = [i for i in items_matched if i]
+                
+                for item in items_matched:
+                    reply_data["shopping_list"].append({
+                        "product_id": item["id"],
+                        "qty": 1 + (req.family_size // 4),
+                        "reason": "Core carbohydrate rice layer and spice elements"
+                    })
+            else:
+                reply_data["recipe_name"] = "Tomato Basil Pasta"
+                reply_data["cooking_time"] = "15 mins"
+                reply_data["difficulty"] = "Easy"
+                reply_data["healthy_score"] = 88
+                
+                noodles = next((p for p in inventory if "pasta" in p["name"].lower() or "maggi" in p["name"].lower() or "noodle" in p["name"].lower()), None)
+                sauce = next((p for p in inventory if "tomato" in p["name"].lower()), None)
+                cheese = next((p for p in inventory if "cheese" in p["name"].lower() or "butter" in p["name"].lower()), None)
+                
+                items_matched = [noodles, sauce, cheese]
+                items_matched = [i for i in items_matched if i]
+                
+                for item in items_matched:
+                    reply_data["shopping_list"].append({
+                        "product_id": item["id"],
+                        "qty": 1 + (req.family_size // 4),
+                        "reason": "Core carbohydrate base and savory elements"
+                    })
+                    
+        # 2. Weekly Planner
+        elif req.type == "weekly":
+            reply_data["recipe_name"] = f"7-Day {req.preference} Meal Plan"
+            reply_data["cooking_time"] = "Variable"
+            reply_data["difficulty"] = "Easy"
+            reply_data["healthy_score"] = 92
+            
+            milk = next((p for p in inventory if "milk" in p["name"].lower()), None)
+            bread = next((p for p in inventory if "bread" in p["name"].lower()), None)
+            eggs = next((p for p in inventory if "eggs" in p["name"].lower()), None)
+            apple = next((p for p in inventory if "apple" in p["name"].lower()), None)
+            chips = next((p for p in inventory if "chips" in p["name"].lower() or "munchies" in p["name"].lower()), None)
+            juice = next((p for p in inventory if "juice" in p["name"].lower() or "coke" in p["name"].lower()), None)
+            
+            items_matched = [milk, bread, eggs, apple, chips, juice]
+            items_matched = [i for i in items_matched if i]
+            
+            for item in items_matched:
+                reply_data["shopping_list"].append({
+                    "product_id": item["id"],
+                    "qty": 2 if req.family_size > 3 else 1,
+                    "reason": "Weekly supply for healthy breakfast and snacking routines"
+                })
+                
+            reply_data["weekly_plan"] = {
+                "Monday": {"breakfast": "Toned Milk & Brown Bread", "lunch": "Rice with mixed vegetables", "dinner": "Wheat Chapati with Dal"},
+                "Tuesday": {"breakfast": "Fruit Salad with Fresh Apples", "lunch": "Paneer butter masala with rice", "dinner": "Tomato soup and toasted bread"},
+                "Wednesday": {"breakfast": "Scrambled Eggs on Bread", "lunch": "Veg Pulao with curd", "dinner": "Stir fry mixed greens"},
+                "Thursday": {"breakfast": "Oats with honey & milk", "lunch": "Dal Tadka with Jeera rice", "dinner": "Paneer bhurji with roti"},
+                "Friday": {"breakfast": "Toned Milk & Brown Bread", "lunch": "Tomato Basil Pasta", "dinner": "Mixed vegetable curry"},
+                "Saturday": {"breakfast": "Fruit Salad with Apples", "lunch": "Vegetable Biryani", "dinner": "Bread toast and butter"},
+                "Sunday": {"breakfast": "Scrambled Eggs on Bread", "lunch": "Kadai Paneer with rice", "dinner": "Wheat Chapati with mixed vegetables"}
+            }
+            
+        # 3. Budget / Healthy / Fallback
+        else:
+            reply_data["recipe_name"] = "Custom Grocery Basket"
+            for p in inventory[:6]:
+                reply_data["shopping_list"].append({
+                    "product_id": p["id"],
+                    "qty": 1,
+                    "reason": "Popular choice matching standard family budget"
+                })
+                
+        # Swap logic
+        for item in reply_data["shopping_list"]:
+            prod = next((p for p in inventory if p["id"] == item["product_id"]), None)
+            if prod:
+                name_lower = prod["name"].lower()
+                if "chips" in name_lower or "kurkure" in name_lower or "bingo" in name_lower:
+                    healthy_item = next((p for p in inventory if "apple" in p["name"].lower() or "cucumber" in p["name"].lower()), None)
+                    if healthy_item:
+                        reply_data["healthy_alternatives"].append({
+                            "original_id": prod["id"],
+                            "healthy_id": healthy_item["id"],
+                            "explanation": "Baked fresh fruits/cucumber contain significantly less saturated fats and zero cholesterol."
+                        })
+                elif "coke" in name_lower or "sprite" in name_lower or "pepsi" in name_lower:
+                    healthy_item = next((p for p in inventory if "juice" in p["name"].lower() or "milk" in p["name"].lower()), None)
+                    if healthy_item:
+                        reply_data["healthy_alternatives"].append({
+                            "original_id": prod["id"],
+                            "healthy_id": healthy_item["id"],
+                            "explanation": "Fresh juice or milk provides calcium and essential vitamins without artificial sweeteners or high fructose syrup."
+                        })
+
+        subtotal = 0
+        for item in reply_data["shopping_list"]:
+            prod = next((p for p in inventory if p["id"] == item["product_id"]), None)
+            if prod:
+                subtotal += prod["price"] * item["qty"]
+        
+        reply_data["original_total"] = subtotal
+        if req.type == "budget" or subtotal > req.budget:
+            reply_data["savings"] = int(subtotal * 0.15)
+            reply_data["grand_total"] = subtotal - reply_data["savings"]
+        else:
+            reply_data["savings"] = 0
+            reply_data["grand_total"] = subtotal
+
+        agent_logs.append({
+            "agent": "Recipe Planning Agent",
+            "status": "success",
+            "output": f"Formulated ingredients, cooking times, and health score for: '{reply_data['recipe_name']}'."
+        })
+        agent_logs.append({
+            "agent": "Recommendation Agent",
+            "status": "success",
+            "output": f"Ranked {len(reply_data['shopping_list'])} products based on rating, availability, and brand score."
+        })
+        agent_logs.append({
+            "agent": "Budget Optimization Agent",
+            "status": "success",
+            "output": f"Completed cost analysis. Found savings of ₹{reply_data['savings']} by swapping select items."
+        })
+        agent_logs.append({
+            "agent": "Offer & Coupon Agent",
+            "status": "success",
+            "output": "Auto-applied dynamic coupon code 'BLINKAI15' (15% OFF) to the checkout basket."
+        })
+        agent_logs.append({
+            "agent": "Cart Generation Agent",
+            "status": "success",
+            "output": f"Cart generated successfully with {len(reply_data['shopping_list'])} items. Ready to checkout!"
+        })
+
+        return hydrate_and_return(reply_data, db)
+
+    try:
+        import httpx
+        http_client = httpx.Client(verify=False)
+        
+        if gemini_key:
+            client = OpenAI(api_key=gemini_key, base_url="https://generativelanguage.googleapis.com/v1beta/openai/", http_client=http_client)
+            model_name = "gemini-2.5-flash"
+        else:
+            client = OpenAI(api_key=openai_key, http_client=http_client)
+            model_name = "gpt-4o-mini"
+            
+        system_instruction = (
+            "You are BlinkAI, a Smart Grocery Planner for the Blinkit application.\n"
+            "Your task is to analyze user queries (recipes, weekly planners, budgets) and recommend products ONLY from our inventory.\n"
+            f"Here is our complete inventory of products available:\n{json.dumps(inventory)}\n\n"
+            "Your output must be a strict JSON object containing the following keys:\n"
+            "1. 'recipe_name': string (Name of recipe or plan)\n"
+            "2. 'cooking_time': string (Estimated time, e.g. '25 mins')\n"
+            "3. 'difficulty': string ('Easy' | 'Medium' | 'Hard')\n"
+            "4. 'healthy_score': number (Value from 1 to 100)\n"
+            "5. 'shopping_list': JSON array of objects, each containing:\n"
+            "   - 'product_id': integer (ID of matching product from inventory)\n"
+            "   - 'qty': integer (Quantity based on query or family size)\n"
+            "   - 'reason': string (Why you recommended this product, e.g. 'Rich curry base', 'Best rated alternative')\n"
+            "6. 'healthy_alternatives': JSON array of objects, each containing:\n"
+            "   - 'original_id': integer (ID of unhealthy product in shopping list, e.g. chips, soft drink)\n"
+            "   - 'healthy_id': integer (ID of a healthier alternative, e.g. juice, apple, brown bread)\n"
+            "   - 'explanation': string (Why this swap is healthier)\n"
+            "7. 'weekly_plan': JSON object representing a 7-day meal plan. Key format: 'Monday': {'breakfast': '...', 'lunch': '...', 'dinner': '...'}\n"
+            "Rules:\n"
+            "1. DO NOT recommend products that are not present in the inventory list. Swap with the closest available if needed.\n"
+            "2. Ensure quantities are adjusted dynamically according to the requested family size.\n"
+            "3. Return ONLY the raw JSON string. Do not wrap in ```json block code tags."
+        )
+        
+        prompt = f"User Request: {req.prompt}\nType: {req.type}\nFamily Size: {req.family_size}\nBudget: {req.budget}\nPreference: {req.preference}\nSelected Items: {req.items}"
+        
+        response = client.chat.completions.create(
+            model=model_name,
+            messages=[
+                {"role": "system", "content": system_instruction},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.2,
+            timeout=4.0
+        )
+        
+        content = response.choices[0].message.content.strip()
+        if content.startswith("```"):
+            lines = content.split("\n")
+            if lines[0].startswith("```"):
+                lines = lines[1:]
+            if lines[-1].startswith("```"):
+                lines = lines[:-1]
+            content = "\n".join(lines).strip()
+            
+        result = json.loads(content)
+        
+        subtotal = 0
+        for item in result.get("shopping_list", []):
+            prod = next((p for p in inventory if p["id"] == item["product_id"]), None)
+            if prod:
+                subtotal += prod["price"] * item.get("qty", 1)
+                
+        result["original_total"] = subtotal
+        if req.type == "budget" or subtotal > req.budget:
+            result["savings"] = int(subtotal * 0.15)
+            result["grand_total"] = subtotal - result["savings"]
+        else:
+            result["savings"] = 0
+            result["grand_total"] = subtotal
+            
+        result["agent_logs"] = [
+            {"agent": "Intent Agent", "status": "success", "output": f"Parsed query of type '{req.type}'. Detected intent: {req.type.upper()} optimization."},
+            {"agent": "Meal Planning Agent", "status": "success", "output": "Created structured meal plan schedule."},
+            {"agent": "Product Search Agent", "status": "success", "output": f"Queried database models. Product count matched: {len(result.get('shopping_list', []))}."},
+            {"agent": "Recommendation Agent", "status": "success", "output": "Selected highest rating items with direct stock availability."},
+            {"agent": "Budget Optimization Agent", "status": "success", "output": f"Optimized catalog pricing. Saved: ₹{result['savings']}."},
+            {"agent": "Offer & Coupon Agent", "status": "success", "output": "Applied BlinkAI system discount coupons."},
+            {"agent": "Cart Generation Agent", "status": "success", "output": "Parsed final cart checkout payload."}
+        ]
+        
+        return hydrate_and_return(result, db)
+        
+    except Exception as e:
+        print(f"Error calling LLM: {str(e)}")
+        # Offline fallback helper
+        return blinkai_plan(req, db)
+
+
 

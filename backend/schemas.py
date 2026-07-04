@@ -8,6 +8,7 @@ class ProductBase(BaseModel):
     price: int
     original_price: Optional[int] = None
     icon: Optional[str] = None
+    images_list: Optional[str] = None
     discount: Optional[str] = None
     brand: Optional[str] = None
     category: Optional[str] = None
@@ -125,4 +126,103 @@ class TokenSchema(BaseModel):
     refresh_token: str
     token_type: str = "bearer"
     user: UserResponse
+
+
+class AddressCreate(BaseModel):
+    house_flat_number: str
+    building_name: str
+    street: str
+    landmark: Optional[str] = None
+    area: str
+    city: str
+    state: str
+    pincode: str
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+    label: str = "Home"  # Home, Work, Other
+    is_default: Optional[bool] = False
+
+class AddressResponse(BaseModel):
+    id: int
+    user_id: int
+    house_flat_number: str
+    building_name: str
+    street: str
+    landmark: Optional[str] = None
+    area: str
+    city: str
+    state: str
+    pincode: str
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+    label: str
+    is_default: bool
+
+    class Config:
+        from_attributes = True
+
+
+class WishlistItemResponse(BaseModel):
+    id: int
+    product_id: int
+    product: ProductResponse
+
+    class Config:
+        from_attributes = True
+
+
+class WishlistItemCreate(BaseModel):
+    product_id: int
+
+
+class CouponResponse(BaseModel):
+    id: int
+    code: str
+    discount_percentage: int
+    max_discount: Optional[int] = None
+    min_order_value: int
+    description: Optional[str] = None
+    is_active: bool
+
+    class Config:
+        from_attributes = True
+
+
+class CouponCreate(BaseModel):
+    code: str
+    discount_percentage: int
+    max_discount: Optional[int] = None
+    min_order_value: int
+    description: Optional[str] = None
+
+
+class ReviewResponse(BaseModel):
+    id: int
+    product_id: int
+    user_name: str
+    rating: int
+    comment: Optional[str] = None
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class ReviewCreate(BaseModel):
+    rating: int
+    comment: Optional[str] = None
+
+
+class NotificationResponse(BaseModel):
+    id: int
+    user_id: str
+    title: str
+    message: str
+    is_read: bool
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
 

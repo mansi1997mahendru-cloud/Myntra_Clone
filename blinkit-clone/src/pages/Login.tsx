@@ -6,7 +6,7 @@ import { Smartphone, Sparkles, User, Mail, Lock, Check, Eye, EyeOff } from 'luci
 export const Login: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, register, forgotPassword } = useAuth();
+  const { login, register, forgotPassword, fetchAddresses } = useAuth();
 
   // Mode state: 'login' | 'register' | 'forgot'
   const [mode, setMode] = useState<'login' | 'register' | 'forgot'>('login');
@@ -70,7 +70,12 @@ export const Login: React.FC = () => {
 
     try {
       await login(emailOrMobile, loginPassword);
-      navigate('/home', { replace: true });
+      const addrs = await fetchAddresses();
+      if (addrs.length === 0) {
+        navigate('/complete-profile', { replace: true });
+      } else {
+        navigate('/home', { replace: true });
+      }
     } catch (err: any) {
       console.error(err);
       setAuthError(err.message || 'Login failed. Please check your credentials.');

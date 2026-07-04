@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Search as SearchIcon, ArrowLeft, X, ShoppingBag, Plus, Minus, Loader2 } from 'lucide-react';
+import { Search as SearchIcon, ArrowLeft, X, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
+import { ProductCard } from '../components/ProductCard';
 
 interface Product {
   id: number;
@@ -30,8 +30,6 @@ export const Search: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
-  const { cartItems, addToCart, removeFromCart } = useCart();
 
   const popularSearches = [
     'Milk', 'Bread', 'Butter', 'Eggs', 'Tomatoes', 'Chips', 
@@ -233,72 +231,11 @@ export const Search: React.FC = () => {
           {!loading && products.length > 0 && (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
               {products.map((product) => {
-                const cartItem = cartItems.find((item) => String(item.id) === String(product.id));
-                const qty = cartItem ? cartItem.qty : 0;
-                return (
-                  <div 
-                    key={product.id}
-                    className="bg-white rounded-2xl border border-neutral-200 p-3 flex flex-col justify-between shadow-sm hover:shadow transition-shadow text-left"
-                  >
-                    <div 
-                      onClick={() => navigate(`/product/${product.id}`)}
-                      className="bg-neutral-50 rounded-xl h-28 flex items-center justify-center text-5xl mb-2 relative cursor-pointer hover:bg-neutral-100 transition-colors select-none"
-                    >
-                      {product.icon}
-                      {product.discount && (
-                        <span className="absolute top-1.5 left-1.5 bg-emerald-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded-md uppercase tracking-wider">
-                          {product.discount}
-                        </span>
-                      )}
-                    </div>
-                    
-                    <div className="space-y-1">
-                      <h4 
-                        onClick={() => navigate(`/product/${product.id}`)}
-                        className="text-xs font-extrabold text-neutral-800 line-clamp-1 cursor-pointer hover:text-yellow-600 transition-colors"
-                      >
-                        {product.name}
-                      </h4>
-                      <p className="text-[10px] text-neutral-500 font-semibold">{product.size}</p>
-                      
-                      <div className="flex justify-between items-center pt-2.5">
-                        <div className="flex flex-col">
-                          <span className="text-xs font-black text-neutral-900">₹{product.price}</span>
-                          {product.original_price > product.price && (
-                            <span className="text-[9px] text-neutral-400 line-through">₹{product.original_price}</span>
-                          )}
-                        </div>
-
-                        {qty > 0 ? (
-                          <div className="bg-emerald-600 text-white rounded-lg flex items-center overflow-hidden shadow-sm">
-                            <button 
-                              onClick={() => removeFromCart(product.id)}
-                              className="px-2 py-1 text-xs font-black hover:bg-emerald-700"
-                            >
-                              <Minus className="h-3.5 w-3.5 stroke-[3]" />
-                            </button>
-                            <span className="px-2 py-1 text-xs font-black min-w-[12px] text-center">{qty}</span>
-                            <button 
-                              onClick={() => addToCart(product)}
-                              className="px-2 py-1 text-xs font-black hover:bg-emerald-700"
-                              disabled={qty >= (product.stock || 15)}
-                            >
-                              <Plus className="h-3.5 w-3.5 stroke-[3]" />
-                            </button>
-                          </div>
-                        ) : (
-                          <button 
-                            onClick={() => addToCart(product)}
-                            className="bg-emerald-55 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 font-black text-xs px-3.5 py-1.5 rounded-lg active:scale-95 transition-transform flex items-center space-x-0.5 shadow-sm"
-                          >
-                            <ShoppingBag className="h-3.5 w-3.5" />
-                            <span>ADD</span>
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                );
+                const formatted = {
+                  ...product,
+                  originalPrice: product.original_price || product.price
+                };
+                return <ProductCard key={product.id} product={formatted} />;
               })}
             </div>
           )}

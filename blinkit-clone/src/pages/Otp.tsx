@@ -113,10 +113,7 @@ export const Otp: React.FC = () => {
 
     try {
       await verifyOtp(email, otpCode);
-      navigate('/login', { 
-        state: { successMessage: 'Email verified successfully! You can now log in.' },
-        replace: true 
-      });
+      navigate('/complete-profile', { replace: true });
     } catch (err: any) {
       console.error(err);
       setAuthError(err.message || 'Incorrect OTP code. Please try again.');

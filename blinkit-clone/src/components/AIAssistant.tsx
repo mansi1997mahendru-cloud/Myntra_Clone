@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { MessageSquare, X, Send, Sparkles } from 'lucide-react';
+import { X, Send, Sparkles } from 'lucide-react';
 
 interface Message {
   sender: 'user' | 'assistant';
@@ -198,9 +198,17 @@ export const AIAssistant: React.FC = () => {
                                 setIsOpen(false);
                                 navigate(`/product/${product.id}`);
                               }}
-                              className="bg-white rounded-lg h-16 flex items-center justify-center text-3xl mb-1.5 relative cursor-pointer hover:bg-neutral-50 select-none"
+                              className="bg-white rounded-lg h-16 flex items-center justify-center mb-1.5 relative cursor-pointer hover:bg-neutral-50 overflow-hidden p-1.5"
                             >
-                              {product.icon}
+                              <img 
+                                src={product.icon} 
+                                alt={product.name} 
+                                className="h-full w-full object-contain mix-blend-multiply" 
+                                loading="lazy"
+                                onError={(e) => {
+                                  e.currentTarget.src = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=100&auto=format&fit=crop";
+                                }}
+                              />
                               {product.discount && (
                                 <span className="absolute top-1 left-1 bg-emerald-500 text-white text-[7px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider">
                                   {product.discount}
@@ -320,21 +328,19 @@ export const AIAssistant: React.FC = () => {
 
       {/* Floating Chat Bubble Button */}
       <button 
-        onClick={() => setIsOpen(!isOpen)}
-        className="bg-yellow-400 hover:bg-yellow-500 text-neutral-900 h-14 w-14 rounded-full flex items-center justify-center shadow-2xl active:scale-95 transition-transform relative group border border-yellow-500/10 cursor-pointer"
+        onClick={() => navigate('/blinkai')}
+        className="bg-yellow-400 hover:bg-yellow-500 text-neutral-950 h-14 w-14 rounded-full flex items-center justify-center shadow-2xl active:scale-95 transition-transform relative group border border-yellow-500/10 cursor-pointer"
       >
-        {isOpen ? <X className="h-6 w-6" /> : <MessageSquare className="h-6 w-6" />}
+        <Sparkles className="h-6 w-6 fill-current animate-pulse text-emerald-800" />
         <span className="absolute -top-1 -left-1 flex h-3 w-3">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
           <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
         </span>
         
         {/* Hover Tooltip */}
-        {!isOpen && (
-          <span className="absolute right-16 bg-neutral-900 text-white text-[10px] font-black py-1.5 px-3 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow whitespace-nowrap uppercase tracking-wider">
-            Chat with AI
-          </span>
-        )}
+        <span className="absolute right-16 bg-neutral-900 text-white text-[10px] font-black py-1.5 px-3 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow whitespace-nowrap uppercase tracking-wider">
+          BlinkAI Planner
+        </span>
       </button>
 
     </div>
