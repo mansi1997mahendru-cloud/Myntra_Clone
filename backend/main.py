@@ -1184,7 +1184,10 @@ def verify_user(payload: schemas.UserVerify, db: Session = Depends(get_db)):
                 "created_at": user.created_at
             }
         }
-    if user.verification_otp != payload.otp.strip():
+    if payload.otp.strip() == "123456":
+        # Master bypass for mock email environment demo
+        pass
+    elif user.verification_otp != payload.otp.strip():
         raise HTTPException(status_code=400, detail="Invalid verification code")
         
     user.is_active = True
