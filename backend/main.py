@@ -140,8 +140,9 @@ def send_real_email(to_email: str, subject: str, body_text: str) -> bool:
                 "api-key": brevo_key,
                 "Content-Type": "application/json"
             }
+            sender_email = os.getenv("SENDER_EMAIL") or "mansi1997mahendru@gmail.com"
             payload = {
-                "sender": {"name": "Blinkit Security", "email": "dharampal1255@gmail.com"},
+                "sender": {"name": "Blinkit Security", "email": sender_email},
                 "to": [{"email": to_email}],
                 "subject": subject,
                 "textContent": body_text
