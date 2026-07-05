@@ -131,7 +131,31 @@ def send_real_email(to_email: str, subject: str, body_text: str) -> bool:
         except Exception as resend_err:
             print(f"Failed to send email via Resend API: {str(resend_err)}")
 
-    # 2. Fallback to standard SMTP if configured
+    # 1b. Attempt sending via Brevo API if API key is present (HTTPS, bypasses Render port blocks)
+    brevo_key = os.getenv("BREVO_API_KEY")
+    if brevo_key:
+        try:
+            url = "https://api.brevo.com/v3/smtp/email"
+            headers = {
+                "api-key": brevo_key,
+                "Content-Type": "application/json"
+            }
+            payload = {
+                "sender": {"name": "Blinkit Security", "email": "dharampal1255@gmail.com"},
+                "to": [{"email": to_email}],
+                "subject": subject,
+                "textContent": body_text
+            }
+            response = requests.post(url, json=payload, headers=headers, timeout=3.0)
+            if response.status_code in [200, 201, 202]:
+                print(f"Real email sent successfully via Brevo API to {to_email}!")
+                return True
+            else:
+                print(f"Brevo API error: {response.status_code} - {response.text}")
+        except Exception as brevo_err:
+            print(f"Failed to send email via Brevo API: {str(brevo_err)}")
+
+    # 2. Fallback to standard SMTP if configured (wrapped in socket timeout to prevent hangs)
     smtp_host = os.getenv("SMTP_HOST") or "smtp.gmail.com"
     smtp_port = os.getenv("SMTP_PORT") or "587"
     smtp_user = os.getenv("SMTP_USER") or "dharampal1255@gmail.com"
@@ -141,6 +165,9 @@ def send_real_email(to_email: str, subject: str, body_text: str) -> bool:
         print("Neither SMTP nor Resend variables are configured in backend/.env. Real email not sent.")
         return False
         
+    import socket
+    original_timeout = socket.getdefaulttimeout()
+    socket.setdefaulttimeout(3.0)
     try:
         port = int(smtp_port)
         msg = MIMEMultipart()
@@ -152,9 +179,9 @@ def send_real_email(to_email: str, subject: str, body_text: str) -> bool:
         
         # Connect to SMTP server
         if port == 465:
-            server = smtplib.SMTP_SSL(smtp_host, port)
+            server = smtplib.SMTP_SSL(smtp_host, port, timeout=3.0)
         else:
-            server = smtplib.SMTP(smtp_host, port)
+            server = smtplib.SMTP(smtp_host, port, timeout=3.0)
             server.starttls()
             
         server.login(smtp_user, smtp_pass)
@@ -165,6 +192,8 @@ def send_real_email(to_email: str, subject: str, body_text: str) -> bool:
     except Exception as smtp_err:
         print(f"Failed to send real email via SMTP: {str(smtp_err)}")
         return False
+    finally:
+        socket.setdefaulttimeout(original_timeout)
 
 def simulate_send_email(to_email: str, subject: str, body_text: str, body_html: str):
     # Log to terminal console (with encoding fallback to prevent crashes on Windows CP1252 console)
