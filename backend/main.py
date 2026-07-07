@@ -236,6 +236,51 @@ app.add_middleware(
 # Initial dataset to seed the database (includes stock counts)
 INITIAL_PRODUCTS = [
     {
+        "name": "Tata Sampann Chitra Rajma",
+        "size": "1 kg",
+        "price": 140,
+        "original_price": 160,
+        "icon": "https://images.unsplash.com/photo-1585996388964-b86e2467b43a?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1585996388964-b86e2467b43a?w=500&auto=format&fit=crop",
+        "discount": "12% OFF",
+        "brand": "Tata Sampann",
+        "category": "Atta, Rice & Dal",
+        "description": "Premium unpolished chitra rajma rich in protein and dietary fiber.",
+        "stock": 30,
+        "is_best_seller": True,
+        "is_recommended": True
+    },
+    {
+        "name": "Organic Tattva Kashmiri Red Rajma",
+        "size": "500 g",
+        "price": 95,
+        "original_price": 110,
+        "icon": "https://images.unsplash.com/photo-1585996388964-b86e2467b43a?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1585996388964-b86e2467b43a?w=500&auto=format&fit=crop",
+        "discount": "13% OFF",
+        "brand": "Organic Tattva",
+        "category": "Atta, Rice & Dal",
+        "description": "100% organic kashmiri red rajma kidney beans.",
+        "stock": 25,
+        "is_best_seller": False,
+        "is_recommended": True
+    },
+    {
+        "name": "Catch Rajma Masala Spice Powder",
+        "size": "100 g",
+        "price": 65,
+        "original_price": 75,
+        "icon": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=500&auto=format&fit=crop",
+        "images_list": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=500&auto=format&fit=crop",
+        "discount": "13% OFF",
+        "brand": "Catch Masala",
+        "category": "Packaged Food",
+        "description": "Traditional blend of spices to create delicious rajma masala curry.",
+        "stock": 40,
+        "is_best_seller": False,
+        "is_recommended": False
+    },
+    {
         "name": "Fresh Red Apples",
         "size": "4 pcs (approx. 500g)",
         "price": 99,
@@ -1620,6 +1665,7 @@ def blinkai_plan(req: BlinkAIRequest, db: Session = Depends(get_db)):
         "shopping_list": [],  # list of { product_id, qty, reason }
         "healthy_alternatives": [], # list of { original_id, healthy_id, explanation }
         "weekly_plan": {}, # dict of day -> breakfast/lunch/dinner
+        "recipe_steps": [], # list of strings for cooking instructions
         "agent_logs": agent_logs
     }
 
@@ -1639,6 +1685,13 @@ def blinkai_plan(req: BlinkAIRequest, db: Session = Depends(get_db)):
                 reply_data["cooking_time"] = "25 mins"
                 reply_data["difficulty"] = "Medium"
                 reply_data["healthy_score"] = 80
+                reply_data["recipe_steps"] = [
+                    "Step 1: Cut fresh Malai Paneer into cubes and fry lightly in butter.",
+                    "Step 2: Sauté chopped onions, ginger paste, and tomato puree in a pan.",
+                    "Step 3: Stir in Catch spice powders, cashew paste, and warm water to create a smooth curry base.",
+                    "Step 4: Fold in the paneer cubes and simmer on low heat for 5 minutes.",
+                    "Step 5: Garnish with fresh cream and serve hot."
+                ]
                 
                 paneer = next((p for p in inventory if "paneer" in p["name"].lower()), None)
                 butter = next((p for p in inventory if "butter" in p["name"].lower()), None)
@@ -1660,6 +1713,13 @@ def blinkai_plan(req: BlinkAIRequest, db: Session = Depends(get_db)):
                 reply_data["cooking_time"] = "40 mins"
                 reply_data["difficulty"] = "Hard"
                 reply_data["healthy_score"] = 75
+                reply_data["recipe_steps"] = [
+                    "Step 1: Soak Basmati Rice for 30 minutes, then parboil with whole cardamoms and bay leaves.",
+                    "Step 2: Sauté diced potatoes and tomatoes with biryani masala paste.",
+                    "Step 3: In a heavy pot, alternate layers of the parboiled rice and the spiced vegetables.",
+                    "Step 4: Top with fried onions and ghee, cover tightly, and steam (dum) on low heat for 20 minutes.",
+                    "Step 5: Fluff gently and serve with cold cucumber raita."
+                ]
                 
                 rice = next((p for p in inventory if "rice" in p["name"].lower()), None)
                 masala = next((p for p in inventory if "masala" in p["name"].lower()), None)
@@ -1675,11 +1735,46 @@ def blinkai_plan(req: BlinkAIRequest, db: Session = Depends(get_db)):
                         "qty": 1 + (req.family_size // 4),
                         "reason": "Core carbohydrate rice layer and spice elements"
                     })
+            elif "rajma" in query_lower or "rasma" in query_lower or "kidney" in query_lower:
+                reply_data["recipe_name"] = "Punjabi Rajma Masala"
+                reply_data["cooking_time"] = "35 mins"
+                reply_data["difficulty"] = "Medium"
+                reply_data["healthy_score"] = 85
+                reply_data["recipe_steps"] = [
+                    "Step 1: Soak Kashmiri/Chitra Rajma overnight, then pressure cook with salt until very soft.",
+                    "Step 2: Sauté chopped onions, ginger, and garlic in a pan until golden brown.",
+                    "Step 3: Add tomato puree and Catch Rajma Masala spice blend. Cook until oil separates.",
+                    "Step 4: Add the boiled rajma with its water. Simmer on low heat for 15 minutes until gravy thickens.",
+                    "Step 5: Mash a few kidney beans to thicken the gravy. Serve piping hot with India Gate Basmati Rice."
+                ]
+                
+                rajma = next((p for p in inventory if "rajma" in p["name"].lower()), None)
+                rice = next((p for p in inventory if "rice" in p["name"].lower()), None)
+                masala = next((p for p in inventory if "masala" in p["name"].lower()), None)
+                onion = next((p for p in inventory if "onion" in p["name"].lower()), None)
+                tomato = next((p for p in inventory if "tomato" in p["name"].lower()), None)
+                
+                items_matched = [rajma, rice, masala, onion, tomato]
+                items_matched = [i for i in items_matched if i]
+                
+                for item in items_matched:
+                    reply_data["shopping_list"].append({
+                        "product_id": item["id"],
+                        "qty": 1 + (req.family_size // 4),
+                        "reason": "Essential ingredient for traditional Punjabi Rajma Masala & Basmati Rice combo"
+                    })
             else:
                 reply_data["recipe_name"] = "Tomato Basil Pasta"
                 reply_data["cooking_time"] = "15 mins"
                 reply_data["difficulty"] = "Easy"
                 reply_data["healthy_score"] = 88
+                reply_data["recipe_steps"] = [
+                    "Step 1: Cook pasta noodles in boiling salted water until al dente, then drain.",
+                    "Step 2: Sauté minced garlic in a splash of oil, then add crushed tomatoes and tomato sauce.",
+                    "Step 3: Simmer the sauce for 5 minutes, then stir in fresh basil leaves.",
+                    "Step 4: Toss the cooked noodles directly in the sauce until fully coated.",
+                    "Step 5: Top with grated cheese and serve immediately."
+                ]
                 
                 noodles = next((p for p in inventory if "pasta" in p["name"].lower() or "maggi" in p["name"].lower() or "noodle" in p["name"].lower()), None)
                 sauce = next((p for p in inventory if "tomato" in p["name"].lower()), None)
@@ -1832,6 +1927,7 @@ def blinkai_plan(req: BlinkAIRequest, db: Session = Depends(get_db)):
             "   - 'healthy_id': integer (ID of a healthier alternative, e.g. juice, apple, brown bread)\n"
             "   - 'explanation': string (Why this swap is healthier)\n"
             "7. 'weekly_plan': JSON object representing a 7-day meal plan. Key format: 'Monday': {'breakfast': '...', 'lunch': '...', 'dinner': '...'}\n"
+            "8. 'recipe_steps': JSON array of strings (Step-by-step cooking instructions, e.g. ['Step 1: Soak rajma beans...', 'Step 2: Chop onions and tomatoes...'])\n"
             "Rules:\n"
             "1. DO NOT recommend products that are not present in the inventory list. Swap with the closest available if needed.\n"
             "2. Ensure quantities are adjusted dynamically according to the requested family size.\n"

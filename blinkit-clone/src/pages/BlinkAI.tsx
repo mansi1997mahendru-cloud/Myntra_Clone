@@ -44,6 +44,7 @@ interface AIPlanResult {
   shopping_list: ShoppingListItem[];
   healthy_alternatives: HealthyAlternative[];
   weekly_plan?: Record<string, { breakfast: string; lunch: string; dinner: string }>;
+  recipe_steps?: string[];
   agent_logs?: AgentLog[];
 }
 
@@ -704,6 +705,26 @@ export const BlinkAI: React.FC = () => {
                           <div><span className="font-black text-neutral-700 block">🍛 Lunch</span>{meals.lunch}</div>
                           <div><span className="font-black text-neutral-700 block">🥗 Dinner</span>{meals.dinner}</div>
                         </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* AI Recipe Cooking Steps */}
+              {plannerType === 'recipe' && result.recipe_steps && result.recipe_steps.length > 0 && (
+                <div className="bg-white rounded-3xl border border-neutral-200/70 p-5 shadow-sm space-y-4">
+                  <div className="flex items-center space-x-2 pb-2 border-b border-neutral-100">
+                    <Utensils className="h-4.5 w-4.5 text-[#0C831F]" />
+                    <h3 className="font-extrabold text-neutral-900 text-xs uppercase tracking-wider text-left">AI Cooking Instructions</h3>
+                  </div>
+                  <div className="space-y-3.5 pr-1 text-left">
+                    {result.recipe_steps.map((step, idx) => (
+                      <div key={idx} className="flex items-start space-x-3.5 text-xs">
+                        <span className="h-5 w-5 bg-emerald-50 text-emerald-700 rounded-full flex items-center justify-center font-extrabold text-[10px] shrink-0 border border-emerald-200">
+                          {idx + 1}
+                        </span>
+                        <p className="text-neutral-600 font-semibold leading-relaxed pt-0.5">{step}</p>
                       </div>
                     ))}
                   </div>
