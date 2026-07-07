@@ -109,7 +109,7 @@ export const BlinkAI: React.FC = () => {
 
     const API_BASE = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/$/, '');
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 1200); // 1.2 seconds timeout limit!
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 seconds timeout limit!
 
     try {
       const res = await fetch(`${API_BASE}/api/blinkai/plan`, {
@@ -166,7 +166,9 @@ export const BlinkAI: React.FC = () => {
           { id: 9, name: "Lays Classic Salted Chips", brand: "Lays", size: "50g", price: 20, original_price: 20, icon: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=300", stock: 40 },
           { id: 10, name: "Real Fruit Juice Mixed Fruit", brand: "Real", size: "1L", price: 115, original_price: 130, icon: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=300", stock: 15 },
           { id: 11, name: "Mother Dairy Diet Eggs", brand: "Mother Dairy", size: "6 pcs", price: 55, original_price: 60, icon: "https://images.unsplash.com/photo-1519689680058-324335c77eba?w=300", stock: 12 },
-          { id: 12, name: "Fresh Fuji Apple", brand: "Organic", size: "4 pcs", price: 140, original_price: 160, icon: "https://images.unsplash.com/photo-1610832958506-ee5633619141?w=300", stock: 20 }
+          { id: 12, name: "Fresh Fuji Apple", brand: "Organic", size: "4 pcs", price: 140, original_price: 160, icon: "https://images.unsplash.com/photo-1610832958506-ee5633619141?w=300", stock: 20 },
+          { id: 13, name: "Tata Sampann Chitra Rajma", brand: "Tata Sampann", size: "1kg", price: 140, original_price: 160, icon: "https://images.unsplash.com/photo-1585996388964-b86e2467b43a?w=300", stock: 15 },
+          { id: 14, name: "Catch Rajma Masala Spice Powder", brand: "Catch Masala", size: "100g", price: 65, original_price: 75, icon: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=300", stock: 30 }
         ];
       }
 
@@ -178,6 +180,7 @@ export const BlinkAI: React.FC = () => {
       let healthScore = 86;
       let matchedItems: any[] = [];
       let alternatives: any[] = [];
+      let recipeSteps: string[] = [];
 
       // 1. Recipe Match
       if (plannerType === "recipe") {
@@ -186,6 +189,13 @@ export const BlinkAI: React.FC = () => {
           cookTime = "25 mins";
           difficultyLevel = "Medium";
           healthScore = 80;
+          recipeSteps = [
+            "Step 1: Cut fresh Malai Paneer into cubes and fry lightly in butter.",
+            "Step 2: Sauté chopped onions, ginger paste, and tomato puree in a pan.",
+            "Step 3: Stir in Catch spice powders, cashew paste, and warm water to create a smooth curry base.",
+            "Step 4: Fold in paneer cubes and simmer on low heat for 5 minutes.",
+            "Step 5: Garnish with fresh cream and serve hot."
+          ];
           const paneer = products.find(p => p.name.toLowerCase().includes("paneer")) || products[0];
           const butter = products.find(p => p.name.toLowerCase().includes("butter")) || products[1];
           const masala = products.find(p => p.name.toLowerCase().includes("masala")) || products[2];
@@ -203,6 +213,13 @@ export const BlinkAI: React.FC = () => {
           cookTime = "40 mins";
           difficultyLevel = "Hard";
           healthScore = 75;
+          recipeSteps = [
+            "Step 1: Soak Basmati Rice for 30 minutes, then parboil with whole cardamoms and bay leaves.",
+            "Step 2: Sauté diced potatoes and tomatoes with biryani masala paste.",
+            "Step 3: In a heavy pot, alternate layers of the parboiled rice and the spiced vegetables.",
+            "Step 4: Top with fried onions and ghee, cover tightly, and steam (dum) on low heat for 20 minutes.",
+            "Step 5: Fluff gently and serve with cold cucumber raita."
+          ];
           const rice = products.find(p => p.name.toLowerCase().includes("rice")) || products[5] || products[0];
           const masala = products.find(p => p.name.toLowerCase().includes("masala")) || products[2];
           const onion = products.find(p => p.name.toLowerCase().includes("onion")) || products[3];
@@ -213,18 +230,27 @@ export const BlinkAI: React.FC = () => {
             { product: onion, qty: 1, reason: "Crispy fried caramelized onion garnish" },
             { product: tomato, qty: 1, reason: "Tangy flavoring agent for rice marinade" }
           ];
-        } else if (text.includes("rajma") || text.includes("dal") || text.includes("naan") || text.includes("roti") || text.includes("chapati")) {
+        } else if (text.includes("rajma") || text.includes("rasma") || text.includes("dal") || text.includes("naan") || text.includes("roti") || text.includes("chapati")) {
           recipeName = "Punjabi Rajma Masala & Basmati Rice";
           cookTime = "30 mins";
           difficultyLevel = "Medium";
           healthScore = 85;
+          recipeSteps = [
+            "Step 1: Soak Kashmiri/Chitra Rajma beans overnight, then pressure cook until very soft.",
+            "Step 2: Sauté chopped onions, ginger, and garlic in a pan until golden brown.",
+            "Step 3: Add tomato puree and Catch Rajma Masala spice blend. Cook until oil separates.",
+            "Step 4: Add boiled rajma with its water. Simmer on low heat for 15 minutes.",
+            "Step 5: Mash a few kidney beans to thicken the gravy. Serve piping hot with basmati rice."
+          ];
+          const rajma = products.find(p => p.name.toLowerCase().includes("rajma")) || products.find(p => p.id === 13) || products[0];
           const rice = products.find(p => p.name.toLowerCase().includes("rice")) || products[5] || products[0];
           const masala = products.find(p => p.name.toLowerCase().includes("masala")) || products[2];
           const onion = products.find(p => p.name.toLowerCase().includes("onion")) || products[3];
           const tomato = products.find(p => p.name.toLowerCase().includes("tomato")) || products[4];
           matchedItems = [
+            { product: rajma, qty: 1, reason: "Premium unpolished high-protein red kidney beans (Rajma)" },
             { product: rice, qty: 1 + Math.floor(familySize / 3), reason: "Fortune rozana long grain basmati rice portion" },
-            { product: masala, qty: 1, reason: "Everest shahi garam spices powder" },
+            { product: masala, qty: 1, reason: "Everest shahi/rajma spices powder mix" },
             { product: onion, qty: 1, reason: "Aromatic vegetable base elements" },
             { product: tomato, qty: 1, reason: "Red tomato paste ingredient base" }
           ];
@@ -233,6 +259,13 @@ export const BlinkAI: React.FC = () => {
           cookTime = "10 mins";
           difficultyLevel = "Easy";
           healthScore = 90;
+          recipeSteps = [
+            "Step 1: Bring fresh water and crushed ginger/cardamom to a boil.",
+            "Step 2: Add strong CTC tea granules and let it simmer for 3 minutes.",
+            "Step 3: Pour in fresh toned milk and heat until it rises.",
+            "Step 4: Add sugar sweetener options to taste.",
+            "Step 5: Strain into cups and serve hot with biscuits."
+          ];
           const milk = products.find(p => p.name.toLowerCase().includes("milk")) || products[6] || products[0];
           const tea = products.find(p => p.name.toLowerCase().includes("tea")) || products.find(p => p.name.toLowerCase().includes("coffee")) || products[0];
           const sugar = products.find(p => p.name.toLowerCase().includes("sugar") || p.name.toLowerCase().includes("honey")) || products[0];
@@ -362,6 +395,7 @@ export const BlinkAI: React.FC = () => {
         grand_total: subtotal - savings,
         shopping_list: shoppingListPayload,
         healthy_alternatives: alternatives,
+        recipe_steps: recipeSteps,
         weekly_plan: plannerType === "weekly" ? {
           "Monday": { breakfast: "Milk & Toast", lunch: "Dal Tadka with Jeera Rice", dinner: "Wheat Chapati with Salad" },
           "Tuesday": { breakfast: "Eggs on Toast", lunch: "Paneer Curry with Veg Rice", dinner: "Fresh tomato soup with bread" },
