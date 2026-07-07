@@ -589,9 +589,10 @@ def seed_database_if_empty():
     try:
         count = db.query(models.Product).count()
         has_emojis = db.query(models.Product).filter(~models.Product.icon.like("http%")).first()
+        has_rajma = db.query(models.Product).filter(models.Product.name.like("%Rajma%")).first()
         
-        if count == 0 or has_emojis:
-            print("Database empty or containing emojis. Auto-seeding real product photographs...")
+        if count == 0 or has_emojis or not has_rajma:
+            print("Database empty, containing emojis, or missing Rajma. Auto-seeding real product photographs...")
             db.query(models.Product).delete()
             db.commit()
             for prod_data in INITIAL_PRODUCTS:
